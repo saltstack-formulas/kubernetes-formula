@@ -20,7 +20,7 @@ Formula to manage kubernetes. Currently supports:
    :scale: 100%
    :target: https://github.com/semantic-release/semantic-release
 
-A SaltStack formula for kubernetes
+A SaltStack formula for kubernetes on MacOS and GNU/Linux.
 
 .. contents:: **Table of Contents**
    :depth: 1
