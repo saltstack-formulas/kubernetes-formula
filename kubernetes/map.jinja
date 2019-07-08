@@ -51,10 +51,14 @@
 
     {%- if kubernetes[comp]['pkg']['use_upstream_source'] %}
         {%- set dirname = '%s-%s'|format(kubernetes[comp]['pkg']['source']['name'], kubernetes[comp]['version']) %}
-        {%- set uri = kubernetes[comp]['pkg']['source']['uri'] + '/' + dirname %}
+        {%- if comp == 'kubectl' %}
+            {%- set uri = kubernetes[comp]['pkg']['source']['uri'] + '/' + dirname %}
+        {%- else %}
+            {%- set uri = kubernetes[comp]['pkg']['source']['uri'] + '/v' + kubernetes[comp]['version'] %}
+        {%- endif %}
         {%- do kubernetes[comp]['pkg']['source'].update({
                'name':    kubernetes.dir.source + '/' + dirname,
-               'basedir': kubernetes.dir.source + '/' + dirname,
+               'basedir': kubernetes.dir.source + '/' + kubernetes[comp]['pkg']['source']['name'] + dirname,
                'source':  uri + '.' + kubernetes[comp]['pkg']['source']['archive_suffix'],
                'archive_format': kubernetes[comp]['pkg']['source']['archive_format']
         }) %}
