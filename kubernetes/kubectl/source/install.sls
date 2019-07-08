@@ -8,7 +8,7 @@
 
 k8s-kubectl-release-source-install-file-directory:
   file.directory:
-    - name: {{ k8s.kubectl.pkg.source.basedir }}
+    - name: {{ k8s.kubectl.pkg.source.name }}
     - user: {{ k8s.rootuser }}
     - group: {{ k8s.rootgroup }}
     - mode: 755
@@ -32,7 +32,7 @@ k8s-kubectl-release-source-install-source-extracted:
 
 k8s-kubectl-release-source-install-cmd-run-make-install:
   cmd.run:
-    - cwd: {{ k8s.kubectl.pkg.source.basedir }}
+    - cwd: {{ k8s.kubectl.pkg.source.name }}
     - names:
       - echo "figure out how to build from source code tarball"
     - unless:

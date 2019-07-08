@@ -6,7 +6,7 @@
 {%- from tplroot ~ "/map.jinja" import kubernetes as k8s with context %}
 
 include:
-  {{ '- .package' if k8s.kubectl.pkg.use_upstream_repo }}
-  {{ '- .binary' if k8s.kubectl.pkg.use_upstream_source }}
-  {{ '- .source' if k8s.kubectl.pkg.use_upstream_binary }}
+  {{ '- .package' if k8s.kubectl.pkg.use_upstream_repo else '' }}
+  {{ '- .binary' if k8s.kubectl.pkg.use_upstream_binary else '' }}
+  {{ '- .source' if k8s.kubectl.pkg.use_upstream_source else '' }}
   - .config

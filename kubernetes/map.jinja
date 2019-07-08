@@ -29,30 +29,35 @@
 {%- set kubernetes = config %}
 
 {%- for comp in ('kubectl', 'minikube') %}
-
     {%- if kubernetes[comp]['pkg']['use_upstream_binary'] %}
-        {%- set dirname = comp + '-v%s'|format(ks8[comp]['version']) %}
-        {%- set uri = '%s/v%s/bin/%s/%s'|format(kubernetes[comp]['pkg']['binary']['uri'], 
-                                                kubernetes[comp]['version'], 
-                                                kubernetes.kernel,
-                                                kubernetes.arch) %}
+        {%- set dirname = comp + '-v%s'|format(kubernetes[comp]['version']) %}
+        {%- if comp == 'kubectl' %}
+            {%- set uri = '%s/v%s/bin/%s/%s'|format(kubernetes[comp]['pkg']['binary']['uri'], 
+                                                    kubernetes[comp]['version'], 
+                                                    kubernetes.kernel,
+                                                    kubernetes.arch) %}
+        {%- else %}
+            {%- set uri = '%s/v%s/minikube-%s-%s'|format(kubernetes[comp]['pkg']['binary']['uri'], 
+                                                    kubernetes[comp]['version'], 
+                                                    kubernetes.kernel,
+                                                    kubernetes.arch) %}
+        {%- endif %}
         {%- do kubernetes[comp]['pkg']['binary'].update({
-               'name':    kubernetes[comp]['pkg']['binary']['basedir'],
-               'basedir': kubernetes[comp]['pkg']['binary']['basedir'] + '/' + dirname,
-               'source':  uri + '/' + kubernetes[comp]['pkg']['name']
+               'name':    kubernetes.dir.binary + '/' + dirname,
+               'basedir': kubernetes.dir.binary + '/' + dirname,
+               'source':  uri if comp == 'minikube' else uri + '/' + kubernetes[comp]['pkg']['name']
         }) %}
     {%- endif %}
 
     {%- if kubernetes[comp]['pkg']['use_upstream_source'] %}
-        {%- set dirname = '%s-%s'|format(kubernetes[comp]['pkg']['source']['name'], ks8[comp]['version']) %}
+        {%- set dirname = '%s-%s'|format(kubernetes[comp]['pkg']['source']['name'], kubernetes[comp]['version']) %}
         {%- set uri = kubernetes[comp]['pkg']['source']['uri'] + '/' + dirname %}
-        {%- do kubectl.pkg.source.update({
-               'name':    kubernetes[comp]['pkg']['source']['basedir'],
-               'basedir': kubernetes[comp]['pkg']['source']['basedir'] + '/' + dirname,
+        {%- do kubernetes[comp]['pkg']['source'].update({
+               'name':    kubernetes.dir.source + '/' + dirname,
+               'basedir': kubernetes.dir.source + '/' + dirname,
                'source':  uri + '.' + kubernetes[comp]['pkg']['source']['archive_suffix'],
                'archive_format': kubernetes[comp]['pkg']['source']['archive_format']
         }) %}
     {%- endif %}
-
 {%- endfor %}
 

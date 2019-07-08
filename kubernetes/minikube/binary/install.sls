@@ -7,7 +7,7 @@
 
 k8s-minikube-release-binary-install-file-directory:
   file.directory:
-    - name: {{ k8s.minikube.pkg.binary.basedir }}/bin
+    - name: {{ k8s.minikube.pkg.binary.name }}/bin
     - user: {{ k8s.rootuser }}
     - group: {{ k8s.rootgroup }}
     - mode: 755
@@ -22,25 +22,25 @@ k8s-minikube-release-binary-install-file-directory:
 k8s-minikube-release-binary-install-cmd-run:
   cmd.run:
     - names:
-      - curl -Lo {{ k8s.minikube.pkg.binary.basedir }}/bin/minikube {{ k8s.minikube.pkg.binary.source }}
-      - chmod '0755' {{ k8s.minikube.pkg.binary.basedir }}/bin/minikube 2>/dev/null
+      - curl -Lo {{ k8s.minikube.pkg.binary.name }}/bin/minikube {{ k8s.minikube.pkg.binary.source }}
+      - chmod '0755' {{ k8s.minikube.pkg.binary.name }}/bin/minikube 2>/dev/null
     - retry: {{ k8s.retry_option }}
     - user: {{ k8s.rootuser }}
     - group: {{ k8s.rootgroup }}
       {%- if 'source_hash' in k8s.minikube.pkg.binary and k8s.minikube.pkg.binary.source_hash %}
   module.run:
     - name: file.check_hash
-    - path: {{ k8s.minikube.pkg.binary.basedir }}/bin/minikube
+    - path: {{ k8s.minikube.pkg.binary.name }}/bin/minikube
     - file_hash: {{ k8s.minikube.pkg.binary.source_hash }}
     - require:
       - cmd: k8s-minikube-release-binary-install-cmd-run
       {%- endif %}
 
-      {%- if k8s.minikube.linux.altpriority|int == 0 and k8s.kernel == 'linux' %}
+      {%- if k8s.minikube.linux.altpriority|int == 0 %}
 k8s-minikube-release-binary-install-file-symlink:
   file.symlink:
     - name: /usr/local/bin/minikube
-    - target: {{ k8s.minikube.pkg.binary.basedir }}/bin/minikube
+    - target: {{ k8s.minikube.pkg.binary.name }}/bin/minikube
     - force: True
     - backupname: salt.bak
     - onlyif: {{ k8s.kernel not in ('windows',) }}

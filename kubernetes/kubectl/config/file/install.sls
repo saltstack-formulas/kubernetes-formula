@@ -12,9 +12,9 @@
         {%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
 
 include:
-  {{ '- ' + sls_package_clean if k8s.kubectl.pkg.use_upstream_repo }}
-  {{ '- ' + sls_source_clean if k8s.kubectl.pkg.use_upstream_source }}
-  {{ '- ' + sls_binary_clean if k8s.kubectl.pkg.use_upstream_binary }}
+  {{ '- ' + sls_package_clean if k8s.kubectl.pkg.use_upstream_repo else '' }}
+  {{ '- ' + sls_source_clean if k8s.kubectl.pkg.use_upstream_source else '' }}
+  {{ '- ' + sls_binary_clean if k8s.kubectl.pkg.use_upstream_binary else '' }}
 
 k8s-kubectl-config-file-install-file-managed:
   file.managed:
@@ -31,8 +31,8 @@ k8s-kubectl-config-file-install-file-managed:
     - context:
         config: {{ k8s.kubectl.config|json }}
     - require:
-      {{ '- sls: ' + sls_package_install if k8s.kubectl.pkg.use_upstream_repo }}
-      {{ '- sls: ' + sls_source_install if k8s.kubectl.pkg.use_upstream_source }}
-      {{ '- sls: ' + sls_binary_install if k8s.kubectl.pkg.use_upstream_binary }}
+      {{ '- sls: ' + sls_package_install if k8s.kubectl.pkg.use_upstream_repo else '' }}
+      {{ '- sls: ' + sls_source_install if k8s.kubectl.pkg.use_upstream_source else '' }}
+      {{ '- sls: ' + sls_binary_install if k8s.kubectl.pkg.use_upstream_binary else '' }}
 
     {%- endif %}

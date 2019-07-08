@@ -18,7 +18,7 @@ include:
 k8s-minikube-config-alternatives-clean-k8s-minikube-alternative-remove:
   alternatives.remove:
     - name: link-k8s-minikube
-    - path: {{ k8s.minikube.pkg.binary.basedir }}/bin/minikube
+    - path: {{ k8s.dir.binary }}/{{ k8s.minikube.pkg.binary.name }}/bin/minikube
     - onlyif: update-alternatives --get-selections |grep ^link-k8s-minikube
     - require:
       - sls: {{ sls_package_clean }}

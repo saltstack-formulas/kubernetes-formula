@@ -8,5 +8,5 @@
 k8s-minikube-release-source-clean-file-absent:
   file.absent:
     - names:
-      - {{ k8s.minikube.pkg.source.basedir }}
+      - {{ k8s.dir.source }}/{{ k8s.minikube.pkg.source.name }}
       - /usr/local/bin/minikube

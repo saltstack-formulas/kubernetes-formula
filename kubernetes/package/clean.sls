@@ -5,7 +5,7 @@
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import kubernetes as k8s with context %}
 
-    {%- if kubectl.pkg.use_upstream_repo %}
+    {%- if k8s.pkg.use_upstream_repo %}
 
 include:
   - .repo.clean

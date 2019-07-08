@@ -8,5 +8,5 @@
 k8s-kubectl-release-source-clean-file-absent:
   file.absent:
     - names:
-      - {{ k8s.kubectl.pkg.source.basedir }}
+      - {{ k8s.dir.source }}/{{ k8s.kubectl.pkg.source.name }}
       - /usr/local/bin/kubectl

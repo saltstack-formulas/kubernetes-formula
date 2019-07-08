@@ -25,10 +25,12 @@ Debian:
     pkg:
       use_upstream_repo: True
       use_upstream_binary: False
+      use_upstream_source: False
   minikube:
     pkg:
-      use_upstream_repo: True
-      use_upstream_binary: False
+      use_upstream_repo: False
+      use_upstream_binary: True
+      use_upstream_source: False
 
 RedHat:
   pkg:
@@ -37,10 +39,6 @@ RedHat:
       gpgkey: 'https://packages.cloud.google.com/yum/doc/yum-key.gpg gpgkey2=https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg'
       repo_gpgcheck: 1
   kubectl:
-    pkg:
-      use_upstream_repo: True
-      use_upstream_binary: False
-  minikube:
     pkg:
       use_upstream_repo: True
       use_upstream_binary: False
@@ -80,11 +78,9 @@ OpenBSD:
       use_upstream_binary: False
 
 Windows:
-  pkg:
-    binary:
-      basedir: C:\\kubernetes
-    source:
-      basedir: C:\\temp\\kubernetes
+  dir:
+    binary: C:\\kubernetes
+    source: C:\\temp\\kubernetes
   kubectl:
     check: systeminfo
     pkg:
@@ -111,7 +107,7 @@ MacOS:
     check: sysctl -a | grep machdep.cpu.features
     pkg:
       name: minikube               #homebrew
-      use_upstream_repo: True      #homebrew
-      use_upstream_binary: False   #binary
+      use_upstream_repo: False     #homebrew
+      use_upstream_binary: True   #binary
       binary:
         source_hash: 183d017d094b7783c938dc709dbdfc9a48f92299178234f89047dfbb083a592c  #minikube binary amd64

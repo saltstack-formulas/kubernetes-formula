@@ -18,7 +18,7 @@ include:
 k8s-kubectl-config-alternatives-clean-k8s-kubectl-alternative-remove:
   alternatives.remove:
     - name: link-k8s-kubectl
-    - path: {{ k8s.kubectl.pkg.binary.basedir }}/bin/kubectl
+    - path: {{ k8s.dir.binary }}/{{ k8s.kubectl.pkg.binary.name }}/bin/kubectl
     - onlyif: update-alternatives --get-selections |grep ^link-k8s-kubectl
     - require:
       - sls: {{ sls_package_clean }}
