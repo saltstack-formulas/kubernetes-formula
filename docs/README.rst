@@ -3,7 +3,7 @@
 kubernetes-formula
 ====================
 
-Formula to manage kubernetes. Currently supports:
+Formula to manage kubernetes on MacOS and GNU/Linux. Currently supports:
 
 * `kubectl`
 * `minikube`
