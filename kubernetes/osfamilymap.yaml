@@ -43,7 +43,17 @@ RedHat:
       use_upstream_repo: True
       use_upstream_binary: False
 
-Suse: {}
+Suse:
+  kubectl:
+    pkg:
+      use_upstream_repo: False
+      use_upstream_binary: True
+      use_upstream_source: False
+  minikube:
+    pkg:
+      use_upstream_repo: False
+      use_upstream_binary: True
+      use_upstream_source: False
 
 Gentoo: {}
 
