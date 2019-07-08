@@ -1,0 +1,94 @@
+# -*- coding: utf-8 -*-
+# vim: ft=yaml
+---
+kubernetes:
+  rootuser: root
+  rootgroup: root
+  config: '/etc/kubernetes'
+  tmpdir: '/tmp/kubernetes'
+  kernel: {{ grains.kernel|lower }}
+  arch: ''
+
+  pkg:
+    deps:
+      - curl
+      - bzip2
+      - gzip
+    binary:
+      basedir: /opt/kubernetes
+    source:
+      basedir: /tmp/kubernetes_kubectl
+    repo:
+      humanname: kubernetes
+      name: kubernetes
+      comments:
+        - installed by salt
+      enabled: 1
+      gpgcheck: 1
+
+  # Just here for testing
+  added_in_defaults: defaults_value
+  winner: defaults
+
+  kubectl:
+    version: '1.15.0'
+    config_file: /etc/default/kubectl.ini
+    config: {}
+    environ_file: /etc/default/kubectl.sh
+    environ: []
+    service: {}
+    linux:
+      altpriority: 0
+    pkg:
+      name: kubectl
+      use_upstream_repo: False
+      use_upstream_binary: True
+      use_upstream_source: False
+      binary:
+        uri:  https://storage.googleapis.com/kubernetes-release/release
+        source: None                                                                   #set in map.jinja
+        source_hash: ecec7fe4ffa03018ff00f14e228442af5c2284e57771e4916b977c20ba4e5b39  #linux amd64 binary
+        trim_output: True   {# works in 2018.3.2. onwards #}
+      source:
+        name: kubernetes
+        uri:  https://github.com/kubernetes/kubectl/archive
+        source: None
+        source_hash: dfe8b2475d626aa07d02ac4f0072d445c7d71615c6e52b6b448cbbe1ff0490d2    #source tarball
+        trim_output: True   {# works in 2018.3.2. onwards #}
+        archive_suffix: tar.gz
+        archive_format: tar
+        enforce_toplevel: False
+        options: '--strip-components=1'
+
+  minikube:
+    version: '1.2.0'
+    config_file: /etc/default/minikube.ini
+    config: {}
+    environ_file: /etc/default/minikube.sh
+    environ: []
+    service: {}
+    check: egrep --color 'vmx|svm' /proc/cpuinfo
+    linux:
+      altpriority: 0
+    vm_driver: none
+    pkg:
+      name: minikube
+      use_upstream_repo: False
+      use_upstream_binary: True
+      use_upstream_source: False
+      binary:
+        uri:  https://storage.googleapis.com/minikube/releases
+        source: None                                                                   #set in map.jinja
+        source_hash: 123fc9f5656333fb2927cf91666a91cd5b28ef97503418ac2a90a2109e518ed9  #linux amd64 binary
+        trim_output: True   {# works in 2018.3.2. onwards #}
+      source:
+        name: minikube
+        uri:  https://github.com/kubernetes/minikube/archive
+        source: None
+        source_hash: 34544176451a9dbddf0ff053285efecbef69942e1b4a103452862dc6ee31ebd4   #source tarball
+        trim_output: True   {# works in 2018.3.2. onwards #}
+        archive_suffix: tar.gz
+        archive_format: tar
+        enforce_toplevel: False
+        options: '--strip-components=1'
+
