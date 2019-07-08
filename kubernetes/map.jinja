@@ -30,27 +30,27 @@
 
 {%- for comp in ('kubectl', 'minikube') %}
 
-    {%- if k8s[comp]['pkg']['use_upstream_binary'] %}
+    {%- if kubernetes[comp]['pkg']['use_upstream_binary'] %}
         {%- set dirname = comp + '-v%s'|format(ks8[comp]['version']) %}
-        {%- set uri = '%s/v%s/bin/%s/%s'|format(k8s[comp]['pkg']['binary']['uri'], 
-                                                k8s[comp]['version'], 
-                                                k8s.kernel,
-                                                k8s.arch) %}
-        {%- do k8s[comp]['pkg']['binary'].update({
-               'name':    k8s[comp]['pkg']['binary']['basedir'],
-               'basedir': k8s[comp]['pkg']['binary']['basedir'] + '/' + dirname,
-               'source':  uri + '/' + k8s[comp]['pkg']['name']
+        {%- set uri = '%s/v%s/bin/%s/%s'|format(kubernetes[comp]['pkg']['binary']['uri'], 
+                                                kubernetes[comp]['version'], 
+                                                kubernetes.kernel,
+                                                kubernetes.arch) %}
+        {%- do kubernetes[comp]['pkg']['binary'].update({
+               'name':    kubernetes[comp]['pkg']['binary']['basedir'],
+               'basedir': kubernetes[comp]['pkg']['binary']['basedir'] + '/' + dirname,
+               'source':  uri + '/' + kubernetes[comp]['pkg']['name']
         }) %}
     {%- endif %}
 
-    {%- if k8s[comp]['pkg']['use_upstream_source'] %}
-        {%- set dirname = '%s-%s'|format(k8s[comp]['pkg']['source']['name'], ks8[comp]['version']) %}
-        {%- set uri = k8s[comp]['pkg']['source']['uri'] + '/' + dirname %}
+    {%- if kubernetes[comp]['pkg']['use_upstream_source'] %}
+        {%- set dirname = '%s-%s'|format(kubernetes[comp]['pkg']['source']['name'], ks8[comp]['version']) %}
+        {%- set uri = kubernetes[comp]['pkg']['source']['uri'] + '/' + dirname %}
         {%- do kubectl.pkg.source.update({
-               'name':    k8s[comp]['pkg']['source']['basedir'],
-               'basedir': k8s[comp]['pkg']['source']['basedir'] + '/' + dirname,
-               'source':  uri + '.' + k8s[comp]['pkg']['source']['archive_suffix'],
-               'archive_format': k8s[comp]['pkg']['source']['archive_format']
+               'name':    kubernetes[comp]['pkg']['source']['basedir'],
+               'basedir': kubernetes[comp]['pkg']['source']['basedir'] + '/' + dirname,
+               'source':  uri + '.' + kubernetes[comp]['pkg']['source']['archive_suffix'],
+               'archive_format': kubernetes[comp]['pkg']['source']['archive_format']
         }) %}
     {%- endif %}
 

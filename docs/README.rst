@@ -50,22 +50,29 @@ Available states
 
 *Meta-state (This is a state that includes other states)*.
 
-This installs from kubernetes solution. The default installation source is package.
+This installs from kubernetes solution.
+
+``kubernetes.clean``
+^^^^^^^^^^^^^^^^^^^^
+
+*Meta-state (This is a state that includes other states)*.
+
+This removes the kubernetes solution.
+
+``kubernetes.package.repo``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state will install kubernetes package repository only.
+
+``kubernetes.package.repo.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state will uninstall kubernetes package repository only.
 
 ``kubernetes.kubectl``
 ^^^^^^^^^^^^^^^^^^^^^^
 
 This state will install kubernetes-cli only.
-
-``kubernetes.package.repo``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state will install kubernetes package repository only.
-
-``kubernetes.package.repo.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state will uninstall kubernetes package repository only.
 
 ``kubernetes.kubectl.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -87,10 +94,20 @@ This state will uninstall kubernetes-cli package only.
 
 This state will install kubectl binary only.
 
-``kubernetes.kubectl.archive.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``kubernetes.kubectl.binary.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will uninstall kubectl binary only.
+
+``kubernetes.kubectl.source``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state will install kubectl source tarball only.
+
+``kubernetes.kubectl.binary.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state will uninstall the kubectl source extracted tarball only.
 
 ``kubernetes.minikube``
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -115,12 +132,12 @@ This state will uninstall the kubernetes minikube package only (MacOS).
 ``kubernetes.minikube.binary``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state will install kubernetes minikube binary archive only (Linux/Windows).
+This state will install kubernetes minikube binary only.
 
 ``kubernetes.minikube.binary.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state will uninstall the kubernetes minikube binary archive only.
+This state will uninstall the kubernetes minikube binary only.
 
 ``kubernetes.minikube.source``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
