@@ -6,9 +6,8 @@
 {%- from tplroot ~ "/map.jinja" import kubernetes as k8s with context %}
 
     {%- if 'repo' in k8s.pkg and k8s.pkg.repo %}
-        {%- from tplroot ~ "/jinja/macros.jinja" import format_kwargs with context %}
-
-        {%- if grains.os_family|lower not in ('macos', 'windows') %}
+        {%- if grains.os_family|lower in ('redhat', 'debian') %}
+            {%- from tplroot ~ "/jinja/macros.jinja" import format_kwargs with context %}
 
 k8s-package-repo-install-pkgrepo-managed:
   pkgrepo.managed:
@@ -25,6 +24,6 @@ k8s-package-repo-install-file-replace:
     - pattern: ' gpgkey2='
     - repl: '\n       '
     - ignore_if_missing: True
-    - onlyif: {{ grains.os_family == 'RedHat' }}
+    - onlyif: test -f /etc/yum.repos.d/kubernetes.repo
 
     {%- endif %}
