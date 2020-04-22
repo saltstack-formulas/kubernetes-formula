@@ -59,16 +59,6 @@ This installs from kubernetes solution.
 
 This removes the kubernetes solution.
 
-``kubernetes.package.repo``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state will install kubernetes package repository only.
-
-``kubernetes.package.repo.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state will uninstall kubernetes package repository only.
-
 ``kubernetes.kubectl``
 ^^^^^^^^^^^^^^^^^^^^^^
 
@@ -83,6 +73,16 @@ This state will uninstall kubernetes-cli only.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will install kubernetes-cli package only.
+
+``kubernetes.kubectl.package.repo``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state will install kubernetes package repository only.
+
+``kubernetes.kubectl.package.repo.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state will remove kubernetes package repository only.
 
 ``kubernetes.kubectl.package.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -123,6 +123,16 @@ This state will uninstall kubernetes minikube only.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will install kubernetes minikube package only (MacOS).
+
+``kubernetes.minikube.package.repo``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state will install kubernetes package repository only.
+
+``kubernetes.minikube.package.repo.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state will remove kubernetes package repository only.
 
 ``kubernetes.minikube.package.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

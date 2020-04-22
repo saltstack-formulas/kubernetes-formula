@@ -16,48 +16,59 @@
 {%- endif %}
 
 Debian:
-  pkg:
-    repo:
-      name: deb https://apt.kubernetes.io/ kubernetes-xenial main
-      file: /etc/apt/sources.list.d/kubernetes.list
-      key_url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
   kubectl:
     pkg:
-      use_upstream_repo: True
-      use_upstream_binary: False
-      use_upstream_source: False
+      use_upstream_repo: true
+      use_upstream_binary: false
+      repo:
+        name: deb https://apt.kubernetes.io/ kubernetes-xenial main
+        file: /etc/apt/sources.list.d/kubernetes.list
+        key_url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
   minikube:
     pkg:
-      use_upstream_repo: False
-      use_upstream_binary: True
-      use_upstream_source: False
+      use_upstream_binary: true
+      repo:
+        name: deb https://apt.kubernetes.io/ kubernetes-xenial main
+        file: /etc/apt/sources.list.d/kubernetes.list
+        key_url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
 
 RedHat:
-  pkg:
-    repo:
-      baseurl: 'https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64'
-      gpgkey: 'https://packages.cloud.google.com/yum/doc/yum-key.gpg gpgkey2=https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg'
-      repo_gpgcheck: 1
   kubectl:
     pkg:
-      use_upstream_repo: True
-      use_upstream_binary: False
+      use_upstream_repo: true
+      use_upstream_binary: false
+      repo:
+        baseurl: 'https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64'
+        gpgkey: 'https://packages.cloud.google.com/yum/doc/yum-key.gpg gpgkey2=https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg'
+        repo_gpgcheck: 1
 
 Suse:
   kubectl:
     pkg:
-      use_upstream_repo: False
-      use_upstream_binary: True
-      use_upstream_source: False
+      use_upstream_repo: false
+      use_upstream_binary: true
   minikube:
     pkg:
-      use_upstream_repo: False
-      use_upstream_binary: True
-      use_upstream_source: False
+      use_upstream_repo: false
+      use_upstream_binary: true
 
 Gentoo: {}
 
-Arch: {}
+Arch:
+  kubectl:
+    linux:
+      altpriority: 0
+    pkg:
+      deps:
+        - tar
+        - gzip
+  minikube:
+    linux:
+      altpriority: 0
+    pkg:
+      deps:
+        - tar
+        - gzip
 
 Alpine: {}
 
@@ -65,27 +76,27 @@ FreeBSD:
   rootgroup: wheel
   kubectl:
     pkg:
-      use_upstream_source: True
-      use_upstream_repo: False
-      use_upstream_binary: False
+      use_upstream_source: true
+      use_upstream_repo: false
+      use_upstream_binary: false
   minikube:
     pkg:
-      use_upstream_source: True
-      use_upstream_repo: False
-      use_upstream_binary: False
+      use_upstream_source: true
+      use_upstream_repo: false
+      use_upstream_binary: false
 
 OpenBSD:
   rootgroup: wheel
   kubectl:
     pkg:
-      use_upstream_source: True
-      use_upstream_repo: False
-      use_upstream_binary: False
+      use_upstream_source: true
+      use_upstream_repo: false
+      use_upstream_binary: false
   minikube:
     pkg:
-      use_upstream_source: True
-      use_upstream_repo: False
-      use_upstream_binary: False
+      use_upstream_source: true
+      use_upstream_repo: false
+      use_upstream_binary: false
 
 Windows:
   dir:
@@ -96,28 +107,28 @@ Windows:
     pkg:
       name: kubectl.exe
       binary:
-        source_hash: d617596d9f00dae9ede45c650aea020f4b4237a7341d0ba9ac9acf1b1e380ad5   #kubectl.exe 
+        source_hash: 974d351e7e0ad1e1ed0901770d65188e8d4c4cdd2494474d14a2b2c325751293
   minikube:
     pkg:
       name: minikube-windows-amd64.exe
       binary:
-        source_hash: f6c30cb88ec61bc6fe17532a3ef56e4f1fcef2473e3d73fc56f352b44784490d
+        source_hash: 426586f33d88a484fdc5a3b326b0651d57860e9305a4f9d4180640e3beccaf6b
 
 MacOS:
   rootuser: {{ macos_rootuser | d('') }}
   rootgroup: {{ macos_rootgroup | d('') }}
   kubectl:
     pkg:
-      name: kubernetes-cli         #homebrew
-      use_upstream_repo: True      #homebrew
-      use_upstream_binary: False   #binary
+      name: kubernetes-cli         # homebrew
+      use_upstream_repo: true      # homebrew
+      use_upstream_binary: false   # binary
       binary:
-        source_hash: 63f1ace419edffa1f5ebb64a6c63597afd48f8d94a61d4fb44e820139adbbe54   #kubectl binary amd64
+        source_hash: 7b9bdc2dc8604e590052a58456ac648d3afd1b436e609118538a6ffe07579cc6
   minikube:
     check: sysctl -a | grep machdep.cpu.features
     pkg:
-      name: minikube               #homebrew
-      use_upstream_repo: False     #homebrew
-      use_upstream_binary: True   #binary
+      name: minikube               # homebrew
+      use_upstream_repo: false     # homebrew
+      use_upstream_binary: true    # binary
       binary:
-        source_hash: 183d017d094b7783c938dc709dbdfc9a48f92299178234f89047dfbb083a592c  #minikube binary amd64
+        source_hash: f27016246850b3145e1509e98f7ed060fd9575ac4d455c7bdc15277734372e85

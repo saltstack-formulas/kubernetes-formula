@@ -29,7 +29,7 @@ k8s-minikube-config-file-file-managed-environ_file:
     - makedirs: True
     - template: jinja
     - context:
-        config: {{ k8s.minikube.environ|json }}
+        environ: {{ k8s.minikube.environ|json }}
     - require:
       - sls: {{ sls_binary_clean }}
       - sls: {{ sls_package_clean }}

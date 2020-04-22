@@ -4,30 +4,16 @@
 kubernetes:
   rootuser: root
   rootgroup: root
-  config: '/etc/kubernetes'
-  tmpdir: '/tmp/kubernetes'
-  kernel: {{ grains.kernel|lower }}
   arch: ''
   dir:
-    binary: /opt/kubernetes
+    binary: /usr/local
     source: /tmp/kubernetes
-  pkg:
-    use_upstream_repo: False
-    deps: []
-    repo:
-      humanname: kubernetes
-      name: kubernetes
-      comments:
-        - installed by salt
-      enabled: 1
-      gpgcheck: 1
-
   # Just here for testing
   added_in_defaults: defaults_value
   winner: defaults
 
   kubectl:
-    version: '1.15.0'
+    version: 1.18.2
     config_file: /etc/default/kubectl.ini
     config: {}
     environ_file: /etc/default/kubectl.sh
@@ -35,30 +21,40 @@ kubernetes:
     service: {}
     linux:
       altpriority: 0
+      symlink: /usr/local/bin/kubectl
     pkg:
       name: kubectl
-      use_upstream_repo: False
-      use_upstream_binary: True
-      use_upstream_source: False
+      use_upstream_repo: false
+      use_upstream_binary: true
+      use_upstream_source: false
+      deps:
+        - curl
+      repo:
+        humanname: kubernetes
+        name: kubernetes
+        comments:
+          - installed by salt
+        enabled: 1
+        gpgcheck: 1
       binary:
+        uri: https://storage.googleapis.com/kubernetes-release/release
         name: kubectl
-        uri:  https://storage.googleapis.com/kubernetes-release/release
-        source: None                                                                   #set in map.jinja
-        source_hash: ecec7fe4ffa03018ff00f14e228442af5c2284e57771e4916b977c20ba4e5b39  #linux amd64 binary
-        trim_output: True   {# works in 2018.3.2. onwards #}
+        source: None   # set in map.jinja
+        source_hash: 6ea8261b503c6c63d616878837dc70b758d4a3aeb9996ade8e83b51aedac9698
+        trim_output: true
       source:
         name: kubernetes
-        uri:  https://github.com/kubernetes/kubectl/archive
+        uri: https://github.com/kubernetes/kubectl/archive
         source: None
-        source_hash: dfe8b2475d626aa07d02ac4f0072d445c7d71615c6e52b6b448cbbe1ff0490d2    #source tarball
-        trim_output: True   {# works in 2018.3.2. onwards #}
+        source_hash: f13e2706e173ceed635b3be60bf929c400ed31165bd0ad16ff0dd103821494ec
+        trim_output: true
         archive_suffix: tar.gz
         archive_format: tar
-        enforce_toplevel: False
+        enforce_toplevel: false
         options: '--strip-components=1'
 
   minikube:
-    version: '1.2.0'
+    version: 1.9.2
     config_file: /etc/default/minikube.ini
     config: {}
     environ_file: /etc/default/minikube.sh
@@ -67,32 +63,42 @@ kubernetes:
     check: egrep --color 'vmx|svm' /proc/cpuinfo
     linux:
       altpriority: 0
+      symlink: /usr/local/bin/minikube
     vm_driver: none
     pkg:
       name: minikube
-      use_upstream_repo: False
-      use_upstream_binary: True
-      use_upstream_source: False
+      use_upstream_repo: false
+      use_upstream_binary: true
+      use_upstream_source: false
+      deps:
+        - curl
+      repo:
+        humanname: kubernetes
+        name: kubernetes
+        comments:
+          - installed by salt
+        enabled: 1
+        gpgcheck: 1
       binary:
         name: minikube
-        uri:  https://github.com/kubernetes/minikube/releases/download
-        source: None                                                                   #set in map.jinja
-        source_hash: 123fc9f5656333fb2927cf91666a91cd5b28ef97503418ac2a90a2109e518ed9  #linux amd64 binary
-        trim_output: True   {# works in 2018.3.2. onwards #}
+        uri: https://github.com/kubernetes/minikube/releases/download
+        source: None       # see map.jinja
+        source_hash: 3121f933bf8d608befb24628a045ce536658738c14618504ba46c92e656ea6b5
+        trim_output: true
       source:
         name: minikube
-        uri:  https://github.com/kubernetes/minikube/archive
+        uri: https://github.com/kubernetes/minikube/archive
         source: None
-        source_hash: 34544176451a9dbddf0ff053285efecbef69942e1b4a103452862dc6ee31ebd4   #source tarball
-        trim_output: True   {# works in 2018.3.2. onwards #}
+        source_hash: f94465221ad1f402e18b3ecd701c12a50d23e841a80de26c7861e3ddc86f2075
+        trim_output: true
         archive_suffix: tar.gz
         archive_format: tar
-        enforce_toplevel: False
-        options: '--strip-components=1'
+        enforce_toplevel: false
+        options: --strip-components=1
 
   retry_option:
     # https://docs.saltstack.com/en/latest/ref/states/requisites.html#retrying-states
     attempts: 3
-    until: True
+    until: true
     interval: 60
     splay: 10
