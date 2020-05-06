@@ -39,13 +39,13 @@ kubernetes:
       binary:
         uri: https://storage.googleapis.com/kubernetes-release/release
         name: kubectl
-        source: None   # set in map.jinja
+        source: null   # set in map.jinja
         source_hash: 6ea8261b503c6c63d616878837dc70b758d4a3aeb9996ade8e83b51aedac9698
         trim_output: true
       source:
         name: kubernetes
         uri: https://github.com/kubernetes/kubectl/archive
-        source: None
+        source: null
         source_hash: f13e2706e173ceed635b3be60bf929c400ed31165bd0ad16ff0dd103821494ec
         trim_output: true
         archive_suffix: tar.gz
@@ -82,13 +82,13 @@ kubernetes:
       binary:
         name: minikube
         uri: https://github.com/kubernetes/minikube/releases/download
-        source: None       # see map.jinja
+        source: null       # see map.jinja
         source_hash: 3121f933bf8d608befb24628a045ce536658738c14618504ba46c92e656ea6b5
         trim_output: true
       source:
         name: minikube
         uri: https://github.com/kubernetes/minikube/archive
-        source: None
+        source: null
         source_hash: f94465221ad1f402e18b3ecd701c12a50d23e841a80de26c7861e3ddc86f2075
         trim_output: true
         archive_suffix: tar.gz
