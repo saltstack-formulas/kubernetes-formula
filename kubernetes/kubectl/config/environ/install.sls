@@ -29,7 +29,7 @@ k8s-kubectl-config-file-file-managed-environ_file:
     - makedirs: True
     - template: jinja
     - context:
-        config: {{ k8s.kubectl.environ|json }}
+        environ: {{ k8s.kubectl.environ|json }}
     - require:
       - sls: {{ sls_binary_clean }}
       - sls: {{ sls_package_clean }}

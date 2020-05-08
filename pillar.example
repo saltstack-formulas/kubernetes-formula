@@ -7,29 +7,23 @@ kubernetes:
   dir:
     binary: /opt/kubernetes
     source: /tmp/kubernetes
-  pkg:
-    use_upstream_repo: True
-    repo:
-      humanname: kubernetes
-      gpgcheck: 1
-
   # Just here for testing
   added_in_defaults: defaults_value
   winner: defaults
 
   kubectl:
-    version: '1.15.0'
+    version: 1.18.2
     config: {}
     environ: []
     linux:
       altpriority: 1000
     pkg:
       binary:
-        source_hash: ecec7fe4ffa03018ff00f14e228442af5c2284e57771e4916b977c20ba4e5b39  #linux amd64 binary
+        source_hash: 6ea8261b503c6c63d616878837dc70b758d4a3aeb9996ade8e83b51aedac9698
       source:
-        source_hash: dfe8b2475d626aa07d02ac4f0072d445c7d71615c6e52b6b448cbbe1ff0490d2    #source tarball
+        source_hash: f13e2706e173ceed635b3be60bf929c400ed31165bd0ad16ff0dd103821494ec
   minikube:
     version: '1.2.0'
     pkg:
       binary:
-        source_hash: 123fc9f5656333fb2927cf91666a91cd5b28ef97503418ac2a90a2109e518ed9  #linux amd64 binary
+        source_hash: 3121f933bf8d608befb24628a045ce536658738c14618504ba46c92e656ea6b5

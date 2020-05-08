@@ -4,4 +4,3 @@
 include:
   - .minikube.clean
   - .kubectl.clean
-  - .package.clean

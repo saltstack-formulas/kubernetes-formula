@@ -2,5 +2,4 @@
 # vim: ft=sls
 
 include:
-  - .repo
   - .install

@@ -32,14 +32,14 @@
     {%- if kubernetes[comp]['pkg']['use_upstream_binary'] %}
         {%- set dirname = comp + '-v%s'|format(kubernetes[comp]['version']) %}
         {%- if comp == 'kubectl' %}
-            {%- set uri = '%s/v%s/bin/%s/%s'|format(kubernetes[comp]['pkg']['binary']['uri'], 
-                                                    kubernetes[comp]['version'], 
-                                                    kubernetes.kernel,
+            {%- set uri = '%s/v%s/bin/%s/%s'|format(kubernetes[comp]['pkg']['binary']['uri'],
+                                                    kubernetes[comp]['version'],
+                                                    grains.kernel|lower,
                                                     kubernetes.arch) %}
         {%- else %}
-            {%- set uri = '%s/v%s/minikube-%s-%s'|format(kubernetes[comp]['pkg']['binary']['uri'], 
-                                                    kubernetes[comp]['version'], 
-                                                    kubernetes.kernel,
+            {%- set uri = '%s/v%s/minikube-%s-%s'|format(kubernetes[comp]['pkg']['binary']['uri'],
+                                                    kubernetes[comp]['version'],
+                                                    grains.kernel|lower,
                                                     kubernetes.arch) %}
         {%- endif %}
         {%- do kubernetes[comp]['pkg']['binary'].update({
