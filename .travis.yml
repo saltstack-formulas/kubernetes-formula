@@ -29,8 +29,8 @@ jobs:
     ## Define the test stage that runs the linters (and testing matrix, if applicable)
 
     # Run all of the linters in a single job
-    - stage: 'test'
-      language: 'node_js'
+    # stage: 'test'
+    - language: 'node_js'
       node_js: 'lts/*'
       env: 'Lint'
       name: 'Lint: salt-lint, yamllint, rubocop, shellcheck & commitlint'
