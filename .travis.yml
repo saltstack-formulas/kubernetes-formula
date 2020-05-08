@@ -29,7 +29,8 @@ jobs:
     ## Define the test stage that runs the linters (and testing matrix, if applicable)
 
     # Run all of the linters in a single job
-    - language: 'node_js'
+    - stage: 'test'
+      language: 'node_js'
       node_js: 'lts/*'
       env: 'Lint'
       name: 'Lint: salt-lint, yamllint, rubocop, shellcheck & commitlint'
@@ -57,13 +58,45 @@ jobs:
     # Make sure the instances listed below match up with
     # the `platforms` defined in `kitchen.yml`
     # env: INSTANCE=default-debian-10-master-py3
-    - env: INSTANCE=pkgrepo-debian-10-master-py3
-    - env: INSTANCE=default-ubuntu-1804-master-py3
-    - env: INSTANCE=pkgrepo-ubuntu-1804-master-py3
+    - env:
+        INSTANCE=pkgrepo-debian-10-master-py3
+        global:
+          - CHANGE_MINIKUBE_NONE_USER=true
+          - MINIKUBE_WANTUPDATENOTIFICATION=false
+          - MINIKUBE_WANTREPORTERRORPROMPT=false
+          - MINIKUBE_HOME=$HOME
+          - CHANGE_MINIKUBE_NONE_USER=true
+          - KUBECONFIG=$HOME/.kube/config
+    - env:
+        INSTANCE=default-ubuntu-1804-master-py3
+        global:
+          - CHANGE_MINIKUBE_NONE_USER=true
+          - MINIKUBE_WANTUPDATENOTIFICATION=false
+          - MINIKUBE_WANTREPORTERRORPROMPT=false
+          - MINIKUBE_HOME=$HOME
+          - CHANGE_MINIKUBE_NONE_USER=true
+          - KUBECONFIG=$HOME/.kube/config
+    - env:
+        INSTANCE=pkgrepo-ubuntu-1804-master-py3
+        global:
+          - CHANGE_MINIKUBE_NONE_USER=true
+          - MINIKUBE_WANTUPDATENOTIFICATION=false
+          - MINIKUBE_WANTREPORTERRORPROMPT=false
+          - MINIKUBE_HOME=$HOME
+          - CHANGE_MINIKUBE_NONE_USER=true
+          - KUBECONFIG=$HOME/.kube/config
     # env: INSTANCE=default-centos-8-master-py3
     # env: INSTANCE=pkgrepo-centos-8-master-py3
     # env: INSTANCE=default-fedora-31-master-py3
-    - env: INSTANCE=pkgrepo-fedora-31-master-py3
+    - env:
+        INSTANCE=pkgrepo-fedora-31-master-py3
+        global:
+          - CHANGE_MINIKUBE_NONE_USER=true
+          - MINIKUBE_WANTUPDATENOTIFICATION=false
+          - MINIKUBE_WANTREPORTERRORPROMPT=false
+          - MINIKUBE_HOME=$HOME
+          - CHANGE_MINIKUBE_NONE_USER=true
+          - KUBECONFIG=$HOME/.kube/config
     # env: INSTANCE=default-opensuse-leap-151-master-py3
     # env: INSTANCE=default-amazonlinux-2-master-py3
     # - env: INSTANCE=default-arch-base-latest-master-py2
@@ -94,8 +127,16 @@ jobs:
     # - env: INSTANCE=default-centos-6-2018-3-py2
     # - env: INSTANCE=default-opensuse-leap-151-2018-3-py2
     # - env: INSTANCE=default-amazonlinux-1-2018-3-py2
-    - env: INSTANCE=default-arch-base-latest-2018-3-py2
-    - env: INSTANCE=source-arch-base-latest-2018-3-py2
+    - env:
+        INSTANCE=default-arch-base-latest-2018-3-py2
+        global:
+          - CHANGE_MINIKUBE_NONE_USER=true
+          - MINIKUBE_WANTUPDATENOTIFICATION=false
+          - MINIKUBE_WANTREPORTERRORPROMPT=false
+          - MINIKUBE_HOME=$HOME
+          - CHANGE_MINIKUBE_NONE_USER=true
+          - KUBECONFIG=$HOME/.kube/config
+    # env: INSTANCE=source-arch-base-latest-2018-3-py2
 
     ## Define the release stage that runs `semantic-release`
     - stage: 'release'
