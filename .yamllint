@@ -13,8 +13,6 @@ ignore: |
   test/**/states/**/*.sls
   .kitchen/
   kubernetes/osfamilymap.yaml
-  kubernetes/files/default/shortcut.desktop.jinja
-  pillar.example
 
 yaml-files:
   # Default settings

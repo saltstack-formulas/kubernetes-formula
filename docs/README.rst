@@ -1,7 +1,7 @@
 .. _readme:
 
 kubernetes-formula
-====================
+==================
 
 Formula to manage kubernetes on MacOS and GNU/Linux. Currently supports:
 
@@ -53,109 +53,109 @@ Available states
 This installs from kubernetes solution.
 
 ``kubernetes.clean``
-^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^
 
 *Meta-state (This is a state that includes other states)*.
 
 This removes the kubernetes solution.
 
 ``kubernetes.kubectl``
-^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^
 
 This state will install kubernetes-cli only.
 
 ``kubernetes.kubectl.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will uninstall kubernetes-cli only.
 
 ``kubernetes.kubectl.package``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will install kubernetes-cli package only.
 
 ``kubernetes.kubectl.package.repo``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will install kubernetes package repository only.
 
 ``kubernetes.kubectl.package.repo.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will remove kubernetes package repository only.
 
 ``kubernetes.kubectl.package.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will uninstall kubernetes-cli package only.
 
 ``kubernetes.kubectl.binary``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will install kubectl binary only.
 
 ``kubernetes.kubectl.binary.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will uninstall kubectl binary only.
 
 ``kubernetes.kubectl.source``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will install kubectl source tarball only.
 
 ``kubernetes.kubectl.binary.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will uninstall the kubectl source extracted tarball only.
 
 ``kubernetes.minikube``
-^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
 
 This state will install kubernetes minikube only.
 
 ``kubernetes.minikube.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will uninstall kubernetes minikube only.
 
 ``kubernetes.minikube.package``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will install kubernetes minikube package only (MacOS).
 
 ``kubernetes.minikube.package.repo``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will install kubernetes package repository only.
 
 ``kubernetes.minikube.package.repo.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will remove kubernetes package repository only.
 
 ``kubernetes.minikube.package.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will uninstall the kubernetes minikube package only (MacOS).
 
 ``kubernetes.minikube.binary``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will install kubernetes minikube binary only.
 
 ``kubernetes.minikube.binary.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will uninstall the kubernetes minikube binary only.
 
 ``kubernetes.minikube.source``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will install kubernetes minikube source archive only.
 
 ``kubernetes.minikube.source.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state will uninstall the kubernetes minikube source archive only.
 
