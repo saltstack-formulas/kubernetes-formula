@@ -232,7 +232,7 @@ platforms:
 
 provisioner:
   name: salt_solo
-  # log_level: debug
+  log_level: debug
   salt_install: none
   require_chef: false
   formula: kubernetes
@@ -254,7 +254,7 @@ suites:
       state_top:
         base:
           '*':
-            - kubernetes.clean
+            # kubernetes.clean
             - kubernetes
       pillars:
         top.sls:
@@ -271,7 +271,7 @@ suites:
       state_top:
         base:
           '*':
-            - kubernetes.clean
+            # kubernetes.clean
             - kubernetes
       pillars:
         top.sls:
@@ -288,7 +288,7 @@ suites:
       state_top:
         base:
           '*':
-            - kubernetes.clean
+            # kubernetes.clean
             - kubernetes
       pillars:
         top.sls:

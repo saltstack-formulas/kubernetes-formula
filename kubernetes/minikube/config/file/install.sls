@@ -12,9 +12,9 @@
         {%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
 
 include:
-  {{ '- ' + sls_package_clean if k8s.minikube.pkg.use_upstream_repo else '' }}
-  {{ '- ' + sls_source_clean if k8s.minikube.pkg.use_upstream_source else '' }}
-  {{ '- ' + sls_binary_clean if k8s.minikube.pkg.use_upstream_binary else '' }}
+  {{ '- ' + sls_package_install if k8s.minikube.pkg.use_upstream_repo else '' }}
+  {{ '- ' + sls_source_install if k8s.minikube.pkg.use_upstream_source else '' }}
+  {{ '- ' + sls_binary_install if k8s.minikube.pkg.use_upstream_binary else '' }}
 
 k8s-minikube-config-file-install-file-managed:
   file.managed:

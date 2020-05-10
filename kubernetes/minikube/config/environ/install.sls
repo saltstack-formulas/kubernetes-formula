@@ -4,17 +4,17 @@
 {#- Get the `tplroot` from `tpldir` #}
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import kubernetes as k8s with context %}
-{%- set sls_binary_clean = tplroot ~ '.minikube.binary.clean' %}
-{%- set sls_package_clean = tplroot ~ '.minikube.package.clean' %}
-{%- set sls_source_clean = tplroot ~ '.minikube.source.clean' %}
+{%- set sls_binary_install = tplroot ~ '.minikube.binary' %}
+{%- set sls_package_install = tplroot ~ '.minikube.package' %}
+{%- set sls_source_install = tplroot ~ '.minikube.source' %}
 
     {%- if 'environ' in k8s.minikube and k8s.minikube.environ %}
         {%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
 
 include:
-  - {{ sls_binary_clean }}
-  - {{ sls_package_clean }}
-  - {{ sls_source_clean }}
+  - {{ sls_binary_install }}
+  - {{ sls_package_install }}
+  - {{ sls_source_install }}
 
 k8s-minikube-config-file-file-managed-environ_file:
   file.managed:
@@ -31,8 +31,8 @@ k8s-minikube-config-file-file-managed-environ_file:
     - context:
         environ: {{ k8s.minikube.environ|json }}
     - require:
-      - sls: {{ sls_binary_clean }}
-      - sls: {{ sls_package_clean }}
-      - sls: {{ sls_source_clean }}
+      - sls: {{ sls_binary_install }}
+      - sls: {{ sls_package_install }}
+      - sls: {{ sls_source_install }}
 
     {%- endif %}

@@ -96,7 +96,7 @@ jobs:
     # - env: INSTANCE=default-amazonlinux-2-2019-2-py3
     # - env: INSTANCE=default-centos-6-2019-2-py2
     # - env: INSTANCE=default-amazonlinux-1-2019-2-py2
-    - env: INSTANCE=arch-arch-base-latest-2019-2-py2
+    - env: INSTANCE=default-arch-base-latest-2019-2-py2
 
     ## Define the release stage that runs `semantic-release`
     - stage: 'release'
