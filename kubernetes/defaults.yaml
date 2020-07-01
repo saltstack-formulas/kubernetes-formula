@@ -2,6 +2,10 @@
 # vim: ft=yaml
 ---
 kubernetes:
+  supported:
+    - 'kubectl'
+    - 'minikube'
+    - 'devspace'
   rootuser: root
   rootgroup: root
   arch: ''
@@ -95,6 +99,29 @@ kubernetes:
         archive_format: tar
         enforce_toplevel: false
         options: --strip-components=1
+
+  devspace:
+    version: 4.13.1
+    config_file: /etc/default/devspace.ini
+    config: {}
+    environ_file: /etc/default/devspace.sh
+    environ: []
+    service: {}
+    linux:
+      altpriority: 0
+      symlink: /usr/local/bin/devspace
+    pkg:
+      name: devspace
+      use_upstream_repo: false
+      use_upstream_binary: true
+      deps:
+        - curl
+      binary:
+        uri: https://github.com/devspace-cloud/devspace/releases/download
+        name: devspace
+        source: null   # set in map.jinja
+        source_hash: 19faec36f190d0c3a3447f47c05378fabbe9f01e27f8b7475d51796e288bdbd4
+        trim_output: true
 
   retry_option:
     # https://docs.saltstack.com/en/latest/ref/states/requisites.html#retrying-states

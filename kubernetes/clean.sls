@@ -3,4 +3,5 @@
 
 include:
   - .minikube.clean
+  - .devspace.clean
   - .kubectl.clean

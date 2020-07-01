@@ -42,16 +42,7 @@ RedHat:
         gpgkey: 'https://packages.cloud.google.com/yum/doc/yum-key.gpg gpgkey2=https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg'
         repo_gpgcheck: 1
 
-Suse:
-  kubectl:
-    pkg:
-      use_upstream_repo: false
-      use_upstream_binary: true
-  minikube:
-    pkg:
-      use_upstream_repo: false
-      use_upstream_binary: true
-
+Suse: {}
 Gentoo: {}
 
 Arch:
@@ -69,6 +60,9 @@ Arch:
       deps:
         - tar
         - gzip
+  devspace:
+    linux:
+      altpriority: 0
 
 Alpine: {}
 
@@ -113,6 +107,11 @@ Windows:
       name: minikube-windows-amd64.exe
       binary:
         source_hash: 426586f33d88a484fdc5a3b326b0651d57860e9305a4f9d4180640e3beccaf6b
+  devspace:
+    pkg:
+      name: devspace-windows-amd64.exe
+      binary:
+        source_hash: a696bd3ae755222fd63884fa654ba91e24d46826bb78358fcba592fc2b4013c0
 
 MacOS:
   rootuser: {{ macos_rootuser | d('') }}
@@ -132,3 +131,8 @@ MacOS:
       use_upstream_binary: true    # binary
       binary:
         source_hash: f27016246850b3145e1509e98f7ed060fd9575ac4d455c7bdc15277734372e85
+  devspace:
+    pkg:
+      use_upstream_binary: true   # binary
+      binary:
+        source_hash: 92a8a50de12b06d5255aa2242dca77e879b7a63b1bcf214cd49e998831be9c1c

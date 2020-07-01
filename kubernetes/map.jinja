@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 # vim: ft=jinja
 
-{#- Get the `tplroot` from `tpldir` #}
 {%- set tplroot = tpldir.split('/')[0] %}
 {#- Start imports as #}
 {%- import_yaml tplroot ~ "/defaults.yaml" as default_settings %}
@@ -22,46 +21,50 @@
       )
     )
  %}
+{%- set k = salt['grains.filter_by']( {'defaults': defaults}, default='defaults', merge=_config) %}
 
-{%- set config = salt['grains.filter_by']( {'defaults': defaults}, default='defaults', merge=_config) %}
+{%- for comp in k.supported %}
+    {%- if 'use_upstream_binary' in k[comp]['pkg'] and k[comp]['pkg']['use_upstream_binary'] %}
+        {%- set dirname = comp + '-v%s'|format(k[comp]['version']) %}
 
-{#- Change **kubernetes** to match with your formula's name and then remove this line #}
-{%- set kubernetes = config %}
-
-{%- for comp in ('kubectl', 'minikube') %}
-    {%- if kubernetes[comp]['pkg']['use_upstream_binary'] %}
-        {%- set dirname = comp + '-v%s'|format(kubernetes[comp]['version']) %}
         {%- if comp == 'kubectl' %}
-            {%- set uri = '%s/v%s/bin/%s/%s'|format(kubernetes[comp]['pkg']['binary']['uri'],
-                                                    kubernetes[comp]['version'],
-                                                    grains.kernel|lower,
-                                                    kubernetes.arch) %}
-        {%- else %}
-            {%- set uri = '%s/v%s/minikube-%s-%s'|format(kubernetes[comp]['pkg']['binary']['uri'],
-                                                    kubernetes[comp]['version'],
-                                                    grains.kernel|lower,
-                                                    kubernetes.arch) %}
+            {%- set uri = '%s/v%s/bin/%s/%s'|format(k[comp]['pkg']['binary']['uri'], k[comp]['version'],
+                                                    grains.kernel|lower, k.arch) %}
+        {%- elif comp == 'minikube' %}
+            {%- set uri = '%s/v%s/%s-%s-%s'|format(k[comp]['pkg']['binary']['uri'], k[comp]['version'],
+                                                    comp, grains.kernel|lower, k.arch) %}
+        {%- elif comp == 'devspace' %}
+            {%- set uri = '%s/v%s/%s-%s-%s'|format(k[comp]['pkg']['binary']['uri'], k[comp]['version'],
+                                                    comp, grains.kernel|lower, k.arch) %}
         {%- endif %}
-        {%- do kubernetes[comp]['pkg']['binary'].update({
-               'name':    kubernetes.dir.binary + '/' + dirname,
-               'basedir': kubernetes.dir.binary + '/' + dirname,
-               'source':  uri if comp == 'minikube' else uri + '/' + kubernetes[comp]['pkg']['name']
+
+        {%- if 'source_hash' in k[comp]['pkg']['binary'] and k[comp]['pkg']['binary']['source_hash'] %}
+            {%- do k[comp]['pkg']['binary'].update({'source_hash': k[comp]['pkg']['binary']['source_hash']}) %}
+        {%- else %}
+            {%- do k[comp]['pkg']['binary'].update({'source_hash': uri ~ '.sha256'}) %}
+        {%- endif %}
+
+        {%- do k[comp]['pkg']['binary'].update({
+               'name':    k.dir.binary + '/' + dirname,
+               'basedir': k.dir.binary + '/' + dirname,
+               'source':  uri if comp in ('minikube', 'devspace') else uri + '/' + k[comp]['pkg']['name']
         }) %}
     {%- endif %}
 
-    {%- if kubernetes[comp]['pkg']['use_upstream_source'] %}
-        {%- set dirname = '%s-%s'|format(kubernetes[comp]['pkg']['source']['name'], kubernetes[comp]['version']) %}
+    {%- if 'use_upstream_source' in k[comp]['pkg'] and k[comp]['pkg']['use_upstream_source'] %}
+        {%- set dirname = '%s-%s'|format(k[comp]['pkg']['source']['name'], k[comp]['version']) %}
         {%- if comp == 'kubectl' %}
-            {%- set uri = kubernetes[comp]['pkg']['source']['uri'] + '/' + dirname %}
+            {%- set uri = k[comp]['pkg']['source']['uri'] + '/' + dirname %}
         {%- else %}
-            {%- set uri = kubernetes[comp]['pkg']['source']['uri'] + '/v' + kubernetes[comp]['version'] %}
+            {%- set uri = k[comp]['pkg']['source']['uri'] + '/v' + k[comp]['version'] %}
         {%- endif %}
-        {%- do kubernetes[comp]['pkg']['source'].update({
-               'name':    kubernetes.dir.source + '/' + dirname,
-               'basedir': kubernetes.dir.source + '/' + kubernetes[comp]['pkg']['source']['name'] + dirname,
-               'source':  uri + '.' + kubernetes[comp]['pkg']['source']['archive_suffix'],
-               'archive_format': kubernetes[comp]['pkg']['source']['archive_format']
+        {%- do k[comp]['pkg']['source'].update({
+               'name':    k.dir.source + '/' + dirname,
+               'basedir': k.dir.source + '/' + k[comp]['pkg']['source']['name'] + dirname,
+               'source':  uri + '.' + k[comp]['pkg']['source']['archive_suffix'],
+               'archive_format': k[comp]['pkg']['source']['archive_format']
         }) %}
     {%- endif %}
 {%- endfor %}
 
+{%- set kubernetes = k %}

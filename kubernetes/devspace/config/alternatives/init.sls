@@ -2,6 +2,4 @@
 # vim: ft=sls
 
 include:
-  - .kubectl
-  - .minikube
-  - .devspace
+  - .install

@@ -2,6 +2,5 @@
 # vim: ft=sls
 
 include:
-  - .kubectl
-  - .minikube
-  - .devspace
+  - .config.clean
+  - .binary.clean
