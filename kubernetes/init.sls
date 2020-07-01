@@ -2,6 +2,5 @@
 # vim: ft=sls
 
 include:
-  - .package
   - .kubectl
   - .minikube

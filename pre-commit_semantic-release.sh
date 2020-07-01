@@ -14,9 +14,9 @@ sed -i -e "s_^\(version:\).*_\1 ${1}_" FORMULA
 sudo -H pip install m2r
 
 # Copy and then convert the `.md` docs
-cp *.md docs/
-cd docs/
-m2r --overwrite *.md
+cp ./*.md docs/
+cd docs/ || exit 1
+m2r --overwrite ./*.md
 
 # Change excess `H1` headings to `H2` in converted `CHANGELOG.rst`
 sed -i -e '/^=.*$/s/=/-/g' CHANGELOG.rst
@@ -27,4 +27,4 @@ sed -i -e '1,4s/-/=/g' CHANGELOG.rst
 # cat CHANGELOG.rst
 
 # Return back to the main directory
-cd ..
+cd .. || exit 1

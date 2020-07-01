@@ -5,7 +5,9 @@
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import kubernetes as k8s with context %}
 
-k8s-minikube-release-binary-install-file-directory:
+k8s-minikube-release-binary-install:
+  pkg.installed:
+    - names: {{ k8s.minikube.pkg.deps|json }}
   file.directory:
     - name: {{ k8s.minikube.pkg.binary.name }}/bin
     - user: {{ k8s.rootuser }}
@@ -13,18 +15,16 @@ k8s-minikube-release-binary-install-file-directory:
     - mode: 755
     - makedirs: True
     - require_in:
-      - cmd: k8s-minikube-release-binary-install-cmd-run
+      - cmd: k8s-minikube-release-binary-install
     - recurse:
         - user
         - group
         - mode
-
-k8s-minikube-release-binary-install-cmd-run:
   cmd.run:
     - names:
       - curl -Lo {{ k8s.minikube.pkg.binary.name }}/bin/minikube {{ k8s.minikube.pkg.binary.source }}
       - chmod '0755' {{ k8s.minikube.pkg.binary.name }}/bin/minikube 2>/dev/null
-    - retry: {{ k8s.retry_option }}
+    - retry: {{ k8s.retry_option|json }}
     - user: {{ k8s.rootuser }}
     - group: {{ k8s.rootgroup }}
       {%- if 'source_hash' in k8s.minikube.pkg.binary and k8s.minikube.pkg.binary.source_hash %}
@@ -33,17 +33,16 @@ k8s-minikube-release-binary-install-cmd-run:
     - path: {{ k8s.minikube.pkg.binary.name }}/bin/minikube
     - file_hash: {{ k8s.minikube.pkg.binary.source_hash }}
     - require:
-      - cmd: k8s-minikube-release-binary-install-cmd-run
+      - cmd: k8s-minikube-release-binary-install
       {%- endif %}
 
-      {%- if k8s.minikube.linux.altpriority|int == 0 %}
 k8s-minikube-release-binary-install-file-symlink:
   file.symlink:
-    - name: /usr/local/bin/minikube
-    - target: {{ k8s.minikube.pkg.binary.name }}/bin/minikube
+    - name: {{ k8s.minikube.linux.symlink }}
+    - target: {{ k8s.minikube.pkg.binary.name }}/bin/{{ k8s.minikube.pkg.name }}
     - force: True
-    - backupname: salt.bak
-    - onlyif: {{ k8s.kernel not in ('windows',) }}
     - require:
-      - cmd: k8s-minikube-release-binary-install-cmd-run
-      {%- endif %}
+      - cmd: k8s-minikube-release-binary-install
+    - unless:
+      - {{ k8s.minikube.linux.altpriority|int > 0 }}
+      - {{ grains.os_family|lower in ('windows', 'arch') }}
