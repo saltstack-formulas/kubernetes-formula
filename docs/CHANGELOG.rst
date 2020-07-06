@@ -2,6 +2,16 @@
 Changelog
 =========
 
+`1.2.1 <https://github.com/saltstack-formulas/kubernetes-formula/compare/v1.2.0...v1.2.1>`_ (2020-07-06)
+------------------------------------------------------------------------------------------------------------
+
+Bug Fixes
+^^^^^^^^^
+
+
+* **macos:** add fullpath to brew (\ ` <https://github.com/saltstack-formulas/kubernetes-formula/commit/8edae91>`_\ )
+* **macos:** fix group (\ ` <https://github.com/saltstack-formulas/kubernetes-formula/commit/936ae46>`_\ )
+
 `1.2.0 <https://github.com/saltstack-formulas/kubernetes-formula/compare/v1.1.0...v1.2.0>`_ (2020-07-06)
 ------------------------------------------------------------------------------------------------------------
 
