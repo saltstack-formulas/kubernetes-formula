@@ -1,5 +1,17 @@
 # Changelog
 
+# [1.1.0](https://github.com/saltstack-formulas/kubernetes-formula/compare/v1.0.0...v1.1.0) (2020-07-06)
+
+
+### Code Refactoring
+
+* **formula:** simplify; add devspace, k3s; expand tests ([](https://github.com/saltstack-formulas/kubernetes-formula/commit/fea0ce2))
+
+
+### Features
+
+* **devspace:** add devspace support ([](https://github.com/saltstack-formulas/kubernetes-formula/commit/e7629b7))
+
 # 1.0.0 (2020-07-01)
 
 
