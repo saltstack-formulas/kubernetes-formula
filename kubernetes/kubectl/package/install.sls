@@ -29,13 +29,13 @@ include:
 
 {{ formula }}-kubectl-package-install-brew:
   cmd.run:
-    - name: brew install {{ d.kubectl.pkg.name }}
+    - name: /usr/local/bin/brew install {{ d.kubectl.pkg.name }}
     - runas: {{ d.identity.rootuser }}
     - onlyif: test -x /usr/local/bin/brew
 
 {{ formula }}-kubectl-package-reinstall-brew:
   cmd.run:
-    - name: brew reinstall {{ d.kubectl.pkg.name }}
+    - name: /usr/local/bin/brew reinstall {{ d.kubectl.pkg.name }}
     - runas: {{ d.identity.rootuser }}
     - unless: test -x /usr/local/bin/kubectl  # if binary is missing
 

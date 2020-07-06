@@ -24,11 +24,11 @@ include:
 
 {{ formula }}-minikube-package-clean-brew:
   cmd.run:
-    - name: brew uninstall {{ d.minikube.pkg.name }}
+    - name: /usr/local/bin/brew uninstall {{ d.minikube.pkg.name }}
     - runas: {{ d.identity.rootuser }}
     - onlyif:
       - test -x /usr/local/bin/brew
-      - grew list | grep {{ d.minikube.pkg.name }}
+      - /usr/local/bin/brew list | grep {{ d.minikube.pkg.name }}
 
     {%- elif grains.kernel|lower == 'linux' %}
 

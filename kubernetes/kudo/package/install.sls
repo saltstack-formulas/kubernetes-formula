@@ -10,12 +10,12 @@
 {{ formula }}-kudo-package-install-brew:
   cmd.run:
     - names:
-      - brew tap install {{ d.kudo.pkg.tapname }}
-      - brew install {{ d.kudo.pkg.name }}
+      - /usr/local/bin/brew tap install {{ d.kudo.pkg.tapname }}
+      - /usr/local/bin/brew install {{ d.kudo.pkg.name }}
 
 {{ formula }}-kudo-package-reinstall-brew:
   cmd.run:
-    - name: brew reinstall {{ d.kudo.pkg.name }}
+    - name: /usr/local/bin/brew reinstall {{ d.kudo.pkg.name }}
     - runas: {{ d.identity.rootuser }}
     - unless: test -x /usr/local/bin/kudo  # if binary is missing
 
