@@ -2,9 +2,10 @@
 # vim: ft=sls
 
 {%- set tplroot = tpldir.split('/')[0] %}
-{%- from tplroot ~ "/map.jinja" import kubernetes as k8s with context %}
+{%- from tplroot ~ "/map.jinja" import data as d with context %}
+{%- set formula = d.formula %}
 
-k8s-kubectl-package-repo-pkgrepo-absent:
+{{ formula }}-kubectl-package-repo-absent:
   pkgrepo.absent:
-    - name: {{ k8s.kubectl.pkg.repo.name }}
-    - onlyif: {{ k8s.kubectl.pkg.repo }}
+    - name: {{ d.kubectl.pkg.repo.name }}
+    - onlyif: {{ d.kubectl.pkg.repo }}

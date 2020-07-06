@@ -254,7 +254,7 @@ suites:
       state_top:
         base:
           '*':
-            # kubernetes.clean
+            - kubernetes.clean
             - kubernetes
       pillars:
         top.sls:
@@ -262,7 +262,7 @@ suites:
             '*':
               - kubernetes
       pillars_from_files:
-        kubernetes.sls: test/salt/default/pillar.sls
+        kubernetes.sls: test/salt/pillar/default.sls
     verifier:
       inspec_tests:
         - path: test/integration/default
@@ -271,7 +271,7 @@ suites:
       state_top:
         base:
           '*':
-            # kubernetes.clean
+            - kubernetes.clean
             - kubernetes
       pillars:
         top.sls:
@@ -279,24 +279,7 @@ suites:
             '*':
               - kubernetes
       pillars_from_files:
-        kubernetes.sls: test/salt/default/pillar.sls
+        kubernetes.sls: test/salt/pillar/pkgrepo.sls
     verifier:
       inspec_tests:
         - path: test/integration/pkgrepo
-  - name: source
-    provisioner:
-      state_top:
-        base:
-          '*':
-            # kubernetes.clean
-            - kubernetes
-      pillars:
-        top.sls:
-          base:
-            '*':
-              - kubernetes
-      pillars_from_files:
-        kubernetes.sls: test/salt/source/pillar.sls
-    verifier:
-      inspec_tests:
-        - path: test/integration/source

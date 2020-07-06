@@ -2,17 +2,19 @@
 # vim: ft=sls
 
 {%- set tplroot = tpldir.split('/')[0] %}
-{%- from tplroot ~ "/map.jinja" import kubernetes as k8s with context %}
+{%- from tplroot ~ "/map.jinja" import data as d with context %}
+{%- set formula = d.formula %}
+
 {%- set sls_binary_clean = tplroot ~ '.devspace.binary.clean' %}
 
 include:
-  {{ '- ' + sls_binary_clean if k8s.devspace.pkg.use_upstream_binary else '' }}
+  - {{ sls_binary_clean }}
   - .alternatives.clean
 
-k8s-devspace-config-clean-file-absent:
+{{ formula }}-devspace-config-clean:
   file.absent:
     - names:
-      - {{ k8s.devspace.config_file }}
-      - {{ k8s.devspace.environ_file }}
+      - {{ d.devspace.config_file }}
+      - {{ d.devspace.environ_file }}
     - require:
-      {{ '- sls: ' + sls_binary_clean if k8s.devspace.pkg.use_upstream_binary else '' }}
+      - sls: {{ sls_binary_clean }}

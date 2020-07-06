@@ -2,22 +2,13 @@
 # vim: ft=sls
 
 {%- set tplroot = tpldir.split('/')[0] %}
-{%- from tplroot ~ "/map.jinja" import kubernetes as k8s with context %}
+{%- from tplroot ~ "/map.jinja" import data as d with context %}
+{%- set formula = d.formula %}
 
-k8s-devspace-release-binary-clean-file-absent:
+{{ formula }}-devspace-binary-clean:
   file.absent:
     - names:
-      - /tmp/dummy_file_entry
-           {%- if k8s.devspace.pkg.use_upstream_binary %}
-      - {{ k8s.devspace.pkg.binary.name }}/bin/devspace
-           {%- endif %}
-           {%- if k8s.devspace.linux.altpriority|int > 0 %}
       - /usr/local/bin/devspace
+           {%- if d.devspace.pkg.use_upstream_binary and d.devspace.pkg.binary.name %}
+      - {{ d.devspace.pkg.binary.name }}/
            {%- endif %}
-
-k8s-devspace-release-binary-clean-file-symlink:
-  file.absent:
-    - name: {{ k8s.devspace.linux.symlink }}
-    - unless:
-      - {{ k8s.devspace.linux.altpriority|int > 0 }}
-      - {{ grains.os_family|lower in ('windows', 'arch') }}

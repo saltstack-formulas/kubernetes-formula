@@ -5,7 +5,6 @@
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
 
-{{ formula }}-kubectl-package-repo-managed:
-  pkgrepo.managed:
-    {{- format_kwargs(k8s.kubectl.pkg.repo) }}
-    - onlyif: {{ d.kubectl.pkg.repo }}
+include:
+  - {{ '.binary' if d.k3s.pkg.use_upstream_binary else '.script' }}
+  - .config

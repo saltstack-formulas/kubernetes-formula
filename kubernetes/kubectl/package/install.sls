@@ -2,53 +2,54 @@
 # vim: ft=sls
 
 {%- set tplroot = tpldir.split('/')[0] %}
-{%- from tplroot ~ "/map.jinja" import kubernetes as k8s with context %}
+{%- from tplroot ~ "/map.jinja" import data as d with context %}
+{%- set formula = d.formula %}
 
     {%- if grains.kernel|lower in ('linux',) %}
-           {%- if k8s.kubectl.pkg.use_upstream_repo %}
+        {%- if d.kubectl.pkg.use_upstream_repo %}
 include:
   - .repo
-           {%- endif %}
+        {%- endif %}
 
-k8s-kubectl-package-install-deps-installed:
+{{ formula }}-kubectl-package-install-deps:
   pkg.installed:
-    - names: {{ k8s.kubectl.pkg.deps|json }}
+    - names: {{ d.kubectl.pkg.deps|json }}
 
-k8s-kubectl-package-install-pkg-installed:
+{{ formula }}-kubectl-package-install-pkg:
   pkg.installed:
-    - name: {{ k8s.kubectl.pkg.name }}
-    - runas: {{ k8s.rootuser }}
+    - name: {{ d.kubectl.pkg.name }}
+    - runas: {{ d.identity.rootuser }}
     - reload_modules: true
-        {%- if k8s.kubectl.pkg.use_upstream_repo %}
+        {%- if d.kubectl.pkg.use_upstream_repo %}
     - require:
-      - pkgrepo: k8s-kubectl-package-repo-pkgrepo-managed
+      - pkgrepo: {{ formula }}-kubectl-package-repo-managed
         {%- endif %}
 
     {%- elif grains.os_family == 'MacOS' %}
 
-k8s-kubectl-package-install-cmd-run-brew:
+{{ formula }}-kubectl-package-install-brew:
   cmd.run:
-    - name: brew install {{ k8s.kubectl.pkg.name }}
-    - runas: {{ k8s.rootuser }}
+    - name: brew install {{ d.kubectl.pkg.name }}
+    - runas: {{ d.identity.rootuser }}
     - onlyif: test -x /usr/local/bin/brew
 
-k8s-kubectl-package-reinstall-cmd-run-brew:
+{{ formula }}-kubectl-package-reinstall-brew:
   cmd.run:
-    - name: brew reinstall {{ k8s.kubectl.pkg.name }}
-    - runas: {{ k8s.rootuser }}
+    - name: brew reinstall {{ d.kubectl.pkg.name }}
+    - runas: {{ d.identity.rootuser }}
     - unless: test -x /usr/local/bin/kubectl  # if binary is missing
 
     {%- elif grains.kernel|lower == 'linux' %}
 
-k8s-kubectl-package-install-cmd-run-snap:
+{{ formula }}-kubectl-package-install-snap:
   pkg.installed:
     - name: snapd
   service.running:
     - name: snapd
   cmd.run:
-    - name: snap install {{ k8s.kubectl.pkg.name }} --classic
+    - name: snap install {{ d.kubectl.pkg.name }} --classic
     - onlyif: test -x /usr/bin/snap || test -x /usr/local/bin/snap
     - require:
-      - service: k8s.kubectl-package-install-cmd-run-snap
+      - service: d.kubectl-package-install-cmd-run-snap
 
     {%- endif %}

@@ -5,3 +5,4 @@ include:
   - .kubectl
   - .minikube
   - .devspace
+  - .k3s

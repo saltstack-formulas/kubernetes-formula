@@ -2,69 +2,60 @@
 # vim: ft=jinja
 
 {%- set tplroot = tpldir.split('/')[0] %}
-{#- Start imports as #}
 {%- import_yaml tplroot ~ "/defaults.yaml" as default_settings %}
 {%- import_yaml tplroot ~ "/osfamilymap.yaml" as osfamilymap %}
+{%- import_yaml tplroot ~ "/osfingermap.yaml" as osfingermap %}
+{%- import_yaml tplroot ~ "/osmap.yaml" as osmap %}
 {%- import_yaml tplroot ~ "/osarchmap.yaml" as osarchmap %}
 
-{#- Retrieve the config dict only once #}
 {%- set _config = salt['config.get'](tplroot, default={}) %}
-
 {%- set defaults = salt['grains.filter_by'](
       default_settings,
       default=tplroot,
       merge=salt['grains.filter_by']( osfamilymap, grain='os_family',
-        merge=salt['grains.filter_by']( osarchmap, grain='osarch',
-          merge=salt['grains.filter_by']( _config, default='lookup'
+        merge=salt['grains.filter_by']( osmap, grain='os',
+          merge=salt['grains.filter_by']( osfingermap, grain='osfinger',
+            merge=salt['grains.filter_by']( osarchmap, grain='osarch',
+              merge=salt['grains.filter_by']( _config, default='lookup'
+              )
+            )
           )
         )
       )
     )
  %}
-{%- set k = salt['grains.filter_by']( {'defaults': defaults}, default='defaults', merge=_config) %}
+{%- set d = salt['grains.filter_by']( {'defaults': defaults}, default='defaults', merge=_config) %}
 
-{%- for comp in k.supported %}
-    {%- if 'use_upstream_binary' in k[comp]['pkg'] and k[comp]['pkg']['use_upstream_binary'] %}
-        {%- set dirname = comp + '-v%s'|format(k[comp]['version']) %}
+{%- for comp in d.supported %}
+    {%- if 'use_upstream_binary' in d[comp]['pkg'] and d[comp]['pkg']['use_upstream_binary'] %}
+        {%- set dirname = comp + '-v%s'|format(d[comp]['version']) %}
 
         {%- if comp == 'kubectl' %}
-            {%- set uri = '%s/v%s/bin/%s/%s'|format(k[comp]['pkg']['binary']['uri'], k[comp]['version'],
-                                                    grains.kernel|lower, k.arch) %}
+            {%- set uri = '%s/v%s/bin/%s/%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
+                                                    grains.kernel|lower, d.arch) %}
         {%- elif comp == 'minikube' %}
-            {%- set uri = '%s/v%s/%s-%s-%s'|format(k[comp]['pkg']['binary']['uri'], k[comp]['version'],
-                                                    comp, grains.kernel|lower, k.arch) %}
+            {%- set uri = '%s/v%s/%s-%s-%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
+                                                    comp, grains.kernel|lower, d.arch) %}
         {%- elif comp == 'devspace' %}
-            {%- set uri = '%s/v%s/%s-%s-%s'|format(k[comp]['pkg']['binary']['uri'], k[comp]['version'],
-                                                    comp, grains.kernel|lower, k.arch) %}
+            {%- set uri = '%s/v%s/%s-%s-%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
+                                                    comp, grains.kernel|lower, d.arch) %}
+        {%- elif comp == 'k3s' %}
+            {%- set arch = '' if d.arch == 'amd64' else d.arch %}
+            {%- set uri = '%s/v%s/%s-%s-%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
+                                                    comp, grains.kernel|lower, arch) %}
         {%- endif %}
 
-        {%- if 'source_hash' in k[comp]['pkg']['binary'] and k[comp]['pkg']['binary']['source_hash'] %}
-            {%- do k[comp]['pkg']['binary'].update({'source_hash': k[comp]['pkg']['binary']['source_hash']}) %}
+        {%- if 'source_hash' in d[comp]['pkg']['binary'] and d[comp]['pkg']['binary']['source_hash'] %}
+            {%- do d[comp]['pkg']['binary'].update({'source_hash': d[comp]['pkg']['binary']['source_hash']}) %}
         {%- else %}
-            {%- do k[comp]['pkg']['binary'].update({'source_hash': uri ~ '.sha256'}) %}
+            {%- do d[comp]['pkg']['binary'].update({'source_hash': uri ~ '.sha256'}) %}
         {%- endif %}
 
-        {%- do k[comp]['pkg']['binary'].update({
-               'name':    k.dir.binary + '/' + dirname,
-               'basedir': k.dir.binary + '/' + dirname,
-               'source':  uri if comp in ('minikube', 'devspace') else uri + '/' + k[comp]['pkg']['name']
-        }) %}
-    {%- endif %}
-
-    {%- if 'use_upstream_source' in k[comp]['pkg'] and k[comp]['pkg']['use_upstream_source'] %}
-        {%- set dirname = '%s-%s'|format(k[comp]['pkg']['source']['name'], k[comp]['version']) %}
-        {%- if comp == 'kubectl' %}
-            {%- set uri = k[comp]['pkg']['source']['uri'] + '/' + dirname %}
-        {%- else %}
-            {%- set uri = k[comp]['pkg']['source']['uri'] + '/v' + k[comp]['version'] %}
-        {%- endif %}
-        {%- do k[comp]['pkg']['source'].update({
-               'name':    k.dir.source + '/' + dirname,
-               'basedir': k.dir.source + '/' + k[comp]['pkg']['source']['name'] + dirname,
-               'source':  uri + '.' + k[comp]['pkg']['source']['archive_suffix'],
-               'archive_format': k[comp]['pkg']['source']['archive_format']
+        {%- do d[comp]['pkg']['binary'].update({
+               'name':    d.dir.binary + '/' + dirname,
+               'source':  uri if comp in ('minikube', 'devspace') else uri + '/' + d[comp]['pkg']['name']
         }) %}
     {%- endif %}
 {%- endfor %}
 
-{%- set kubernetes = k %}
+{%- set data = d %}

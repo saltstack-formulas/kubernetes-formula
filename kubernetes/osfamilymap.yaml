@@ -41,28 +41,33 @@ RedHat:
         baseurl: 'https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64'
         gpgkey: 'https://packages.cloud.google.com/yum/doc/yum-key.gpg gpgkey2=https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg'
         repo_gpgcheck: 1
+  k3s:
+    pkg:
+      deps:
+        - container-selinux
+      deps_url:
+        - https://rpm.rancher.io/k3s-selinux-0.1.1-rc1.el7.noarch.rpm
 
 Suse: {}
 Gentoo: {}
 
 Arch:
   kubectl:
-    linux:
-      altpriority: 0
     pkg:
       deps:
         - tar
         - gzip
   minikube:
-    linux:
-      altpriority: 0
     pkg:
       deps:
         - tar
         - gzip
-  devspace:
-    linux:
-      altpriority: 0
+  k3s:
+    pkg:
+      deps:
+        - which
+  linux:
+    altpriority: 0
 
 Alpine: {}
 
@@ -70,12 +75,10 @@ FreeBSD:
   rootgroup: wheel
   kubectl:
     pkg:
-      use_upstream_source: true
       use_upstream_repo: false
       use_upstream_binary: false
   minikube:
     pkg:
-      use_upstream_source: true
       use_upstream_repo: false
       use_upstream_binary: false
 
@@ -83,12 +86,10 @@ OpenBSD:
   rootgroup: wheel
   kubectl:
     pkg:
-      use_upstream_source: true
       use_upstream_repo: false
       use_upstream_binary: false
   minikube:
     pkg:
-      use_upstream_source: true
       use_upstream_repo: false
       use_upstream_binary: false
 

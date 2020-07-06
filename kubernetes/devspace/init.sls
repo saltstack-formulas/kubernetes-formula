@@ -2,8 +2,9 @@
 # vim: ft=sls
 
 {%- set tplroot = tpldir.split('/')[0] %}
-{%- from tplroot ~ "/map.jinja" import kubernetes as k8s with context %}
+{%- from tplroot ~ "/map.jinja" import data as d with context %}
+{%- set formula = d.formula %}
 
 include:
-  {{ '- .binary' if k8s.devspace.pkg.use_upstream_binary else '' }}
+  {{ '- .binary' if d.devspace.pkg.use_upstream_binary else '' }}
   - .config

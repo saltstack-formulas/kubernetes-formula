@@ -2,52 +2,53 @@
 # vim: ft=sls
 
 {%- set tplroot = tpldir.split('/')[0] %}
-{%- from tplroot ~ "/map.jinja" import kubernetes as k8s with context %}
+{%- from tplroot ~ "/map.jinja" import data as d with context %}
+{%- set formula = d.formula %}
 
     {%- if grains.kernel|lower in ('linux',) %}
-           {%- if k8s.minikube.pkg.use_upstream_repo %}
+        {%- if d.minikube.pkg.use_upstream_repo %}
 include:
   - .repo
-           {%- endif %}
+        {%- endif %}
 
-k8s-minikube-package-install-deps-installed:
+{{ formula }}-minikube-package-install-deps:
   pkg.installed:
-    - names: {{ k8s.minikube.pkg.deps|json }}
+    - names: {{ d.minikube.pkg.deps|json }}
 
-k8s-minikube-package-install-pkg-installed:
+{{ formula }}-minikube-package-installed:
   pkg.installed:
-    - name: {{ k8s.minikube.pkg.name }}
+    - name: {{ d.minikube.pkg.name }}
     - reload_modules: true
-        {%- if k8s.minikube.pkg.use_upstream_repo %}
+        {%- if d.minikube.pkg.use_upstream_repo %}
     - require:
-      - pkgrepo: k8s-minikube-package-repo-pkgrepo-managed
+      - pkgrepo: {{ formula }}-minikube-package-repo-managed
         {%- endif %}
 
     {%- elif grains.os_family == 'MacOS' %}
 
-k8s-minikube-package-install-cmd-run-brew:
+{{ formula }}-minikube-package-install-brew:
   cmd.run:
-    - name: brew install {{ k8s.minikube.pkg.name }}
-    - runas: {{ k8s.rootuser }}
+    - name: brew install {{ d.minikube.pkg.name }}
+    - runas: {{ d.identity.rootuser }}
     - onlyif: test -x /usr/local/bin/brew
 
-k8s-minikube-package-reinstall-cmd-run-brew:
+{{ formula }}-minikube-package-reinstall-brew:
   cmd.run:
-    - name: brew reinstall {{ k8s.minikube.pkg.name }}
-    - runas: {{ k8s.rootuser }}
+    - name: brew reinstall {{ d.minikube.pkg.name }}
+    - runas: {{ d.identity.rootuser }}
     - unless: test -x /usr/local/bin/minikube  # if corruption detected
 
     {%- elif grains.kernel|lower == 'linux' %}
 
-k8s-minikube-package-install-cmd-run-snap:
+{{ formula }}-minikube-package-install-snap:
   pkg.installed:
     - name: snapd
   service.running:
     - name: snapd
   cmd.run:
-    - name: snap install {{ k8s.minikube.pkg.name }} --classic
+    - name: snap install {{ d.minikube.pkg.name }} --classic
     - onlyif: test -x /usr/bin/snap || test -x /usr/local/bin/snap
     - require:
-      - service: k8s-minikube-package-install-cmd-run-snap
+      - service: {{ formula }}-minikube-package-install-snap
 
     {%- endif %}

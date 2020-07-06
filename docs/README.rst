@@ -8,6 +8,7 @@ Formula to manage kubernetes on MacOS and GNU/Linux. Currently supports:
 * `devspace`
 * `kubectl`
 * `minikube`
+* `k3s`
 
 
 |img_travis| |img_sr|
@@ -90,6 +91,16 @@ This state installs devspace only.
 
 This state uninstalls kubernetes devspace only.
 
+``kubernetes.k3s``
+^^^^^^^^^^^^^^^^^^
+
+This state installs k3s only.
+
+``kubernetes.k3s.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls k3s only.
+
 
 Main Sub-states
 ---------------
@@ -127,16 +138,6 @@ This state installs minikube binary only.
 
 This state uninstalls minikube binary only.
 
-``kubernetes.minikube.source``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state installs minikube source archive only.
-
-``kubernetes.minikube.source.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state uninstalls minikube source archive only.
-
 ``kubernetes.kubectl.package``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -167,16 +168,6 @@ This state installs kubectl binary only.
 
 This state uninstalls kubectl binary only.
 
-``kubernetes.kubectl.source``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state installs kubectl source tarball only.
-
-``kubernetes.kubectl.source.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state uninstalls kubectl source files only.
-
 ``kubernetes.devspace.binary``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -186,6 +177,26 @@ This state installs devspace binary only.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state uninstalls devspace binary only.
+
+``kubernetes.k3s.binary``
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state installs k3s binary only.
+
+``kubernetes.k3s.binary.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls k3s binary only.
+
+``kubernetes.k3s.script``
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state installs k3s script only.
+
+``kubernetes.k3s.script.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls k3s script only.
 
 
 Testing

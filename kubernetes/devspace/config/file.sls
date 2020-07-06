@@ -2,30 +2,32 @@
 # vim: ft=sls
 
 {%- set tplroot = tpldir.split('/')[0] %}
-{%- from tplroot ~ "/map.jinja" import kubernetes as k8s with context %}
-{%- set sls_binary_install = tplroot ~ '.devspace.binary.install' %}
+{%- from tplroot ~ "/map.jinja" import data as d with context %}
+{%- set formula = d.formula %}
 
-    {%- if 'config' in k8s.devspace and k8s.devspace.config %}
+    {%- if 'config' in d.devspace and d.devspace.config %}
+        {%- set sls_binary_install = tplroot ~ '.devspace.binary.install' %}
+        {%- set sls_package_install = tplroot ~ '.devspace.package.install' %}
         {%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
 
 include:
-  {{ '- ' + sls_binary_install if k8s.devspace.pkg.use_upstream_binary else '' }}
+  - {{ sls_binary_install if d.devspace.pkg.use_upstream_binary else sls_package_install }}
 
-k8s-devspace-config-file-install-file-managed:
+{{ formula }}-devspace-config-file-install-file-managed:
   file.managed:
-    - name: {{ k8s.devspace.config_file }}
+    - name: {{ d.devspace.config_file }}
     - source: {{ files_switch(['config.yml.jinja'],
                               lookup='k8s-devspace-config-file-install-file-managed'
                  )
               }}
     - mode: 644
-    - user: {{ k8s.rootuser }}
-    - group: {{ k8s.rootgroup }}
+    - user: {{ d.identity.rootuser }}
+    - group: {{ d.identity.rootgroup }}
     - makedirs: True
     - template: jinja
     - context:
-        config: {{ k8s.devspace.config|json }}
+        config: {{ d.devspace.config|json }}
     - require:
-      {{ '- sls: ' + sls_binary_install if k8s.devspace.pkg.use_upstream_binary else '' }}
+      - sls: {{ sls_binary_install if d.devspace.pkg.use_upstream_binary else sls_package_install }}
 
     {%- endif %}

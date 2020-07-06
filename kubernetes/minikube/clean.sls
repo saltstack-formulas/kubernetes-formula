@@ -5,4 +5,3 @@ include:
   - .config.clean
   - .package.clean
   - .binary.clean
-  - .source.clean

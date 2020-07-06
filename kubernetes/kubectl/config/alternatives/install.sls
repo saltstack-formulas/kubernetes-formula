@@ -1,52 +1,46 @@
 # -*- coding: utf-8 -*-
 # vim: ft=sls
 
-  {%- if grains.kernel|lower == 'linux' and grains.os_family not in ('Arch',) %}
+    {%- if grains.kernel|lower == 'linux' and grains.os_family not in ('Arch',) %}
 
 {%- set tplroot = tpldir.split('/')[0] %}
-{%- from tplroot ~ "/map.jinja" import kubernetes as k8s with context %}
-{%- set sls_binary_install = tplroot ~ '.kubectl.binary.install' %}
-{%- set sls_package_install = tplroot ~ '.kubectl.package.install' %}
-{%- set sls_source_install = tplroot ~ '.kubectl.source.install' %}
+{%- from tplroot ~ "/map.jinja" import data as d with context %}
+{%- set formula = d.formula %}
 
-        {%- if not k8s.kubectl.pkg.use_upstream_repo and k8s.kubectl.linux.altpriority|int > 0 %}
+        {%- if not d.kubectl.pkg.use_upstream_repo and d.linux.altpriority|int > 0 %}
+            {%- set sls_binary_install = tplroot ~ '.kubectl.binary.install' %}
+            {%- set sls_package_install = tplroot ~ '.kubectl.package.install' %}
 
 include:
-  {{ '- ' + sls_package_install if k8s.kubectl.pkg.use_upstream_repo else '' }}
-  {{ '- ' + sls_source_install if k8s.kubectl.pkg.use_upstream_source else '' }}
-  {{ '- ' + sls_binary_install if k8s.kubectl.pkg.use_upstream_binary else '' }}
+  - {{ sls_binary_install if d.kubectl.pkg.use_upstream_binary else sls_package_install }}
 
-k8s-kubectl-config-alternatives-install-k8s-kubectl-alternative-install:
+{{ formula }}-kubectl-config-alternatives-install:
   alternatives.install:
     - unless:
       - {{ grains.os_family in ('Suse', 'Arch') }}
-      - {{ k8s.kubectl.pkg.use_upstream_repo }}
+      - {{ d.kubectl.pkg.use_upstream_repo }}
     - name: link-k8s-kubectl
     - link: /usr/local/bin/kubectl
-    - path: {{ k8s.kubectl.pkg.binary.name }}/bin/kubectl
-    - priority: {{ k8s.kubectl.linux.altpriority }}
+    - path: {{ d.kubectl.pkg.binary.name }}/bin/kubectl
+    - priority: {{ d.linux.altpriority }}
     - order: 10
     - require:
-      {{ '- sls: ' + sls_package_install if k8s.kubectl.pkg.use_upstream_repo else '' }}
-      {{ '- sls: ' + sls_source_install if k8s.kubectl.pkg.use_upstream_source else '' }}
-      {{ '- sls: ' + sls_binary_install if k8s.kubectl.pkg.use_upstream_binary else '' }}
+      - sls: {{ sls_binary_install if d.kubectl.pkg.use_upstream_binary else sls_package_install }}
   cmd.run:
     - onlyif: {{ grains.os_family in ('Suse',) }}
-    - name: update-alternatives --install /usr/local/bin/kubectl link-k8s-kubectl {{ k8s.kubectl.pkg.binary.name }}/bin/kubectl {{ k8s.kubectl.linux.altpriority }} # noqa 204
+    - name: update-alternatives --install /usr/local/bin/kubectl link-k8s-kubectl {{ d.kubectl.pkg.binary.name }}/bin/kubectl {{ d.linux.altpriority }} # noqa 204
 
-k8s-kubectl-config-alternatives-install-k8s.kubectl-alternative-set:
+{{ formula }}-kubectl-config-alternatives-set:
   alternatives.set:
     - unless:
       # {{ grains.os in ('Debian',) }}
       - {{ grains.os_family in ('Suse', 'Arch') }}
-      - {{ k8s.kubectl.pkg.use_upstream_repo }}
+      - {{ d.kubectl.pkg.use_upstream_repo }}
     - name: link-k8s-kubectl
-    - path: {{ k8s.kubectl.pkg.binary.name }}/bin/kubectl
+    - path: {{ d.kubectl.pkg.binary.name }}/bin/kubectl
     - require:
-      - alternatives: k8s-kubectl-config-alternatives-install-k8s-kubectl-alternative-install
-      {{ '- sls: ' + sls_package_install if k8s.kubectl.pkg.use_upstream_repo else '' }}
-      {{ '- sls: ' + sls_source_install if k8s.kubectl.pkg.use_upstream_source else '' }}
-      {{ '- sls: ' + sls_binary_install if k8s.kubectl.pkg.use_upstream_binary else '' }}
+      - alternatives: {{ formula }}-kubectl-config-alternatives-install
+      - sls: {{ sls_binary_install if d.kubectl.pkg.use_upstream_binary else sls_package_install }}
 
         {%- endif %}
-  {%- endif %}
+    {%- endif %}

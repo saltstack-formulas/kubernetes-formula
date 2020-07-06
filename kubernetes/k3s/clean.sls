@@ -3,5 +3,5 @@
 
 include:
   - .config.clean
-  - .package.clean
+  - .script.clean
   - .binary.clean
