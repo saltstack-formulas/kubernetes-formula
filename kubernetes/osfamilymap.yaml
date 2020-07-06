@@ -137,3 +137,9 @@ MacOS:
       use_upstream_binary: true   # binary
       binary:
         source_hash: 92a8a50de12b06d5255aa2242dca77e879b7a63b1bcf214cd49e998831be9c1c
+  kudo:
+    pkg:
+      name: kudo-cli
+      tapname: kudobuilder/tap
+      binary:
+        source_hash: df8ca9034ef78000638e9cb08e65c7f054938b4827368755b613a63a8ea8efc7
