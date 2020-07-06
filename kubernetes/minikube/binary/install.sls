@@ -1,48 +1,48 @@
 # -*- coding: utf-8 -*-
 # vim: ft=sls
 
-{#- Get the `tplroot` from `tpldir` #}
 {%- set tplroot = tpldir.split('/')[0] %}
-{%- from tplroot ~ "/map.jinja" import kubernetes as k8s with context %}
+{%- from tplroot ~ "/map.jinja" import data as d with context %}
+{%- set formula = d.formula %}
 
-k8s-minikube-release-binary-install:
+{{ formula }}-minikube-binary-install:
   pkg.installed:
-    - names: {{ k8s.minikube.pkg.deps|json }}
+    - names: {{ d.minikube.pkg.deps|json }}
   file.directory:
-    - name: {{ k8s.minikube.pkg.binary.name }}/bin
-    - user: {{ k8s.rootuser }}
-    - group: {{ k8s.rootgroup }}
+    - name: {{ d.minikube.pkg.binary.name }}/bin
+    - user: {{ d.identity.rootuser }}
+    - group: {{ d.identity.rootgroup }}
     - mode: 755
     - makedirs: True
     - require_in:
-      - cmd: k8s-minikube-release-binary-install
+      - cmd: {{ formula }}-minikube-binary-install
     - recurse:
         - user
         - group
         - mode
   cmd.run:
     - names:
-      - curl -Lo {{ k8s.minikube.pkg.binary.name }}/bin/minikube {{ k8s.minikube.pkg.binary.source }}
-      - chmod '0755' {{ k8s.minikube.pkg.binary.name }}/bin/minikube 2>/dev/null
-    - retry: {{ k8s.retry_option|json }}
-    - user: {{ k8s.rootuser }}
-    - group: {{ k8s.rootgroup }}
-      {%- if 'source_hash' in k8s.minikube.pkg.binary and k8s.minikube.pkg.binary.source_hash %}
+      - curl -Lo {{ d.minikube.pkg.binary.name }}/bin/minikube {{ d.minikube.pkg.binary.source }}
+      - chmod '0755' {{ d.minikube.pkg.binary.name }}/bin/minikube 2>/dev/null
+    - retry: {{ d.retry_option|json }}
+    - user: {{ d.identity.rootuser }}
+    - group: {{ d.identity.rootgroup }}
+      {%- if 'source_hash' in d.minikube.pkg.binary and d.minikube.pkg.binary.source_hash %}
   module.run:
     - name: file.check_hash
-    - path: {{ k8s.minikube.pkg.binary.name }}/bin/minikube
-    - file_hash: {{ k8s.minikube.pkg.binary.source_hash }}
+    - path: {{ d.minikube.pkg.binary.name }}/bin/minikube
+    - file_hash: {{ d.minikube.pkg.binary.source_hash }}
     - require:
-      - cmd: k8s-minikube-release-binary-install
+      - cmd: {{ formula }}-minikube-binary-install
       {%- endif %}
 
-k8s-minikube-release-binary-install-file-symlink:
+{{ formula }}-minikube-binary-install-symlink:
   file.symlink:
-    - name: {{ k8s.minikube.linux.symlink }}
-    - target: {{ k8s.minikube.pkg.binary.name }}/bin/{{ k8s.minikube.pkg.name }}
+    - name: /usr/local/bin/minikube
+    - target: {{ d.minikube.pkg.binary.name }}/bin/{{ d.minikube.pkg.name }}
     - force: True
     - require:
-      - cmd: k8s-minikube-release-binary-install
+      - cmd: {{ formula }}-minikube-binary-install
     - unless:
-      - {{ k8s.minikube.linux.altpriority|int > 0 }}
-      - {{ grains.os_family|lower in ('windows', 'arch') }}
+      - {{ d.linux.altpriority|int > 0 }}
+      - {{ grains.os_family|lower in ('windows',) }}

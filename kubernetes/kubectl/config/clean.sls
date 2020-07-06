@@ -2,23 +2,20 @@
 # vim: ft=sls
 
 {%- set tplroot = tpldir.split('/')[0] %}
-{%- from tplroot ~ "/map.jinja" import kubernetes as k8s with context %}
+{%- from tplroot ~ "/map.jinja" import data as d with context %}
+{%- set formula = d.formula %}
+
 {%- set sls_binary_clean = tplroot ~ '.kubectl.binary.clean' %}
 {%- set sls_package_clean = tplroot ~ '.kubectl.package.clean' %}
-{%- set sls_source_clean = tplroot ~ '.kubectl.source.clean' %}
 
 include:
-  {{ '- ' + sls_package_clean if k8s.kubectl.pkg.use_upstream_repo else '' }}
-  {{ '- ' + sls_source_clean if k8s.kubectl.pkg.use_upstream_source else '' }}
-  {{ '- ' + sls_binary_clean if k8s.kubectl.pkg.use_upstream_binary else '' }}
+  - {{ sls_binary_clean if d.kubectl.pkg.use_upstream_binary else sls_package_clean }}
   - .alternatives.clean
 
-k8s-kubectl-config-clean-file-absent:
+{{ formula }}-kubectl-config-clean:
   file.absent:
     - names:
-      - {{ k8s.kubectl.config_file }}
-      - {{ k8s.kubectl.environ_file }}
+      - {{ d.kubectl.config_file }}
+      - {{ d.kubectl.environ_file }}
     - require:
-      {{ '- sls: ' + sls_package_clean if k8s.kubectl.pkg.use_upstream_repo else '' }}
-      {{ '- sls: ' + sls_source_clean if k8s.kubectl.pkg.use_upstream_source else '' }}
-      {{ '- sls: ' + sls_binary_clean if k8s.kubectl.pkg.use_upstream_binary else '' }}
+      - sls: {{ sls_binary_clean if d.kubectl.pkg.use_upstream_binary else sls_package_clean }}

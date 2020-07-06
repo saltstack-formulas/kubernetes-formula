@@ -2,46 +2,47 @@
 # vim: ft=sls
 
 {%- set tplroot = tpldir.split('/')[0] %}
-{%- from tplroot ~ "/map.jinja" import kubernetes as k8s with context %}
+{%- from tplroot ~ "/map.jinja" import data as d with context %}
+{%- set formula = d.formula %}
 
-k8s-kubectl-release-binary-install:
+{{ formula }}-kubectl-binary-install:
   pkg.installed:
-    - names: {{ k8s.kubectl.pkg.deps|json }}
+    - names: {{ d.kubectl.pkg.deps|json }}
   file.directory:
-    - name: {{ k8s.kubectl.pkg.binary.name }}/bin
-    - user: {{ k8s.rootuser }}
-    - group: {{ k8s.rootgroup }}
+    - name: {{ d.kubectl.pkg.binary.name }}/bin
+    - user: {{ d.identity.rootuser }}
+    - group: {{ d.identity.rootgroup }}
     - mode: 755
     - makedirs: True
     - require_in:
-      - cmd: k8s-kubectl-release-binary-install
+      - cmd: {{ formula }}-kubectl-binary-install
     - recurse:
         - user
         - group
         - mode
   cmd.run:
     - names:
-      - curl -Lo {{ k8s.kubectl.pkg.binary.name }}/bin/kubectl {{ k8s.kubectl.pkg.binary.source }}
-      - chmod '0755' {{ k8s.kubectl.pkg.binary.name }}/bin/kubectl 2>/dev/null
-    - retry: {{ k8s.retry_option|json }}
-    - user: {{ k8s.rootuser }}
-    - group: {{ k8s.rootgroup }}
-      {%- if 'source_hash' in k8s.kubectl.pkg.binary and k8s.kubectl.pkg.binary.source_hash %}
+      - curl -Lo {{ d.kubectl.pkg.binary.name }}/bin/kubectl {{ d.kubectl.pkg.binary.source }}
+      - chmod '0755' {{ d.kubectl.pkg.binary.name }}/bin/kubectl 2>/dev/null
+    - retry: {{ d.retry_option|json }}
+    - user: {{ d.identity.rootuser }}
+    - group: {{ d.identity.rootgroup }}
+      {%- if 'source_hash' in d.kubectl.pkg.binary and d.kubectl.pkg.binary.source_hash %}
   module.run:
     - name: file.check_hash
-    - path: {{ k8s.kubectl.pkg.binary.name }}/bin/kubectl
-    - file_hash: {{ k8s.kubectl.pkg.binary.source_hash }}
+    - path: {{ d.kubectl.pkg.binary.name }}/bin/kubectl
+    - file_hash: {{ d.kubectl.pkg.binary.source_hash }}
     - require:
-      - cmd: k8s-kubectl-release-binary-install
+      - cmd: {{ formula }}-kubectl-binary-install
       {%- endif %}
 
-k8s-kubectl-release-binary-install-file-symlink:
+{{ formula }}-kubectl-binary-install-symlink:
   file.symlink:
-    - name: {{ k8s.kubectl.linux.symlink }}
-    - target: {{ k8s.kubectl.pkg.binary.name }}/bin/{{ k8s.kubectl.pkg.name }}
+    - name: /usr/local/bin/kubectl
+    - target: {{ d.kubectl.pkg.binary.name }}/bin/{{ d.kubectl.pkg.name }}
     - force: True
     - require:
-      - cmd: k8s-kubectl-release-binary-install
+      - cmd: {{ formula }}-kubectl-binary-install
     - unless:
-      - {{ k8s.kubectl.linux.altpriority|int > 0 }}
-      - {{ grains.os_family|lower in ('windows', 'arch') }}
+      - {{ d.linux.altpriority|int > 0 }}
+      - {{ grains.os_family|lower in ('windows',) }}

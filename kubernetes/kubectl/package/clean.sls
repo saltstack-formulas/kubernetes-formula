@@ -2,38 +2,39 @@
 # vim: ft=sls
 
 {%- set tplroot = tpldir.split('/')[0] %}
-{%- from tplroot ~ "/map.jinja" import kubernetes as k8s with context %}
+{%- from tplroot ~ "/map.jinja" import data as d with context %}
+{%- set formula = d.formula %}
 
     {%- if grains.kernel|lower in ('linux',) %}
-           {%- if k8s.kubectl.pkg.use_upstream_repo %}
+        {%- if d.kubectl.pkg.use_upstream_repo %}
 include:
   - .repo.clean
-           {%- endif %}
+        {%- endif %}
 
-k8s-kubectl-package-clean-pkg-cleaned:
+{{ formula }}-kubectl-package-clean-pkg:
   pkg.removed:
-    - name: {{ k8s.kubectl.pkg.name }}
+    - name: {{ d.kubectl.pkg.name }}
     - reload_modules: true
-        {%- if k8s.kubectl.pkg.use_upstream_repo %}
+        {%- if d.kubectl.pkg.use_upstream_repo %}
     - require:
-      - pkgrepo: k8s-kubectl-package-repo-pkgrepo-absent
+      - pkgrepo: {{ formula }}-kubectl-package-repo-absent
         {%- endif %}
 
     {%- elif grains.os_family == 'MacOS' %}
 
-k8s-kubectl-package-clean-cmd-run-brew:
+{{ formula }}-kubectl-package-clean-brew:
   cmd.run:
-    - name:  brew uninstall {{ k8s.minikube.pkg.name }} {{ k8s.kubectl.pkg.name }}
-    - runas: {{ k8s.rootuser }}
+    - name:  brew uninstall {{ d.minikube.pkg.name }} {{ d.kubectl.pkg.name }}
+    - runas: {{ d.identity.rootuser }}
     - onlyif:
       - test -x /usr/local/bin/brew
-      - grew list | grep {{ k8s.kubectl.pkg.name }}
+      - grew list | grep {{ d.kubectl.pkg.name }}
 
     {%- elif grains.kernel|lower == 'linux' %}
 
-k8s-kubectl-package-clean-cmd-run-snap:
+{{ formula }}-kubectl-package-clean-snap:
   cmd.run:
-    - name: snap remove {{ k8s.kubectl.pkg.name }}
+    - name: snap remove {{ d.kubectl.pkg.name }}
     - onlyif: test -x /usr/bin/snap || test -x /usr/local/bin/snap
 
     {%- endif %}

@@ -2,15 +2,19 @@
 # vim: ft=yaml
 ---
 kubernetes:
-  rootuser: root
-  rootgroup: root
+  formula: kubernetes
+  supported:
+    - kubectl
+    - minikube
+    - devspace
+    - k3s
+  identity:
+    rootuser: root
+    rootgroup: root
   arch: ''
   dir:
     binary: /usr/local
-    source: /tmp/kubernetes
-  # Just here for testing
-  added_in_defaults: defaults_value
-  winner: defaults
+    tmp: /tmp/kubernetes-tmp
 
   kubectl:
     version: 1.18.2
@@ -19,14 +23,10 @@ kubernetes:
     environ_file: /etc/default/kubectl.sh
     environ: []
     service: {}
-    linux:
-      altpriority: 0
-      symlink: /usr/local/bin/kubectl
     pkg:
       name: kubectl
       use_upstream_repo: false
       use_upstream_binary: true
-      use_upstream_source: false
       deps:
         - curl
       repo:
@@ -42,16 +42,6 @@ kubernetes:
         source: null   # set in map.jinja
         source_hash: 6ea8261b503c6c63d616878837dc70b758d4a3aeb9996ade8e83b51aedac9698
         trim_output: true
-      source:
-        name: kubernetes
-        uri: https://github.com/kubernetes/kubectl/archive
-        source: null
-        source_hash: f13e2706e173ceed635b3be60bf929c400ed31165bd0ad16ff0dd103821494ec
-        trim_output: true
-        archive_suffix: tar.gz
-        archive_format: tar
-        enforce_toplevel: false
-        options: '--strip-components=1'
 
   minikube:
     version: 1.9.2
@@ -61,15 +51,11 @@ kubernetes:
     environ: []
     service: {}
     check: egrep --color 'vmx|svm' /proc/cpuinfo
-    linux:
-      altpriority: 0
-      symlink: /usr/local/bin/minikube
     vm_driver: none
     pkg:
       name: minikube
       use_upstream_repo: false
       use_upstream_binary: true
-      use_upstream_source: false
       deps:
         - curl
       repo:
@@ -85,16 +71,76 @@ kubernetes:
         source: null       # see map.jinja
         source_hash: 3121f933bf8d608befb24628a045ce536658738c14618504ba46c92e656ea6b5
         trim_output: true
-      source:
-        name: minikube
-        uri: https://github.com/kubernetes/minikube/archive
-        source: null
-        source_hash: f94465221ad1f402e18b3ecd701c12a50d23e841a80de26c7861e3ddc86f2075
+
+  devspace:
+    version: 4.13.1
+    config_file: /etc/default/devspace.ini
+    config: {}
+    environ_file: /etc/default/devspace.sh
+    environ: []
+    service: {}
+    pkg:
+      name: devspace
+      use_upstream_repo: false
+      use_upstream_binary: true
+      deps:
+        - curl
+      binary:
+        uri: https://github.com/devspace-cloud/devspace/releases/download
+        name: devspace
+        source: null   # set in map.jinja
+        source_hash: 19faec36f190d0c3a3447f47c05378fabbe9f01e27f8b7475d51796e288bdbd4
         trim_output: true
-        archive_suffix: tar.gz
-        archive_format: tar
-        enforce_toplevel: false
-        options: --strip-components=1
+
+  k3s:
+    version: '1.18.4+k3s1'
+    pkg:
+      use_upstream_binary: false
+      use_upstream_script: true
+      deps:
+        - curl
+      binary:
+        uri: https://github.com/rancher/k3s/releases/download
+        name: k3s
+        source: null   # set in map.jinja
+        source_hash: 0c19d64dde77c8bb3af1dfbac5aecea59ab4679d97dcfaa62419aaa795380490
+      script:
+        source: https://get.k3s.io
+        source_hash: b2856cee3432cf0148513b644b5369db8fa8b039793959f410aa7dfdb496b2b9
+        killall: /usr/local/bin/k3s-killall.sh
+        uninstall: /usr/local/bin/k3s-uninstall.sh
+        env:
+          INSTALL_K3S_BIN_DIR: /usr/local/bin
+          # INSTALL_K3S_BIN_DIR_READ_ONLY: false
+          # INSTALL_K3S_CHANNEL_URL: https://update.k3s.io/v1-release/channels
+          # INSTALL_K3S_CHANNEL: stable
+          # INSTALL_K3S_EXEC: ''
+          # INSTALL_K3S_NAME: ''
+          # INSTALL_K3S_SKIP_DOWNLOAD: false
+          # INSTALL_K3S_SYMLINK: skip
+          # INSTALL_K3S_SKIP_ENABLE: false
+          # INSTALL_K3S_SKIP_START: false
+          # INSTALL_K3S_SYSTEMD_DIR: /etc/system/systemd
+          # INSTALL_K3S_TYPE: ''
+          # INSTALL_K3S_VERSION: ''
+          # K3S_AGENT_TOKEN: ''
+          # K3S_AGENT_TOKEN_FILE: ''
+          # K3S_CLUSTER_INIT: ''
+          # K3S_CLUSTER_RESET: ''
+          # K3S_CLUSTER_SECRET: ''
+          # K3S_DATASTORE_ENDPOINT: ''
+          # K3S_DATASTORE_CAFILE: ''
+          # K3S_DATASTORE_CERTFILE: ''
+          # K3S_DATASTORE_KEYFILE:''
+          # K3S_KUBECONFIG_MODE: ''
+          # K3S_NODE_NAME: ''
+          # K3S_RESOLV_CONF: ''
+          # K3S_TOKEN: ''
+          # K3S_TOKEN_FILE: ''
+          # KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+
+  linux:
+    altpriority: 0
 
   retry_option:
     # https://docs.saltstack.com/en/latest/ref/states/requisites.html#retrying-states
@@ -102,3 +148,7 @@ kubernetes:
     until: true
     interval: 60
     splay: 10
+
+  # Just here for testing
+  added_in_defaults: defaults_value
+  winner: defaults
