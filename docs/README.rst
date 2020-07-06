@@ -6,9 +6,10 @@ kubernetes-formula
 Formula to manage kubernetes on MacOS and GNU/Linux. Currently supports:
 
 * `devspace`
+* `k3s`
 * `kubectl`
 * `minikube`
-* `k3s`
+* `kudo`
 
 
 |img_travis| |img_sr|
@@ -100,6 +101,16 @@ This state installs k3s only.
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state uninstalls k3s only.
+
+``kubernetes.kudo``
+^^^^^^^^^^^^^^^^^^^
+
+This state installs kudo only.
+
+``kubernetes.kudo.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls kudo only.
 
 
 Main Sub-states
@@ -197,6 +208,26 @@ This state installs k3s script only.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state uninstalls k3s script only.
+
+``kubernetes.kudo.binary``
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state installs kudo binary only.
+
+``kubernetes.kudo.binary.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls kudo binary only.
+
+``kubernetes.kudo.package``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state installs kudo package only.
+
+``kubernetes.kudo.package.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls kudo package only.
 
 
 Testing

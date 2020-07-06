@@ -39,6 +39,10 @@
         {%- elif comp == 'devspace' %}
             {%- set uri = '%s/v%s/%s-%s-%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
                                                     comp, grains.kernel|lower, d.arch) %}
+        {%- elif comp == 'kudo' %}
+            {%- set arch = 'x86_64' if d.arch == 'amd64' else d.arch %}
+            {%- set uri = '%s/v%s/kubectl-%s_%s_%s_%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
+                                                         comp, d[comp]['version'], grains.kernel|lower, arch) %}
         {%- elif comp == 'k3s' %}
             {%- set arch = '' if d.arch == 'amd64' else d.arch %}
             {%- set uri = '%s/v%s/%s-%s-%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
@@ -52,8 +56,8 @@
         {%- endif %}
 
         {%- do d[comp]['pkg']['binary'].update({
-               'name':    d.dir.binary + '/' + dirname,
-               'source':  uri if comp in ('minikube', 'devspace') else uri + '/' + d[comp]['pkg']['name']
+            'name': d.dir.binary + '/' + dirname,
+            'source': uri if comp in ('minikube', 'devspace', 'kudo') else uri + '/' + d[comp]['pkg']['name']
         }) %}
     {%- endif %}
 {%- endfor %}

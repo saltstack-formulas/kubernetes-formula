@@ -80,4 +80,8 @@ control 'kubernetes archive' do
   describe file('/usr/local/bin/k3s-uninstall.sh') do
     it { should be_file }
   end
+  describe file('/usr/local/bin/kubectl-kudo') do
+    it { should be_file }
+    it { should_not be_directory }
+  end
 end
