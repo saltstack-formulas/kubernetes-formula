@@ -6,3 +6,4 @@ include:
   - .minikube
   - .devspace
   - .k3s
+  - .kudo

@@ -8,6 +8,7 @@ kubernetes:
     - minikube
     - devspace
     - k3s
+    - kudo
   identity:
     rootuser: root
     rootgroup: root
@@ -138,6 +139,20 @@ kubernetes:
           # K3S_TOKEN: ''
           # K3S_TOKEN_FILE: ''
           # KUBECONFIG: /etc/rancher/k3s/k3s.yaml
+
+  kudo:
+    version: 0.12.0
+    pkg:
+      name: kubectl-kudo
+      use_upstream_binary: true
+      use_upstream_package: false
+      deps:
+        - curl
+      binary:
+        uri: https://github.com/kudobuilder/kudo/releases/download
+        name: kubectl-kudo
+        source: null   # set in map.jinja
+        source_hash: 5df22a42021d78a199d00f055faedd47a86ad3001bd06da31549c0a477a403a9
 
   linux:
     altpriority: 0
