@@ -8,6 +8,8 @@ Formula to manage kubernetes on MacOS and GNU/Linux. Currently supports:
 * `devspace`
 * `k3s`
 * `kubectl`
+* `kubeadm`
+* `kubelet`
 * `minikube`
 * `kudo`
 
@@ -71,6 +73,26 @@ This state installs kubernetes-cli only.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state uninstalls kubernetes-cli only.
+
+``kubernetes.kubeadm``
+^^^^^^^^^^^^^^^^^^^^^^
+
+This state installs kubeadm on supported GNU/Linux only.
+
+``kubernetes.kubeadm.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls kubeadm on supported GNU/Linux only.
+
+``kubernetes.kubelet``
+^^^^^^^^^^^^^^^^^^^^^^
+
+This state installs kubelet on supported GNU/Linux only.
+
+``kubernetes.kubelet.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls kublet on supported GNU/Linux only.
 
 ``kubernetes.minikube``
 ^^^^^^^^^^^^^^^^^^^^^^^

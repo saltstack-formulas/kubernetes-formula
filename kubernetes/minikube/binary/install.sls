@@ -7,7 +7,7 @@
 
 {{ formula }}-minikube-binary-install:
   pkg.installed:
-    - names: {{ d.minikube.pkg.deps|json }}
+    - names: {{ d.pkg.deps|json }}
   file.directory:
     - name: {{ d.minikube.pkg.binary.name }}/bin
     - user: {{ d.identity.rootuser }}

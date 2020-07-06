@@ -11,18 +11,14 @@
 # osfingermap: {}
 ---
 CentOS Linux-8:
-  k3s:
-    pkg:
-      deps:
-        - selinux-policy
-
+  pkg:
+    deps:
+      - selinux-policy
 CentOS Linux-7:
-  k3s:
-    pkg:
-      deps:
-        - selinux-policy-base
+  pkg:
+    deps:
+      - selinux-policy-base
 CentOS-6:
-  k3s:
-    pkg:
-      deps:
-        - selinux-policy-base
+  pkg:
+    deps:
+      - selinux-policy-base

@@ -7,7 +7,7 @@
 
 {{ formula }}-kudo-binary-install:
   pkg.installed:
-    - names: {{ d.kudo.pkg.deps|json }}
+    - names: {{ d.pkg.deps|json }}
   file.directory:
     - name: {{ d.kudo.pkg.binary.name }}/bin
     - user: {{ d.identity.rootuser }}

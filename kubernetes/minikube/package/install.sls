@@ -7,13 +7,14 @@
 
     {%- if grains.kernel|lower in ('linux',) %}
         {%- if d.minikube.pkg.use_upstream_repo %}
+            {%- set sls_repo_install = tplroot ~ '.package.repo.install' %}
 include:
-  - .repo
+  - {{ sls_repo_install }}
         {%- endif %}
 
 {{ formula }}-minikube-package-install-deps:
   pkg.installed:
-    - names: {{ d.minikube.pkg.deps|json }}
+    - names: {{ d.pkg.deps|json }}
 
 {{ formula }}-minikube-package-installed:
   pkg.installed:
@@ -21,7 +22,7 @@ include:
     - reload_modules: true
         {%- if d.minikube.pkg.use_upstream_repo %}
     - require:
-      - pkgrepo: {{ formula }}-minikube-package-repo-managed
+      - pkgrepo: {{ formula }}-package-repo-managed
         {%- endif %}
 
     {%- elif grains.os_family == 'MacOS' %}

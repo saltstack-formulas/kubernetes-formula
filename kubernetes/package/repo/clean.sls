@@ -5,7 +5,7 @@
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
 
-{{ formula }}-kubectl-package-repo-managed:
-  pkgrepo.managed:
-    {{- format_kwargs(k8s.kubectl.pkg.repo) }}
-    - onlyif: {{ d.kubectl.pkg.repo }}
+{{ formula }}-package-repo-absent:
+  pkgrepo.absent:
+    - name: {{ d.pkg.repo.name }}
+    - onlyif: {{ d.pkg.repo }}

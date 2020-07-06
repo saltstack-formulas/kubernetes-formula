@@ -4,11 +4,13 @@
 kubernetes:
   formula: kubernetes
   supported:
-    - kubectl
-    - minikube
     - devspace
+    - kubeadm
+    - kubectl
+    - kubelet
     - k3s
     - kudo
+    - minikube
   identity:
     rootuser: root
     rootgroup: root
@@ -16,6 +18,16 @@ kubernetes:
   dir:
     binary: /usr/local
     tmp: /tmp/kubernetes-tmp
+  pkg:
+    deps:
+      - curl
+    repo:
+      humanname: kubernetes
+      name: kubernetes
+      comments:
+        - installed by salt
+      enabled: 1
+      gpgcheck: 1
 
   kubectl:
     version: 1.18.2
@@ -28,22 +40,20 @@ kubernetes:
       name: kubectl
       use_upstream_repo: false
       use_upstream_binary: true
-      deps:
-        - curl
-      repo:
-        humanname: kubernetes
-        name: kubernetes
-        comments:
-          - installed by salt
-        enabled: 1
-        gpgcheck: 1
       binary:
         uri: https://storage.googleapis.com/kubernetes-release/release
         name: kubectl
         source: null   # set in map.jinja
         source_hash: 6ea8261b503c6c63d616878837dc70b758d4a3aeb9996ade8e83b51aedac9698
         trim_output: true
-
+  kubeadm:
+    pkg:
+      name: kubeadm
+      use_upstream_repo: true
+  kubelet:
+    pkg:
+      name: kubelet
+      use_upstream_repo: true
   minikube:
     version: 1.9.2
     config_file: /etc/default/minikube.ini
@@ -57,15 +67,6 @@ kubernetes:
       name: minikube
       use_upstream_repo: false
       use_upstream_binary: true
-      deps:
-        - curl
-      repo:
-        humanname: kubernetes
-        name: kubernetes
-        comments:
-          - installed by salt
-        enabled: 1
-        gpgcheck: 1
       binary:
         name: minikube
         uri: https://github.com/kubernetes/minikube/releases/download
@@ -84,8 +85,6 @@ kubernetes:
       name: devspace
       use_upstream_repo: false
       use_upstream_binary: true
-      deps:
-        - curl
       binary:
         uri: https://github.com/devspace-cloud/devspace/releases/download
         name: devspace
@@ -98,8 +97,6 @@ kubernetes:
     pkg:
       use_upstream_binary: false
       use_upstream_script: true
-      deps:
-        - curl
       binary:
         uri: https://github.com/rancher/k3s/releases/download
         name: k3s
@@ -146,8 +143,6 @@ kubernetes:
       name: kubectl-kudo
       use_upstream_binary: true
       use_upstream_package: false
-      deps:
-        - curl
       binary:
         uri: https://github.com/kudobuilder/kudo/releases/download
         name: kubectl-kudo

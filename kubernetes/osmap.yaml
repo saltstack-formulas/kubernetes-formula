@@ -11,7 +11,6 @@
 # osmap: {}
 ---
 Fedora:
-  k3s:
-    pkg:
-      deps:
-        - selinux-policy
+  pkg:
+    deps:
+      - selinux-policy

@@ -7,7 +7,7 @@
 
 {{ formula }}-kubectl-binary-install:
   pkg.installed:
-    - names: {{ d.kubectl.pkg.deps|json }}
+    - names: {{ d.pkg.deps|json }}
   file.directory:
     - name: {{ d.kubectl.pkg.binary.name }}/bin
     - user: {{ d.identity.rootuser }}
