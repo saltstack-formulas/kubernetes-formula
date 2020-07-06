@@ -5,7 +5,7 @@
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
 
-    {%- if grains.kernel|lower in ('linux',) %}
+    {%- if grains.os_family|lower in ('redhat', 'debian') %}
         {%- if d.kubelet.pkg.use_upstream_repo %}
             {%- set sls_repo_clean = tplroot ~ '.package.repo.clean' %}
 include:

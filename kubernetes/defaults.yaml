@@ -49,11 +49,11 @@ kubernetes:
   kubeadm:
     pkg:
       name: kubeadm
-      use_upstream_repo: true
+      use_upstream_repo: false
   kubelet:
     pkg:
       name: kubelet
-      use_upstream_repo: true
+      use_upstream_repo: false
   minikube:
     version: 1.9.2
     config_file: /etc/default/minikube.ini
