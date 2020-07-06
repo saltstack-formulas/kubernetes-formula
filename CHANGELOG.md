@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.2.0](https://github.com/saltstack-formulas/kubernetes-formula/compare/v1.1.0...v1.2.0) (2020-07-06)
+
+
+### Features
+
+* **kudo:** add kubectl-kudo support ([](https://github.com/saltstack-formulas/kubernetes-formula/commit/73c1930))
+
 # [1.1.0](https://github.com/saltstack-formulas/kubernetes-formula/compare/v1.0.0...v1.1.0) (2020-07-06)
 
 
