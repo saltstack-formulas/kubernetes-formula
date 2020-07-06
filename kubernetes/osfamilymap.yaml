@@ -115,8 +115,9 @@ Windows:
         source_hash: a696bd3ae755222fd63884fa654ba91e24d46826bb78358fcba592fc2b4013c0
 
 MacOS:
-  rootuser: {{ macos_rootuser | d('') }}
-  rootgroup: {{ macos_rootgroup | d('') }}
+  identity:
+    rootuser: {{ macos_rootuser | d('') }}
+    rootgroup: {{ macos_rootgroup | d('') }}
   kubectl:
     pkg:
       name: kubernetes-cli         # homebrew
