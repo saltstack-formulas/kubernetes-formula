@@ -10,11 +10,11 @@
 {{ formula }}-kubectl-package-clean-brew:
   cmd.run:
     - names:
-      - brew uninstall {{ d.kudo.pkg.name }}
+      - /usr/local/bin/brew uninstall {{ d.kudo.pkg.name }}
     - runas: {{ d.identity.rootuser }}
     - onlyif:
       - test -x /usr/local/bin/brew
-      - brew list | grep {{ d.kubectl.pkg.name }}
+      - /usr/local/bin/brew list | grep {{ d.kubectl.pkg.name }}
 
     {%- elif grains.kernel|lower == 'linux' %}
 

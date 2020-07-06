@@ -28,13 +28,13 @@ include:
 
 {{ formula }}-minikube-package-install-brew:
   cmd.run:
-    - name: brew install {{ d.minikube.pkg.name }}
+    - name: /usr/local/bin/brew install {{ d.minikube.pkg.name }}
     - runas: {{ d.identity.rootuser }}
     - onlyif: test -x /usr/local/bin/brew
 
 {{ formula }}-minikube-package-reinstall-brew:
   cmd.run:
-    - name: brew reinstall {{ d.minikube.pkg.name }}
+    - name: /usr/local/bin/brew reinstall {{ d.minikube.pkg.name }}
     - runas: {{ d.identity.rootuser }}
     - unless: test -x /usr/local/bin/minikube  # if corruption detected
 

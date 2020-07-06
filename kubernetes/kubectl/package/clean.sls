@@ -24,7 +24,7 @@ include:
 
 {{ formula }}-kubectl-package-clean-brew:
   cmd.run:
-    - name:  brew uninstall {{ d.minikube.pkg.name }} {{ d.kubectl.pkg.name }}
+    - name:  /usr/local/bin/brew uninstall {{ d.minikube.pkg.name }} {{ d.kubectl.pkg.name }}
     - runas: {{ d.identity.rootuser }}
     - onlyif:
       - test -x /usr/local/bin/brew
