@@ -84,4 +84,8 @@ control 'kubernetes archive' do
     it { should be_file }
     it { should_not be_directory }
   end
+  describe file('/usr/local/bin/kubebuilder') do
+    it { should be_file }
+    it { should_not be_directory }
+  end
 end
