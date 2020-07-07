@@ -2,6 +2,7 @@
 # vim: ft=sls
 
 include:
+  - .kubebuilder
   - .kubectl
   - .kubeadm
   - .kubelet

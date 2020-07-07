@@ -9,3 +9,4 @@ include:
   - .kubelet.clean
   - .k3s.clean
   - .kudo.clean
+  - .kubebuilder.clean

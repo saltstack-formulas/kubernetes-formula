@@ -21,6 +21,8 @@ kubernetes:
   pkg:
     deps:
       - curl
+      - tar
+      - gzip
     repo:
       humanname: kubernetes
       name: kubernetes
@@ -148,6 +150,20 @@ kubernetes:
         name: kubectl-kudo
         source: null   # set in map.jinja
         source_hash: 5df22a42021d78a199d00f055faedd47a86ad3001bd06da31549c0a477a403a9
+
+  kubebuiler:
+    version: 2.3.1
+    pkg:
+      name: kubebuilder
+      use_upstream_archive: true
+    suffix: tar.gz
+    archive:
+      path: null  # set in map.jinja
+      uri: 'https://github.com/kubernetes-sigs/kubebuilder/releases/download'
+      source_hash: 'ff496970f209706763f2aba2bdcefc2de8d00085b3b972b5790117b59ea4ed10'
+      trim_output: true
+      enforce_toplevel: false
+      options: '--strip-components=1'
 
   linux:
     altpriority: 0

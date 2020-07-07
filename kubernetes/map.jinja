@@ -26,19 +26,36 @@
  %}
 {%- set d = salt['grains.filter_by']( {'defaults': defaults}, default='defaults', merge=_config) %}
 
+--
+{%- if dbeaver['pkg']['use_upstream_archive'] %}
+    {%- set dir = '%s-%s-%s'|format(dbeaver.pkg.name, dbeaver.version, dbeaver.pkg.archive.tag) %}
+    {%- do dbeaver.config.update({'path': dbeaver.dir.archive + '/' + dir }) %}
+    {%- do dbeaver.pkg.archive.update({'name': dbeaver.dir.archive + '/' + dir,
+           'source': '%s/%s/%s.%s.%s'|format(dbeaver.pkg.archive.uri, dbeaver.version, dir,  dbeaver.arch, dbeaver.pkg.suffix)}) %}
+{%- endif %}
+--
 {%- for comp in d.supported %}
-    {%- if 'use_upstream_binary' in d[comp]['pkg'] and d[comp]['pkg']['use_upstream_binary'] %}
-        {%- set dirname = comp + '-v%s'|format(d[comp]['version']) %}
+    {%- set dirname = comp + '-v%s'|format(d[comp]['version']) %}
+    {%- set uri = None %}
 
+    {%- if 'use_upstream_archive' in d[comp]['pkg'] and d[comp]['pkg']['use_upstream_archive'] %}
+        {%- if comp == 'kubebuilder' %}
+            {%- set uri = '%s/v%s/%s_%s_%s_%s.%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
+                                                         comp, d[comp]['version'], grains.kernel|lower,
+                                                         d.arch, d.[comp]['pkg']['suffix']) %}
+        {%- endif %}
+        {%- do d[comp]['pkg']['archive'].update({ 'name': d.dir.binary + '/' + dirname, 'source': uri %}
+
+    {%- elif 'use_upstream_binary' in d[comp]['pkg'] and d[comp]['pkg']['use_upstream_binary'] %}
         {%- if comp == 'kubectl' %}
             {%- set uri = '%s/v%s/bin/%s/%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
-                                                    grains.kernel|lower, d.arch) %}
+                                                      grains.kernel|lower, d.arch) %}
         {%- elif comp == 'minikube' %}
             {%- set uri = '%s/v%s/%s-%s-%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
-                                                    comp, grains.kernel|lower, d.arch) %}
+                                                     comp, grains.kernel|lower, d.arch) %}
         {%- elif comp == 'devspace' %}
             {%- set uri = '%s/v%s/%s-%s-%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
-                                                    comp, grains.kernel|lower, d.arch) %}
+                                                     comp, grains.kernel|lower, d.arch) %}
         {%- elif comp == 'kudo' %}
             {%- set arch = 'x86_64' if d.arch == 'amd64' else d.arch %}
             {%- set uri = '%s/v%s/kubectl-%s_%s_%s_%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
@@ -57,8 +74,7 @@
 
         {%- do d[comp]['pkg']['binary'].update({
             'name': d.dir.binary + '/' + dirname,
-            'source': uri if comp in ('minikube', 'devspace', 'kudo') else uri + '/' + d[comp]['pkg']['name']
-        }) %}
+            'source': uri if comp in ('minikube', 'devspace', 'kudo') else uri + '/' + d[comp]['pkg']['name'] }) %}
     {%- endif %}
 {%- endfor %}
 

@@ -29,6 +29,11 @@ kubernetes:
     version: 4.13.1
   kudo:
     version: 0.12.0
+  kubebuiler:
+    version: 2.3.1
+    pkg:
+      archive:
+        source_hash: 'ff496970f209706763f2aba2bdcefc2de8d00085b3b972b5790117b59ea4ed10'
   k3s:
     version: '1.18.4+k3s1'
     pkg:
