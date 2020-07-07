@@ -7,8 +7,9 @@
 
     {%- if grains.kernel|lower in ('linux',) %}
         {%- if d.kubectl.pkg.use_upstream_repo %}
+            {%- set sls_repo_clean = tplroot ~ '.package.repo.clean' %}
 include:
-  - .repo.clean
+  - {{ sls_repo_clean }}
         {%- endif %}
 
 {{ formula }}-kubectl-package-clean-pkg:
@@ -17,7 +18,7 @@ include:
     - reload_modules: true
         {%- if d.kubectl.pkg.use_upstream_repo %}
     - require:
-      - pkgrepo: {{ formula }}-kubectl-package-repo-absent
+      - pkgrepo: {{ formula }}-package-repo-absent
         {%- endif %}
 
     {%- elif grains.os_family == 'MacOS' %}

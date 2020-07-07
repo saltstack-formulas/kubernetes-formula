@@ -7,11 +7,11 @@
 
 {{ formula }}-k3s-script-install-prerequisites:
   pkg.installed:
-    - names: {{ d.k3s.pkg.deps|json }}
+    - names: {{ d.pkg.deps|json }}
       {%- if grains.os_family in ('CentOS',) and d.k3s.pkg.deps_url %}
   cmd.run:
     - names:
-          {%- for pkg in d.k3s.pkg.deps_url %}
+          {%- for pkg in d.pkg.deps_url %}
       - yum install -y {{ pkg }}
           {%- endfor %}
     - require_in:

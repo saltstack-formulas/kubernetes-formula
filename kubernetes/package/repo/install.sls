@@ -4,8 +4,9 @@
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
+{%- from tplroot ~ "/files/macros.jinja" import format_kwargs with context %}
 
-{{ formula }}-kubectl-package-repo-managed:
+{{ formula }}-package-repo-managed:
   pkgrepo.managed:
-    {{- format_kwargs(k8s.kubectl.pkg.repo) }}
-    - onlyif: {{ d.kubectl.pkg.repo }}
+    {{- format_kwargs(d.pkg.repo) }}
+    - onlyif: {{ d.pkg.repo }}

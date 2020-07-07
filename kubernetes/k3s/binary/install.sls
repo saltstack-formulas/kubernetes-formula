@@ -7,7 +7,7 @@
 
 {{ formula }}-k3s-binary-prerequisites:
   pkg.installed:
-    - names: {{ d.k3s.pkg.deps|json }}
+    - names: {{ d.pkg.deps|json }}
   file.directory:
     - name: {{ d.k3s.pkg.binary.name }}/bin
     - user: {{ d.identity.rootuser }}

@@ -16,63 +16,63 @@
 {%- endif %}
 
 Debian:
+  pkg:
+    repo:
+      name: deb https://apt.kubernetes.io/ kubernetes-xenial main
+      file: /etc/apt/sources.list.d/kubernetes.list
+      key_url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
+  kubelet:
+    pkg:
+      use_upstream_repo: true
+  kubeadm:
+    pkg:
+      use_upstream_repo: true
   kubectl:
     pkg:
       use_upstream_repo: true
       use_upstream_binary: false
-      repo:
-        name: deb https://apt.kubernetes.io/ kubernetes-xenial main
-        file: /etc/apt/sources.list.d/kubernetes.list
-        key_url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
   minikube:
     pkg:
       use_upstream_binary: true
-      repo:
-        name: deb https://apt.kubernetes.io/ kubernetes-xenial main
-        file: /etc/apt/sources.list.d/kubernetes.list
-        key_url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
 
 RedHat:
+  pkg:
+    deps:
+      - container-selinux
+    deps_url:
+      - https://rpm.rancher.io/k3s-selinux-0.1.1-rc1.el7.noarch.rpm
+    repo:
+      baseurl: 'https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64'
+      gpgkey: 'https://packages.cloud.google.com/yum/doc/yum-key.gpg gpgkey2=https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg'
+      repo_gpgcheck: 1
+  kubelet:
+    pkg:
+      use_upstream_repo: true
+  kubeadm:
+    pkg:
+      use_upstream_repo: true
   kubectl:
     pkg:
       use_upstream_repo: true
       use_upstream_binary: false
-      repo:
-        baseurl: 'https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64'
-        gpgkey: 'https://packages.cloud.google.com/yum/doc/yum-key.gpg gpgkey2=https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg'
-        repo_gpgcheck: 1
-  k3s:
-    pkg:
-      deps:
-        - container-selinux
-      deps_url:
-        - https://rpm.rancher.io/k3s-selinux-0.1.1-rc1.el7.noarch.rpm
 
 Suse: {}
 Gentoo: {}
 
 Arch:
-  kubectl:
-    pkg:
-      deps:
-        - tar
-        - gzip
-  minikube:
-    pkg:
-      deps:
-        - tar
-        - gzip
-  k3s:
-    pkg:
-      deps:
-        - which
+  pkg:
+    deps:
+      - tar
+      - gzip
+      - which
   linux:
     altpriority: 0
 
 Alpine: {}
 
 FreeBSD:
-  rootgroup: wheel
+  identity:
+    rootgroup: wheel
   kubectl:
     pkg:
       use_upstream_repo: false
@@ -83,7 +83,8 @@ FreeBSD:
       use_upstream_binary: false
 
 OpenBSD:
-  rootgroup: wheel
+  identity:
+    rootgroup: wheel
   kubectl:
     pkg:
       use_upstream_repo: false

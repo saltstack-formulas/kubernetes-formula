@@ -3,6 +3,8 @@
 
 include:
   - .kubectl
+  - .kubeadm
+  - .kubelet
   - .minikube
   - .devspace
   - .k3s

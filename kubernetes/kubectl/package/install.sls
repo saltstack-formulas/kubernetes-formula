@@ -7,13 +7,14 @@
 
     {%- if grains.kernel|lower in ('linux',) %}
         {%- if d.kubectl.pkg.use_upstream_repo %}
+            {%- set sls_repo_install = tplroot ~ '.package.repo.install' %}
 include:
-  - .repo
+  - {{ sls_repo_install }}
         {%- endif %}
 
 {{ formula }}-kubectl-package-install-deps:
   pkg.installed:
-    - names: {{ d.kubectl.pkg.deps|json }}
+    - names: {{ d.pkg.deps|json }}
 
 {{ formula }}-kubectl-package-install-pkg:
   pkg.installed:
@@ -22,7 +23,7 @@ include:
     - reload_modules: true
         {%- if d.kubectl.pkg.use_upstream_repo %}
     - require:
-      - pkgrepo: {{ formula }}-kubectl-package-repo-managed
+      - pkgrepo: {{ formula }}-package-repo-managed
         {%- endif %}
 
     {%- elif grains.os_family == 'MacOS' %}
@@ -50,6 +51,6 @@ include:
     - name: snap install {{ d.kubectl.pkg.name }} --classic
     - onlyif: test -x /usr/bin/snap || test -x /usr/local/bin/snap
     - require:
-      - service: d.kubectl-package-install-cmd-run-snap
+      - service: {{ formula }}-kubectl-package-install-snap
 
     {%- endif %}
