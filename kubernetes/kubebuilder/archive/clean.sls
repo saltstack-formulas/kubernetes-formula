@@ -12,5 +12,10 @@ include:
 {{ formula }}-kubebuilder-archive-absent:
   file.absent:
     - names:
-      - /usr/local/bin/kubebuilder
+      - {{ d.dir.tmp }}/kubebuilder*
       - {{ d.kubebuilder.pkg.archive.name }}/bin
+        {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
+            {%- for cmd in d.kubebuilder.pkg.commands %}
+      - /usr/local/bin/{{ cmd }}
+            {%- endfor %}
+        {%- endif %}
