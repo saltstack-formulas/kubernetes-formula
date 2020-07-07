@@ -2,6 +2,21 @@
 Changelog
 =========
 
+`1.3.0 <https://github.com/saltstack-formulas/kubernetes-formula/compare/v1.2.1...v1.3.0>`_ (2020-07-07)
+------------------------------------------------------------------------------------------------------------
+
+Bug Fixes
+^^^^^^^^^
+
+
+* **state:** package repo fix (\ ` <https://github.com/saltstack-formulas/kubernetes-formula/commit/ee37c64>`_\ )
+
+Features
+^^^^^^^^
+
+
+* **kubecli:** add kubeadm/kubelet support (\ ` <https://github.com/saltstack-formulas/kubernetes-formula/commit/c0159c3>`_\ )
+
 `1.2.1 <https://github.com/saltstack-formulas/kubernetes-formula/compare/v1.2.0...v1.2.1>`_ (2020-07-06)
 ------------------------------------------------------------------------------------------------------------
 
