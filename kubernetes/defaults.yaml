@@ -159,6 +159,11 @@ kubernetes:
       name: kubebuilder
       use_upstream_archive: true
       suffix: tar.gz
+      commands:
+        - etcd
+        - kube-apiserver
+        - kubebuilder
+        - kubectl
       archive:
         path: null  # set in map.jinja
         uri: 'https://github.com/kubernetes-sigs/kubebuilder/releases/download'

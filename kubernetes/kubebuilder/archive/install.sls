@@ -37,16 +37,18 @@
     - require:
       - file: {{ formula }}-kubebuilder-archive-install
 
-        {%- if d.linux.altpriority|int == 0 %}
+        {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
+            {%- for cmd in d.kubebuilder.pkg.commands %}
 
-{{ formula }}-archive-install-symlink-kubebuilder:
+{{ formula }}-archive-install-symlink-{{ cmd }}:
   file.symlink:
-    - name: /usr/local/bin/kubebuilder
-    - target: {{ d.kubebuilder.pkg.archive.name }}/bin/kubebuilder
+    - name: /usr/local/bin/{{ cmd }}
+    - target: {{ d.kubebuilder.pkg.archive.name }}/bin/{{ cmd }}
     - force: True
     - require:
       - archive: {{ formula }}-kubebuilder-archive-install
 
+            {%- endfor %}
         {%- endif %}
     {%- else %}
 
