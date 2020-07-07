@@ -7,6 +7,7 @@ Formula to manage kubernetes on MacOS and GNU/Linux. Currently supports:
 
 * `devspace`
 * `k3s`
+* `kubebuilder`
 * `kubectl`
 * `kubeadm`
 * `kubelet`
@@ -134,6 +135,16 @@ This state installs kudo only.
 
 This state uninstalls kudo only.
 
+``kubernetes.kubebuilder``
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state installs kubebuilder only.
+
+``kubernetes.kubebuilder.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls kubebuilder only.
+
 
 Main Sub-states
 ---------------
@@ -250,6 +261,27 @@ This state installs kudo package only.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state uninstalls kudo package only.
+
+``kubernetes.kubebuilder.archive``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state installs kubebuilder archive and linux alternatives.
+
+``kubernetes.kubebuilder.archive.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls kubebuilder archive  only.
+
+``kubernetes.kubebuilder.archive.alternatives``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state installs kubebuilder linux alternatives only.
+
+``kubernetes.kubebuilder.archive.alternatives.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls kubebuilder linux alternatives only.
+
 
 
 Testing

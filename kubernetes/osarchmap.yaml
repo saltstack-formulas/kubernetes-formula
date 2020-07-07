@@ -10,6 +10,20 @@
 # you will need to provide at least an empty dict in this file, e.g.
 # osarch: {}
 ---
+arm64:
+  arch: arm64
+  kubebuiler:
+    pkg:
+      archive:
+        source_hash: 153ff1bc656820917fe5b3eb393bf7b607e04c299f8602817f8088040ecffb40
+
+ppc64le:
+  arch: ppc64le
+  kubebuiler:
+    pkg:
+      archive:
+        source_hash: 25c684402841cbb1d87daf05d2c5d76a16e9f8d3c2ad949a439dd947b5e52150
+
 amd64:
   arch: amd64
 
@@ -19,17 +33,11 @@ x86_64:
 386:
   arch: 386
 
-arm64:
-  arch: arm64
-
 armv6l:
   arch: armv6l
 
 armv7l:
   arch: armv6l
-
-ppc64le:
-  arch: ppc64le
 
 s390x:
   arch: s390x

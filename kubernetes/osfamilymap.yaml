@@ -145,3 +145,7 @@ MacOS:
       tapname: kudobuilder/tap
       binary:
         source_hash: df8ca9034ef78000638e9cb08e65c7f054938b4827368755b613a63a8ea8efc7
+  kubebuilder:
+    pkg:
+      archive:
+        source_hash: 39314d45053b6c31eb17e35c9b8d923f8a38277a9a136448345dd4b7f0f308f4
