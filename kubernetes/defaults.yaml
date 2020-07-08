@@ -51,7 +51,7 @@ kubernetes:
       archive:
         path: null  # set in map.jinja
         uri: 'https://dl.k8s.io'
-        source_hash: '110844511b70f9f3ebb92c15105e6680a05a562cd83f79ce2d2e25c2dd70f0dbd91cae34433f61364ae1ce4bd573b635f2f632d52de8f72b54acdbc95a15e3f0'  # noqa 204
+        source_hash: '594ca3eadc7974ec4d9e4168453e36ca434812167ef8359086cd64d048df525b7bd46424e7cc9c41e65c72bda3117326ba1662d1c9d739567f10f5684fd85bee'  # noqa 204
         trim_output: true
         enforce_toplevel: false
         options: '--strip-components=2'
