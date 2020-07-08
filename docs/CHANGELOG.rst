@@ -2,6 +2,22 @@
 Changelog
 =========
 
+`1.4.1 <https://github.com/saltstack-formulas/kubernetes-formula/compare/v1.4.0...v1.4.1>`_ (2020-07-08)
+------------------------------------------------------------------------------------------------------------
+
+Code Refactoring
+^^^^^^^^^^^^^^^^
+
+
+* **kubernetes:** add server, client, node states (\ ` <https://github.com/saltstack-formulas/kubernetes-formula/commit/49eb3b2>`_\ )
+
+Continuous Integration
+^^^^^^^^^^^^^^^^^^^^^^
+
+
+* **alternatives:** test for kubebuilder linux alternatives (\ ` <https://github.com/saltstack-formulas/kubernetes-formula/commit/c8431fd>`_\ )
+* **tests:** fix failures (\ ` <https://github.com/saltstack-formulas/kubernetes-formula/commit/8a787d8>`_\ )
+
 `1.4.0 <https://github.com/saltstack-formulas/kubernetes-formula/compare/v1.3.0...v1.4.0>`_ (2020-07-07)
 ------------------------------------------------------------------------------------------------------------
 
