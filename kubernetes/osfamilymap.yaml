@@ -129,6 +129,10 @@ Windows:
       name: devspace-windows-amd64.exe
       binary:
         source_hash: a696bd3ae755222fd63884fa654ba91e24d46826bb78358fcba592fc2b4013c0
+  kind:
+    pkg:
+      binary:
+        source_hash: 10d0a4adc7485a0525831b2cd67062dd75d551ec0133f09e3a7d2b2674f7efc5
 
 MacOS:
   identity:
@@ -160,7 +164,7 @@ MacOS:
         source_hash: 92a8a50de12b06d5255aa2242dca77e879b7a63b1bcf214cd49e998831be9c1c
   kudo:
     pkg:
-      name: kudo-cli
+      name: kudo-cli    # homebrew
       tapname: kudobuilder/tap
       binary:
         source_hash: df8ca9034ef78000638e9cb08e65c7f054938b4827368755b613a63a8ea8efc7
@@ -168,3 +172,8 @@ MacOS:
     pkg:
       archive:
         source_hash: 39314d45053b6c31eb17e35c9b8d923f8a38277a9a136448345dd4b7f0f308f4
+  kind:
+    pkg:
+      name: kind      # homebrew
+      binary:
+        source_hash: cdd8dfe7dff764429badcd636179b0e3eb937640cfe56749dd9b8f9c048cb7db

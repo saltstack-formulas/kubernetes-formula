@@ -46,10 +46,7 @@
         {%- if comp in ('client', 'server', 'node') %}
             {%- set uri = '%s/v%s/bin/%s/%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
                                                       grains.kernel|lower, d.arch) %}
-        {%- elif comp == 'minikube' %}
-            {%- set uri = '%s/v%s/%s-%s-%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
-                                                     comp, grains.kernel|lower, d.arch) %}
-        {%- elif comp == 'devspace' %}
+        {%- elif comp in ('minikube', 'devspace', 'kind') %}
             {%- set uri = '%s/v%s/%s-%s-%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
                                                      comp, grains.kernel|lower, d.arch) %}
         {%- elif comp == 'kudo' %}

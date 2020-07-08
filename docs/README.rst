@@ -9,6 +9,7 @@ Formula to manage kubernetes on MacOS and GNU/Linux. Currently supports:
 * `server`
 * `node`
 * `devspace`
+* `kind`
 * `k3s`
 * `kubebuilder`
 * `minikube`
@@ -144,6 +145,16 @@ This state installs kudo only.
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state uninstalls kudo only.
+
+``kubernetes.kind``
+^^^^^^^^^^^^^^^^^^^
+
+This state installs kind only.
+
+``kubernetes.kind.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls kind only.
 
 ``kubernetes.kubebuilder``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -10,6 +10,7 @@ kubernetes:
     - devspace
     - kubebuilder
     - k3s
+    - kind
     - kudo
     - minikube
   identity:
@@ -208,6 +209,16 @@ kubernetes:
         name: kubectl-kudo
         source: null   # set in map.jinja
         source_hash: 5df22a42021d78a199d00f055faedd47a86ad3001bd06da31549c0a477a403a9
+  kind:
+    version: 0.8.1
+    pkg:
+      name: kind
+      use_upstream_binary: true
+      binary:
+        uri: 'https://github.com/kubernetes-sigs/kind/releases/download'
+        name: kind
+        source: null  # set in map.jinja
+        source_hash: 781c3db479b805d161b7c2c7a31896d1a504b583ebfcce8fcd49538c684d96bc
 
   kubebuilder:
     version: 2.3.1

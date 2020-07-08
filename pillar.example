@@ -27,6 +27,8 @@ kubernetes:
     version: 4.13.1
   kudo:
     version: 0.12.0
+  kind:
+    version: 0.8.1
   kubebuiler:
     version: 2.3.1
     pkg:
