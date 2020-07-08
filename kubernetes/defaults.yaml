@@ -4,11 +4,11 @@
 kubernetes:
   formula: kubernetes
   supported:
+    - server
+    - client
+    - node
     - devspace
-    - kubeadm
     - kubebuilder
-    - kubectl
-    - kubelet
     - k3s
     - kudo
     - minikube
@@ -33,31 +33,87 @@ kubernetes:
       enabled: 1
       gpgcheck: 1
 
-  kubectl:
-    version: 1.18.2
-    config_file: /etc/default/kubectl.ini
+  client:
+    version: 1.18.0
+    config_file: /etc/default/kubernetes-node.ini
     config: {}
-    environ_file: /etc/default/kubectl.sh
+    environ_file: /etc/default/kubernetes-node.sh
     environ: []
     service: {}
     pkg:
       name: kubectl
       use_upstream_repo: false
-      use_upstream_binary: true
+      use_upstream_binary: false
+      use_upstream_archive: true
+      suffix: tar.gz
+      commands:
+        - kubectl
+      archive:
+        path: null  # set in map.jinja
+        uri: 'https://dl.k8s.io'
+        source_hash: '110844511b70f9f3ebb92c15105e6680a05a562cd83f79ce2d2e25c2dd70f0dbd91cae34433f61364ae1ce4bd573b635f2f632d52de8f72b54acdbc95a15e3f0'  # noqa 204
+        trim_output: true
+        enforce_toplevel: false
+        options: '--strip-components=2'
       binary:
+        name: kubernetes-client
         uri: https://storage.googleapis.com/kubernetes-release/release
-        name: kubectl
         source: null   # set in map.jinja
         source_hash: 6ea8261b503c6c63d616878837dc70b758d4a3aeb9996ade8e83b51aedac9698
         trim_output: true
-  kubeadm:
+  server:
+    version: 1.18.0
+    config_file: /etc/default/kubernetes-server.ini
+    config: {}
+    environ_file: /etc/default/kubernetes-server.sh
+    environ: []
+    service: {}
     pkg:
-      name: kubeadm
+      name: kubernetes-server
       use_upstream_repo: false
-  kubelet:
+      use_upstream_archive: true
+      suffix: tar.gz
+      commands:
+        - apiextensions-apiserver
+        - kube-scheduler
+        - kubeadm
+        - kubectl
+        - kubelet
+        - mounter
+        - kube-apiserver
+        - kube-controller-manager
+        - kube-proxy
+      archive:
+        path: null  # set in map.jinja
+        uri: 'https://dl.k8s.io'
+        source_hash: a92f8d201973d5dfa44a398e95fcf6a7b4feeb1ef879ab3fee1c54370e21f59f725f27a9c09ace8c42c96ac202e297fd458e486c489e05f127a5cade53b8d7c4  # noqa 204
+        trim_output: true
+        enforce_toplevel: false
+        options: '--strip-components=2'
+  node:
+    version: 1.18.0
+    config_file: /etc/default/kubernetes-node.ini
+    config: {}
+    environ_file: /etc/default/kubernetes-node.sh
+    environ: []
+    service: {}
     pkg:
-      name: kubelet
+      name: kubernetes-node
       use_upstream_repo: false
+      use_upstream_archive: true
+      suffix: tar.gz
+      commands:
+        - kubeadm
+        - kubectl
+        - kubelet
+        - kube-proxy
+      archive:
+        path: null  # set in map.jinja
+        uri: 'https://dl.k8s.io'
+        source_hash: f714f80feecb0756410f27efb4cf4a1b5232be0444fbecec9f25cb85a7ccccdcb5be588cddee935294f460046c0726b90f7acc52b20eeb0c46a7200cf10e351a  # noqa 204
+        trim_output: true
+        enforce_toplevel: false
+        options: '--strip-components=2'
   minikube:
     version: 1.9.2
     config_file: /etc/default/minikube.ini

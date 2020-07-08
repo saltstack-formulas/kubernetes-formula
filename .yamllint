@@ -13,6 +13,8 @@ ignore: |
   test/**/states/**/*.sls
   .kitchen/
   kubernetes/osfamilymap.yaml
+  kubernetes/defaults.yaml
+  kubernetes/osarchmap.yaml
 
 yaml-files:
   # Default settings

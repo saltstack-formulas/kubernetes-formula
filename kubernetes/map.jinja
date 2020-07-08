@@ -27,17 +27,23 @@
 {%- set d = salt['grains.filter_by']( {'defaults': defaults}, default='defaults', merge=_config) %}
 
 {%- for comp in d.supported %}
-    {%- set dirname = '' if 'version' not in d[comp] else comp ~ '-v%s'|format(d[comp]['version']) %}
+    {%- set dirname = 'kubernetes' %}
+    {%- if 'version' in d[comp] %}
+        {%- set dirname = dirname ~ '-' ~ comp ~ '-v%s'|format(d[comp]['version']) %}
+    {%- endif %}
 
     {%- if 'use_upstream_archive' in d[comp]['pkg'] and d[comp]['pkg']['use_upstream_archive'] %}
-        {%- if comp == 'kubebuilder' %}
+        {%- if comp in ('client', 'server', 'node') %}
+            {%- set uri = '%s/v%s/kubernetes-%s-%s-%s.%s'|format(d[comp]['pkg']['archive']['uri'],
+                           d[comp]['version'], comp, grains.kernel|lower, d.arch, d[comp]['pkg']['suffix']) %}
+        {%- elif comp == 'kubebuilder' %}
             {%- set uri = '%s/v%s/%s_%s_%s_%s.%s'|format(d[comp]['pkg']['archive']['uri'], d[comp]['version'],
                           comp, d[comp]['version'], grains.kernel|lower, d.arch, d[comp]['pkg']['suffix']) %}
         {%- endif %}
         {%- do d[comp]['pkg']['archive'].update({ 'name': d.dir.archive + '/' + dirname, 'source': uri }) %}
 
     {%- elif 'use_upstream_binary' in d[comp]['pkg'] and d[comp]['pkg']['use_upstream_binary'] %}
-        {%- if comp == 'kubectl' %}
+        {%- if comp in ('client', 'server', 'node') %}
             {%- set uri = '%s/v%s/bin/%s/%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
                                                       grains.kernel|lower, d.arch) %}
         {%- elif comp == 'minikube' %}

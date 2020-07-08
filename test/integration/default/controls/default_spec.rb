@@ -6,12 +6,30 @@ control 'kubernetes archive' do
   impact 1.0
   title 'should be installed'
 
-  describe file('/usr/local/kubectl-v1.18.2/bin') do
+  describe file('/usr/local/kubernetes-server-v1.18.0/bin') do
     it { should exist }
     it { should be_directory }
     its('type') { should eq :directory }
   end
-  describe file('/usr/local/kubectl-v1.18.2/bin/kubectl') do
+  describe file('/usr/local/kubernetes-server-v1.18.0/bin/kubectl') do
+    it { should exist }
+    its('mode') { should cmp '0755' }
+  end
+  describe file('/usr/local/kubernetes-node-v1.18.0/bin') do
+    it { should exist }
+    it { should be_directory }
+    its('type') { should eq :directory }
+  end
+  describe file('/usr/local/kubernetes-node-v1.18.0/bin/kubectl') do
+    it { should exist }
+    its('mode') { should cmp '0755' }
+  end
+  describe file('/usr/local/kubernetes-client-v1.18.0/bin') do
+    it { should exist }
+    it { should be_directory }
+    its('type') { should eq :directory }
+  end
+  describe file('/usr/local/kubernetes-client-v1.18.0/bin/kubectl') do
     it { should exist }
     its('mode') { should cmp '0755' }
   end
@@ -20,15 +38,12 @@ control 'kubernetes archive' do
     it { should be_file }
     it { should_not be_directory }
   end
-  describe file('/etc/default/kubectl.sh') do
-    it { should exist }
-  end
-  describe file('/usr/local/minikube-v1.9.2/bin') do
+  describe file('/usr/local/kubernetes-minikube-v1.9.2/bin') do
     it { should exist }
     it { should be_directory }
     its('type') { should eq :directory }
   end
-  describe file('/usr/local/minikube-v1.9.2/bin/minikube') do
+  describe file('/usr/local/kubernetes-minikube-v1.9.2/bin/minikube') do
     it { should exist }
     its('mode') { should cmp '0755' }
   end
@@ -37,12 +52,12 @@ control 'kubernetes archive' do
     it { should be_file }
     it { should_not be_directory }
   end
-  describe file('/usr/local/devspace-v4.13.1/bin') do
+  describe file('/usr/local/kubernetes-devspace-v4.13.1/bin') do
     it { should exist }
     it { should be_directory }
     its('type') { should eq :directory }
   end
-  describe file('/usr/local/devspace-v4.13.1/bin/devspace') do
+  describe file('/usr/local/kubernetes-devspace-v4.13.1/bin/devspace') do
     it { should exist }
     its('mode') { should cmp '0755' }
   end
@@ -51,7 +66,7 @@ control 'kubernetes archive' do
     it { should be_file }
     it { should_not be_directory }
   end
-  # describe file('/usr/local/k3s-v1.18.4+k3s1/bin') do
+  # describe file('/usr/local/kubernetes-k3s-v1.18.4+k3s1/bin') do
   #   it { should exist }
   #   it { should be_directory }
   #   its('type') { should eq :directory }

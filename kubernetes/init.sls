@@ -2,11 +2,11 @@
 # vim: ft=sls
 
 include:
-  - .kubebuilder
-  - .kubectl
-  - .kubeadm
-  - .kubelet
+  - .client
+  - .server
+  - .node
   - .minikube
   - .devspace
+  - .kubebuilder
   - .k3s
   - .kudo

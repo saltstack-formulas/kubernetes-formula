@@ -5,21 +5,19 @@
 
 kubernetes:
   dir:
+    archive: /opt/kubernetes
     binary: /opt/kubernetes
     source: /tmp/kubernetes
   # Just here for testing
   added_in_defaults: defaults_value
   winner: defaults
 
-  kubectl:
+  client:
     version: 1.18.2
-    config: {}
-    environ: []
     pkg:
+      use_upstream_package: true
       binary:
         source_hash: 6ea8261b503c6c63d616878837dc70b758d4a3aeb9996ade8e83b51aedac9698
-      source:
-        source_hash: f13e2706e173ceed635b3be60bf929c400ed31165bd0ad16ff0dd103821494ec
   minikube:
     version: 1.2.0
     pkg:
