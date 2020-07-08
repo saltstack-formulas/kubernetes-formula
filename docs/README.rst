@@ -5,12 +5,12 @@ kubernetes-formula
 
 Formula to manage kubernetes on MacOS and GNU/Linux. Currently supports:
 
+* `client`
+* `server`
+* `node`
 * `devspace`
 * `k3s`
 * `kubebuilder`
-* `kubectl`
-* `kubeadm`
-* `kubelet`
 * `minikube`
 * `kudo`
 
@@ -58,6 +58,16 @@ Available Meta states
 
 This state installs the kubernetes solution.
 
+``kubernetes.package.repo``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state installs kubernetes package repository only.
+
+``kubernetes.package.repo.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state removes kubernetes package repository only.
+
 ``kubernetes.clean``
 ^^^^^^^^^^^^^^^^^^^^
 
@@ -65,35 +75,35 @@ This state installs the kubernetes solution.
 
 This state removes the kubernetes solution.
 
-``kubernetes.kubectl``
+``kubernetes.client``
 ^^^^^^^^^^^^^^^^^^^^^^
 
 This state installs kubernetes-cli only.
 
-``kubernetes.kubectl.clean``
+``kubernetes.client.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state uninstalls kubernetes-cli only.
 
-``kubernetes.kubeadm``
-^^^^^^^^^^^^^^^^^^^^^^
+``kubernetes.server``
+^^^^^^^^^^^^^^^^^^^^^
 
-This state installs kubeadm on supported GNU/Linux only.
+This state installs kubernetes server on supported GNU/Linux only.
 
-``kubernetes.kubeadm.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``kubernetes.server.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state uninstalls kubeadm on supported GNU/Linux only.
+This state uninstalls kubernetes server on supported GNU/Linux only.
 
-``kubernetes.kubelet``
-^^^^^^^^^^^^^^^^^^^^^^
+``kubernetes.node``
+^^^^^^^^^^^^^^^^^^^
 
-This state installs kubelet on supported GNU/Linux only.
+This state installs kubernetes node on supported GNU/Linux only.
 
-``kubernetes.kubelet.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``kubernetes.node.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state uninstalls kublet on supported GNU/Linux only.
+This state uninstalls kubernetes node on supported GNU/Linux only.
 
 ``kubernetes.minikube``
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -157,16 +167,6 @@ Main Sub-states
 
 This state installs minikube package only (MacOS).
 
-``kubernetes.minikube.package.repo``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state installs minikube package repository only.
-
-``kubernetes.minikube.package.repo.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state removes minikube package repository only.
-
 ``kubernetes.minikube.package.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -182,33 +182,73 @@ This state installs minikube binary only.
 
 This state uninstalls minikube binary only.
 
-``kubernetes.kubectl.package``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``kubernetes.server.package``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state installs kubectl package only.
+This state installs server packages from repo.
 
-``kubernetes.kubectl.package.repo``
+``kubernetes.server.package.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state installs kubectl package repository only.
+This state uninstalls server packages only.
 
-``kubernetes.kubectl.package.repo.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``kubernetes.server.archive``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state removes kubectl package repository only.
+This state installs server archive only.
 
-``kubernetes.kubectl.package.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``kubernetes.server.archive.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls server archive only.
+
+``kubernetes.node.package``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state installs node packages from repo.
+
+``kubernetes.node.package.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls node packages only.
+
+``kubernetes.node.archive``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state installs node archive only.
+
+``kubernetes.node.archive.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls node archive only.
+
+``kubernetes.client.package``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state installs kubectl package only from repo.
+
+``kubernetes.client.package.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state uninstalls kubectl package only.
 
-``kubernetes.kubectl.binary``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``kubernetes.client.archive``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state installs kubectl archive only.
+
+``kubernetes.client.archive.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls kubectl archive only.
+
+``kubernetes.client.binary``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state installs kubectl binary only.
 
-``kubernetes.kubectl.binary.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+``kubernetes.client.binary.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state uninstalls kubectl binary only.
 

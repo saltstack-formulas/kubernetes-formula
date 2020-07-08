@@ -7,20 +7,20 @@
 
     {%- if grains.os_family == 'MacOS' %}
 
-{{ formula }}-kubectl-package-clean-brew:
+{{ formula }}-kudo-package-clean-brew:
   cmd.run:
     - names:
       - /usr/local/bin/brew uninstall {{ d.kudo.pkg.name }}
     - runas: {{ d.identity.rootuser }}
     - onlyif:
       - test -x /usr/local/bin/brew
-      - /usr/local/bin/brew list | grep {{ d.kubectl.pkg.name }}
+      - /usr/local/bin/brew list | grep {{ d.kudo.pkg.name }}
 
     {%- elif grains.kernel|lower == 'linux' %}
 
-{{ formula }}-kubectl-package-clean-kubectl-krew:
+{{ formula }}-kudo-package-clean-kudo-krew:
   cmd.run:
-    - name: kubectl krew uninstall {{ d.kubectl.pkg.name }}
-    - onlyif: test -x /usr/local/bin/kubectl
+    - name: kubectl krew uninstall {{ d.kudo.pkg.name }}
+    - onlyif: test -x /usr/local/bin/{{ d.kudo.pkg.name }}
 
     {%- endif %}
