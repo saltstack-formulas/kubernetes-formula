@@ -250,6 +250,8 @@ This state uninstalls selected kubernetes developer libraries (i.e. kubernetes c
 Main Sub-states
 ---------------
 
+This list may be incomplete.
+
 .. contents::
    :local:
 
@@ -412,17 +414,6 @@ This state installs kubebuilder linux alternatives only
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state uninstalls kubebuilder linux alternatives only 
-
-``kubernetes.client.libs``
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state installs kubernetes api client libs only 
-
-``kubernetes.client.libs.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state removes kubernetes api client libs directory only
-
 
 
 Testing

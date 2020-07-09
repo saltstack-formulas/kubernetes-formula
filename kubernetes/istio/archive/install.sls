@@ -40,7 +40,7 @@
         {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
             {%- for cmd in d.istio.pkg.commands %}
 
-{{ formula }}-archive-install-symlink-{{ cmd }}:
+{{ formula }}-istio-archive-install-symlink-{{ cmd }}:
   file.symlink:
     - name: /usr/local/bin/{{ cmd }}
     - target: {{ d.istio.pkg.archive.name }}/bin/{{ cmd }}

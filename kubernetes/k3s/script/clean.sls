@@ -5,7 +5,8 @@
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
 
-    {%- if d.k3s.pkg.use_upstream_script %}
+{%- if d.k3s.pkg.use_upstream_script %}
+    {%- if grains.os_family not in ('Redhat',) %}
 
 {{ formula }}-k3s-script-clean-killall:
   cmd.run:
@@ -29,4 +30,13 @@
       - cmd: {{ formula }}-k3s-script-clean-killall
       - cmd: {{ formula }}-k3s-script-clean-uninstall
 
+    {%- else %}
+
+{{ formula }}-server-package-install-other:
+  test.show_notification:
+    - text: |
+        The server package is unavailable for {{ salt['grains.get']('finger', grains.os_family) }}
+        RedHat is bugged
+
     {%- endif %}
+{%- endif %}

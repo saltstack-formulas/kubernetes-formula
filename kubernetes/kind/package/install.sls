@@ -10,11 +10,11 @@
 {{ formula }}-kind-package-install-brew:
   cmd.run:
     - names:
-      - /usr/local/bin/brew install {{ d.kind.pkg.name }}
+      - /usr/local/bin/brew install kind
 
 {{ formula }}-kind-package-reinstall-brew:
   cmd.run:
-    - name: /usr/local/bin/brew reinstall {{ d.kind.pkg.name }}
+    - name: /usr/local/bin/brew reinstall kind
     - runas: {{ d.identity.rootuser }}
     - unless: test -x /usr/local/bin/kind  # if binary is missing
 

@@ -39,7 +39,7 @@
 {{ formula }}-minikube-binary-install-symlink:
   file.symlink:
     - name: /usr/local/bin/minikube
-    - target: {{ d.minikube.pkg.binary.name }}/bin/{{ d.minikube.pkg.name }}
+    - target: {{ d.minikube.pkg.binary.name }}/bin/minikube
     - force: True
     - require:
       - cmd: {{ formula }}-minikube-binary-install

@@ -14,5 +14,6 @@ include:
   - .linkerd2
   - .minikube
   - .octant
+  - .operators
   - .devtools
   - .devlibs

@@ -39,7 +39,7 @@
 {{ formula }}-kind-binary-install-symlink:
   file.symlink:
     - name: /usr/local/bin/kind
-    - target: {{ d.kind.pkg.binary.name }}/bin/{{ d.kind.pkg.name }}
+    - target: {{ d.kind.pkg.binary.name }}/bin/kind
     - force: True
     - require:
       - cmd: {{ formula }}-kind-binary-install

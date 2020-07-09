@@ -14,7 +14,7 @@ include:
 
 {{ formula }}-minikube-package-clean-pkg:
   pkg.removed:
-    - name: {{ d.minikube.pkg.name }}
+    - name: minikube
     - reload_modules: true
         {%- if d.minikube.pkg.use_upstream_repo %}
     - require:
@@ -25,17 +25,17 @@ include:
 
 {{ formula }}-minikube-package-clean-brew:
   cmd.run:
-    - name: /usr/local/bin/brew uninstall {{ d.minikube.pkg.name }}
+    - name: /usr/local/bin/brew uninstall minikube
     - runas: {{ d.identity.rootuser }}
     - onlyif:
       - test -x /usr/local/bin/brew
-      - /usr/local/bin/brew list | grep {{ d.minikube.pkg.name }}
+      - /usr/local/bin/brew list | grep minikube
 
     {%- elif grains.kernel|lower == 'linux' %}
 
 {{ formula }}-minikube-package-clean-snap:
   cmd.run:
-    - name: snap remove {{ d.minikube.pkg.name }}
+    - name: snap remove minikube
     - onlyif: test -x /usr/bin/snap || test -x /usr/local/bin/snap
 
     {%- endif %}

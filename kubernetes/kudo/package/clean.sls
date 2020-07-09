@@ -10,17 +10,17 @@
 {{ formula }}-kudo-package-clean-brew:
   cmd.run:
     - names:
-      - /usr/local/bin/brew uninstall {{ d.kudo.pkg.name }}
+      - /usr/local/bin/brew uninstall kudo
     - runas: {{ d.identity.rootuser }}
     - onlyif:
       - test -x /usr/local/bin/brew
-      - /usr/local/bin/brew list | grep {{ d.kudo.pkg.name }}
+      - /usr/local/bin/brew list | grep kudo
 
     {%- elif grains.kernel|lower == 'linux' %}
 
 {{ formula }}-kudo-package-clean-kudo-krew:
   cmd.run:
-    - name: kubectl krew uninstall {{ d.kudo.pkg.name }}
-    - onlyif: test -x /usr/local/bin/{{ d.kudo.pkg.name }}
+    - name: kubectl krew uninstall kudo
+    - onlyif: test -x /usr/local/bin/kudo
 
     {%- endif %}

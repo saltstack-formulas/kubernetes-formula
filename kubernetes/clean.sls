@@ -2,7 +2,6 @@
 # vim: ft=sls
 
 include:
-  - .client.clean
   - .octant.clean
   - .minikube.clean
   - .linkerd2.clean
@@ -15,5 +14,6 @@ include:
   - .node.clean
   - .server.clean
   - .client.clean
+  - .operators.clean
   - .devtools.clean
   - .devlibs.clean

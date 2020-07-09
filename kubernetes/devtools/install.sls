@@ -7,11 +7,11 @@
 
     {%- if 'wanted' in d.devtools and d.devtools.wanted %}
         {%- for tool in d.devtools.wanted %}
-            {%- if tool in d.devtools and d.devtools[tool] %}
+            {%- if 'pkg' in d.devtools and tool in d.devtools['pkg'] and d.devtools['pkg'][tool] %}
 
 {{ formula }}-devtools-{{ tool }}-archive-install:
   file.directory:
-    - name: {{ d.devtools[tool]['pkg']['archive']['path'] }}/
+    - name: {{ d.devtools['pkg'][tool]['archive']['name'] }}/
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
     - mode: 755
@@ -24,9 +24,9 @@
         - group
         - mode
   archive.extracted:
-    - name: {{ d.devtools[tool]['pkg']['archive']['path'] }}/
-    - source: {{ d.devtools[tool]['pkg']['archive']['source'] }}
-    - source_hash: {{ d.devtools[tool]['pkg']['archive']['source_hash'] }}
+    - name: {{ d.devtools['pkg'][tool]['archive']['name'] }}/
+    - source: {{ d.devtools['pkg'][tool]['archive']['source'] }}
+    - source_hash: {{ d.devtools['pkg'][tool]['archive']['source_hash'] }}
     - enforce_toplevel: false
     - trim_output: true
     - retry: {{ d.retry_option }}
@@ -40,12 +40,12 @@
                 {%- endif %}
 
                 {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
-                    {%- for cmd in d.devtools.kubectx.pkg.commands %}
+                    {%- for cmd in d.devtools['pkg'][tool]['commands'] %}
 
 {{ formula }}-devtools-{{ tool }}-archive-install-symlink-{{ cmd }}:
   file.symlink:
     - name: /usr/local/bin/{{ cmd }}
-    - target: {{ d.devtools[tool]['pkg']['archive']['path'] }}/{{ tool }}
+    - target: {{ d.devtools['pkg'][tool]['archive']['name'] }}/{{ tool }}
     - force: True
     - require:
       - archive: {{ formula }}-devtools-{{ tool }}-archive-install

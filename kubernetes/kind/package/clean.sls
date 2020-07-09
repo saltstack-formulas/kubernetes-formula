@@ -9,10 +9,10 @@
 {{ formula }}-kind-package-clean-brew:
   cmd.run:
     - names:
-      - /usr/local/bin/brew uninstall {{ d.kind.pkg.name }}
+      - /usr/local/bin/brew uninstall kind
     - runas: {{ d.identity.rootuser }}
     - onlyif:
       - test -x /usr/local/bin/brew
-      - /usr/local/bin/brew list | grep ^{{ d.kind.pkg.name }}
+      - /usr/local/bin/brew list | grep ^kind$
 
     {%- endif %}

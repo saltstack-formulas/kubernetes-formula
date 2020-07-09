@@ -7,7 +7,7 @@
 
     {%- if 'wanted' in d.operators and d.operators.wanted %}
         {%- for operator in d.operators.wanted %}
-            {%- if 'pkg' in d.operators and d.operators['pkg'] %}
+            {%- if 'pkg' in d.operators and d.operators['pkg'] and operator in d.operators['pkg'] %}
 
 {{ formula }}-operator-install-{{ operator }}:
   file.directory:

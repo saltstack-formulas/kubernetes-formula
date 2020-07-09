@@ -7,14 +7,14 @@
 
     {%- if 'wanted' in d.devtools and d.devtools.wanted %}
         {%- for tool in d.devtools.wanted %}
-            {%- if tool in d.devtools and d.devtools[tool] %}
+            {%- if 'pkg' in d.devtools and tool in d.devtools['pkg'] and d.devtools['pkg'][tool] %}
 
 {{ formula }}-devtools-{{ tool }}-archive-clean:
   file.absent:
     - names:
-      - {{ d.devtools[tool]['pkg']['archive']['path'] }}
+      - {{ d.devtools['pkg'][tool]['archive']['name'] }}
                 {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
-                    {%- for cmd in d.devtools[tool]['pkg']['commands'] %}
+                    {%- for cmd in d.devtools['pkg'][tool]['commands'] %}
       - /usr/local/bin/{{ cmd }}
                     {%- endfor %}
                 {%- endif %}

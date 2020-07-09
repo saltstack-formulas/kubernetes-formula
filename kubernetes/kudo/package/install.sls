@@ -11,11 +11,11 @@
   cmd.run:
     - names:
       - /usr/local/bin/brew tap install {{ d.kudo.pkg.tapname }}
-      - /usr/local/bin/brew install {{ d.kudo.pkg.name }}
+      - /usr/local/bin/brew install kudo
 
 {{ formula }}-kudo-package-reinstall-brew:
   cmd.run:
-    - name: /usr/local/bin/brew reinstall {{ d.kudo.pkg.name }}
+    - name: /usr/local/bin/brew reinstall kudo
     - runas: {{ d.identity.rootuser }}
     - unless: test -x /usr/local/bin/kudo  # if binary is missing
 

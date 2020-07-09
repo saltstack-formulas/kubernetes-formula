@@ -16,6 +16,8 @@ kubernetes:
     - kudo
     - minikube
     - operators
+    - devtools
+    - devlibs
 
   kubectl:
     environ:

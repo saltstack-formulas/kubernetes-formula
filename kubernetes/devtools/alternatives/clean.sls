@@ -13,14 +13,14 @@ include:
 
     {%- if 'wanted' in d.devtools and d.devtools.wanted %}
         {%- for tool in d.devtools.wanted %}
-            {%- if tool in d.devtools and d.devtools[tool] %}
-                {%- if d.devtools[tool]['pkg']['use_upstream_archive'] and d.linux.altpriority|int > 0 %}
-                    {%- for cmd in d.devtools[tool]['pkg']['commands'] %}
+            {%- if 'pkg' in d.devtools and tool in d.devtools['pkg'] and d.devtools['pkg'][tool] %}
+                {%- if d.devtools['pkg'][tool]['use_upstream_archive'] and d.linux.altpriority|int > 0 %}
+                    {%- for cmd in d.devtools['pkg'][tool]['commands'] %}
 
 {{ formula }}-devtools-{{ tool }}-archive-alternatives-clean-{{ cmd }}:
   alternatives.remove:
     - name: link-k8s-devtools-{{ tool }}-{{ cmd }}
-    - path: {{ d.devtools[tool]['pkg']['archive']['path'] }}/{{ cmd }}
+    - path: {{ d.devtools['pkg'][tool]['archive']['name'] }}/{{ cmd }}
     - onlyif: update-alternatives --get-selections |grep ^link-k8s-devtools-{{ tool }}-{{ cmd }}
     - require:
       - sls: {{ sls_archive_clean }}

@@ -5,14 +5,12 @@
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
 
-    {%- if 'wanted' in d.devlibs and d.devlibs.wanted %}
-        {%- for lib in d.devlibs.wanted %}
-            {%- if lib in d.devlibs and d.devlibs[lib] %}
+{%- if 'wanted' in d.devlibs and d.devlibs.wanted %}
+    {%- for lib in d.devlibs.wanted %}
 
 {{ formula }}-devlibs-clean-{{ lib }}:
   file.absent:
     - name: {{ d.dir.source }}/{{ lib }}
 
-            {% endif %}
-        {% endfor %}
-    {% endif %}
+    {% endfor %}
+{% endif %}

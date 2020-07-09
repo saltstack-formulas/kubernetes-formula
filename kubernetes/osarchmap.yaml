@@ -13,20 +13,17 @@
 arm64:
   arch: arm64
   devtools:
-    kubectx:
-      pkg:
+    pkg:
+      kubectx:
         archive:
           source_hash: f49c015f0ae2b6d88387a337b6f7af899101066571d1f908c70468e172d1b140
-    kubens:
-      pkg:
+      kubens:
         archive:
           source_hash: 097f0473fefd9651c3fd87726aed867ed6e8e3ac70dbdc129faee781e19c84d2
-    cue:
-      pkg:
+      cue:
         archive:
           source_hash: 66986314a9c4c160544f54b8b4a30eb5b9d3418ed444711951026e629f4ef9e7
-    audit2rbac:
-      pkg:
+      audit2rbac:
         archive:
           source_hash: 819361a9b61ce02dc86bbe789b1da54dd887c2841f1a92ed0abb790738efc7f2
   octant:
@@ -97,27 +94,30 @@ ppc64le:
       binary:
         source_hash: be3b7d766bf75ba0368921c73691c6028651207ef132c6435bda9ca40b5f6d00
   devtools:
-    audit2rbac:
-      pkg:
+    pkg:
+      audit2rbac:
         archive:
           source_hash: f992061aad5ebacbf5694f63cefa4d4e0f12515322196bd8eaf3c040852491c6
 
 ppc64:
   arch: ppc64
   devtools:
-    audit2rbac:
-      pkg:
+    pkg:
+      audit2rbac:
         archive:
           source_hash: 4c297670d26d7eefddb20d60ba1e4c389245c81ddb9c80c8efb330b06314db28
 
 amd64:
   arch: amd64
 
+x86_64:
+  arch: amd64
+
 386:
   arch: 386
   devtools:
-    audit2rbac:
-      pkg:
+    pkg:
+      audit2rbac:
         archive:
           source_hash: 11ec8ed082fe8555c0537e437aa0448e00a135322fff05410594f691d3632398
   client:
@@ -141,24 +141,22 @@ armv6l:
 armhf:
   arch: armhf
   devtools:
-    kubectx:
-      pkg:
+    pkg:
+      kubectx:
         archive:
           source_hash: f00b075672051449f3e3092c03c12fcbc257cae2f0d8e1934640b48a0c696710
-    kubens:
-      pkg:
+      kubens:
         archive:
           source_hash: 6b3cad24f2a80a35edf2abe54a0eba4346b99d129c9348741ec06262b44f6c69
 
 armv7l:
   arch: armv7l
   devtools:
-    kubectx:
-      pkg:
+    pkg:
+      kubectx:
         archive:
           source_hash: 174cd7d4ad453ed1db826dcd595f64aa9735f7eec3c351e931177c904617750c
-    kubens:
-      pkg:
+      kubens:
         archive:
           source_hash: e7dd55345b3592667b0f667e69b0779800aaa65a8b4473681136ee95a6c7b24d
   client:

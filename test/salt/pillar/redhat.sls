@@ -11,10 +11,13 @@ kubernetes:
     - linkerd2
     - kubebuilder
     - octant
+    - k3s
     - kind
     - kudo
     - minikube
     - operators
+    - devlibs
+    - devtools
 
   kubectl:
     environ:
