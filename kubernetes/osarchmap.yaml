@@ -12,6 +12,10 @@
 ---
 arm64:
   arch: arm64
+  octant:
+    pkg:
+      archive:
+        source_hash: 6713da801fba0d9192ac4e31761046cf09ef3d1e85863b13b06c33bdb1a1a03c
   kubebuiler:
     pkg:
       use_upstream_archive: true

@@ -9,7 +9,9 @@ kubernetes:
     - node
     - devspace
     - istio
+    - linkerd2
     - kubebuilder
+    - octant
     - k3s
     - kind
     - kudo
@@ -53,7 +55,7 @@ kubernetes:
       commands:
         - kubectl
       archive:
-        path: null 2yy # set in map.jinja
+        path: null  # set in map.jinja
         uri: 'https://dl.k8s.io'
         source_hash: '594ca3eadc7974ec4d9e4168453e36ca434812167ef8359086cd64d048df525b7bd46424e7cc9c41e65c72bda3117326ba1662d1c9d739567f10f5684fd85bee'  # noqa 204
         trim_output: true
@@ -264,6 +266,22 @@ kubernetes:
         path: null  # set in map.jinja
         uri: 'https://github.com/istio/istio/releases/download'
         source_hash: null # set in map.jinja
+        trim_output: true
+        enforce_toplevel: false
+        options: '--strip-components=1'
+
+  octant:
+    version: '0.13.1'
+    pkg:
+      name: octant
+      use_upstream_archive: true
+      suffix: tar.gz
+      commands:
+        - octant
+      archive:
+        path: null  # set in map.jinja
+        uri: 'https://github.com/vmware-tanzu/octant/releases/download'
+        source_hash: 'b0fdf8984ac1947986ccd990b0d4ba60c1f5a1070909e734a1c57189308ed977'
         trim_output: true
         enforce_toplevel: false
         options: '--strip-components=1'

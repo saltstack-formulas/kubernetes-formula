@@ -133,6 +133,10 @@ Windows:
     pkg:
       binary:
         source_hash: 10d0a4adc7485a0525831b2cd67062dd75d551ec0133f09e3a7d2b2674f7efc5
+  octant:
+    pkg:
+      archive:
+        source_hash: cecf094c3d8f6c55236cf02c7e4c3916ca0e5c430ef5dff647665a2a16a20c8c
 
 MacOS:
   identity:
@@ -172,6 +176,10 @@ MacOS:
     pkg:
       archive:
         source_hash: 39314d45053b6c31eb17e35c9b8d923f8a38277a9a136448345dd4b7f0f308f4
+  octant:
+    pkg:
+      archive:
+        source_hash: f3ac074585bd3afbf529da7e37e5e8844150504fdb420f0cc930f31e766ce24a
   kind:
     pkg:
       name: kind      # homebrew

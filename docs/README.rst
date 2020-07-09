@@ -8,15 +8,16 @@ Formula to manage kubernetes on MacOS and GNU/Linux. Currently supports:
 * `server`
 * `node`
 * `client`
+* `client libs`
 * `devspace`
+* `istio`
 * `kind`
 * `k3s`
-* `istio`
-* `linkerd2`
-* `kubebuilder`
-* `minikube`
 * `kudo`
-* `client libs`
+* `kubebuilder`
+* `linkerd2`
+* `minikube`
+* `octant`
 
 
 |img_travis| |img_sr|
@@ -178,6 +179,16 @@ This state installs istio only.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state uninstalls istio only.
+
+``kubernetes.octant``
+^^^^^^^^^^^^^^^^^^^^
+
+This state installs octant only.
+
+``kubernetes.octant.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls octant only.
 
 ``kubernetes.linkerd2``
 ^^^^^^^^^^^^^^^^^^^^^^^

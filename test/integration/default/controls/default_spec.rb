@@ -148,6 +148,16 @@ control 'kubernetes archive' do
     it { should be_file }
     it { should_not be_directory }
   end
+  describe file('/usr/local/kubernetes-octant-v0.13.1/octant') do
+    it { should_not be_symlink }
+    it { should be_file }
+    it { should_not be_directory }
+  end
+  describe file('/usr/local/bin/octant') do
+    it { should be_symlink }
+    it { should be_file }
+    it { should_not be_directory }
+  end
   describe file('/usr/local/src/kubernetes/python') do
     it { should be_directory }
   end

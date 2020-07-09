@@ -44,6 +44,11 @@ kubernetes:
     version: 20.7.1
   istio:
     version: 1.6.4
+  octant:
+    version: '0.13.1'
+    pkg:
+      archive:
+        source_hash: b0fdf8984ac1947986ccd990b0d4ba60c1f5a1070909e734a1c57189308ed977
   kubebuiler:
     version: 2.3.1
     pkg:
