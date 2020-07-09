@@ -4,3 +4,4 @@
 include:
   - .package.clean
   - .binary.clean
+  - .libs.clean

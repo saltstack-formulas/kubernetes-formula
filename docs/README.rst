@@ -6,6 +6,7 @@ kubernetes-formula
 Formula to manage kubernetes on MacOS and GNU/Linux. Currently supports:
 
 * `client`
+* `client libs`
 * `server`
 * `node`
 * `devspace`
@@ -332,6 +333,16 @@ This state installs kubebuilder linux alternatives only.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state uninstalls kubebuilder linux alternatives only.
+
+``kubernetes.client.libs``
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state installs kubernetes api client libs only.
+
+``kubernetes.client.libs.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state removes kubernetes api client libs directory only.
 
 
 

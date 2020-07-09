@@ -128,4 +128,16 @@ control 'kubernetes archive' do
     it { should be_file }
     it { should_not be_directory }
   end
+  describe file('/usr/local/src/kubernetes/python') do
+    it { should be_directory }
+  end
+  describe file('/usr/local/src/kubernetes/java') do
+    it { should be_directory }
+  end
+  describe file('/usr/local/src/kubernetes/javascript') do
+    it { should be_directory }
+  end
+  describe file('/usr/local/src/kubernetes/csharp') do
+    it { should be_directory }
+  end
 end

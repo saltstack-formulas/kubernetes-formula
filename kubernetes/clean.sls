@@ -10,3 +10,5 @@ include:
   - .server.clean
   - .node.clean
   - .minikube.clean
+  - .kind.clean
+  - .client.libs.clean

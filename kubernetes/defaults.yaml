@@ -13,6 +13,7 @@ kubernetes:
     - kind
     - kudo
     - minikube
+
   identity:
     rootuser: root
     rootgroup: root
@@ -20,6 +21,7 @@ kubernetes:
   dir:
     binary: /usr/local
     archive: /usr/local
+    source: /usr/local/src/kubernetes
     tmp: /tmp/kubernetes-tmp
   pkg:
     deps:
@@ -50,7 +52,7 @@ kubernetes:
       commands:
         - kubectl
       archive:
-        path: null  # set in map.jinja
+        path: null 2yy # set in map.jinja
         uri: 'https://dl.k8s.io'
         source_hash: '594ca3eadc7974ec4d9e4168453e36ca434812167ef8359086cd64d048df525b7bd46424e7cc9c41e65c72bda3117326ba1662d1c9d739567f10f5684fd85bee'  # noqa 204
         trim_output: true
@@ -62,6 +64,28 @@ kubernetes:
         source: null   # set in map.jinja
         source_hash: 6ea8261b503c6c63d616878837dc70b758d4a3aeb9996ade8e83b51aedac9698
         trim_output: true
+    libs:
+      wanted:
+        - java
+        - python
+        - csharp
+        - javascript
+      uri: https://github.com/kubernetes-client
+      java:
+        name: 'client-java-parent-'
+        version: '6.0.1'
+        source_hash: '51d0229a80b913ede5a973036e7c78c36efc1d425c3ccde10f81acb03e183aa2'
+      python:
+        name: v
+        version: '11.0.0'
+        source_hash: '3ec0a0887bef32589ebb46efe7fbd30758c1da3c37f28d4394e9f4620172951a'
+      csharp:
+        version: '1.2.0'
+        source_hash: '0edcefd17f50d0e9d5b34ea318a6a5a13cf9448f918ffa9dec519da9457f9159'
+      javascript:
+        version: '0.10.1'
+        source_hash: '9b7d2c7a2afd30fc6b42fc060fa64221de8221aa8211ffc8d275b1ac54b9717a'
+      
   server:
     version: 1.18.0
     config_file: /etc/default/kubernetes-server.ini
