@@ -16,6 +16,7 @@ kubernetes:
     - kind
     - kudo
     - minikube
+    - operators
 
   identity:
     rootuser: root
@@ -88,7 +89,33 @@ kubernetes:
       javascript:
         version: '0.10.1'
         source_hash: '9b7d2c7a2afd30fc6b42fc060fa64221de8221aa8211ffc8d275b1ac54b9717a'
-      
+
+  operators:
+    # https:// operatorhub.io
+    wanted:
+      - grafana-operator
+      - prometheus-operator
+      - akka-cluster-operator
+      - istio-operator
+    pkg:
+      akka-cluster-operator:
+        version: 1.0.0
+        uri: https://github.com/lightbend/akka-cluster-operator/archive
+        source_hash: cf5b8b5a16dc3cba76fce0046ae79b226356ddfde84da54602b63edaeb8ae85f
+      grafana-operator:
+        version: 3.4.0
+        uri: https://github.com/integr8ly/grafana-operator/archive
+        source_hash: 3921adb8656c74a201e9e189931357d6be767e807d7312e7bd902efb607db089
+      prometheus-operator
+        version: '0.40.0'
+        uri: https://github.com/coreos/prometheus-operator/archive
+        source_hash: e9771685650803d2d07c0c8f455508e736e0516606d3182bc109f7986380cbc1
+      istio-operator:
+        name: ''
+        version: '0.2.0'
+        uri: https://github.com/banzaicloud/istio-operator/archive
+        source_hash: 8bbcf1c201707d9e01f204f3b2a698827b76757a8cdd593de943af64fe1e72d1
+
   server:
     version: 1.18.0
     config_file: /etc/default/kubernetes-server.ini

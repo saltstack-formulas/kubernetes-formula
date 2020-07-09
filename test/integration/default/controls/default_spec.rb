@@ -170,4 +170,16 @@ control 'kubernetes archive' do
   describe file('/usr/local/src/kubernetes/csharp') do
     it { should be_directory }
   end
+  describe file('/usr/local/src/kubernetes/grafana-operator') do
+    it { should be_directory }
+  end
+  describe file('/usr/local/src/kubernetes/prometheus-operator') do
+    it { should be_directory }
+  end
+  describe file('/usr/local/src/kubernetes/akka-cluster-operator') do
+    it { should be_directory }
+  end
+  describe file('/usr/local/src/kubernetes/istio-operator') do
+    it { should be_directory }
+  end
 end

@@ -5,9 +5,12 @@ include:
   - .client
   - .server
   - .node
-  - .minikube
   - .devspace
-  - .kubebuilder
+  - .istio
+  - .kind
   - .k3s
   - .kudo
-  - .kind
+  - .kubebuilder
+  - .linkerd2
+  - .minikube
+  - .octant

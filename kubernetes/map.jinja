@@ -81,21 +81,29 @@
             {%- do d[comp]['pkg']['binary'].update({'source_hash': uri ~ '.sha256'}) %}
         {%- endif %}
         {%- set fallback_url = uri + '/' + d[comp]['pkg']['name'] %}
-
         {%- do d[comp]['pkg']['binary'].update({
             'name': d.dir.binary + '/' + dirname,
             'source': uri if comp in ('minikube', 'devspace', 'kudo', 'kind') else fallback_url }) %}
 
     {%- endif %}
-    {%- if comp == 'client' and 'libs' in d[comp] and 'wanted' in d[comp]['libs'] and d[comp]['libs']['wanted'] %}
-        {%- for lib in d[comp]['libs']['wanted'] %}
-            {%- if lib in d[comp]['libs'] and d[comp]['libs'][lib] %}
-                {%- set name = '' if 'name' not in d[comp]['libs'][lib] else d[comp]['libs'][lib]['name'] %}
-                {%- set uri = '%s/%s/archive/%s%s.tar.gz'|format(d[comp]['libs']['uri'], lib, name,
-                                                                 d[comp]['libs'][lib]['version']) %}
-                {%- do d[comp]['libs'][lib].update({'source': uri }) %}
-            {%- endif %}
-        {%- endfor %}
+
+    {%- if comp == ('client', 'operators') %}
+        {%- set sw = d[comp] if 'comp' == 'operators' else d[comp]['libs'] %}
+        {%- if 'wanted' in sw and sw['wanted'] %}
+            {%- for item in sw['wanted'] %}
+                {%- if item in sw and sw[item] %}
+                    {%- set name = 'v' if 'name' not in sw['pkg'][item] else sw['pkg'][item]['name'] %}
+                    {%- if comp == 'client' %}
+                        {%- set uri = '%s/%s/archive/%s%s.tar.gz'|format(sw['pkg'][item]['uri'], item, name,
+                                                                         sw['pkg'][item]['version']) %}
+                    {%- elif comp == 'operators' %}
+                        {%- set uri = '%s/%s%s.tar.gz'|format(sw['pkg'][item]['uri'], item, name,
+                                                              sw['pkg'][item]['version']) %}
+                    {%- endif %}
+                        {%- do sw['pkg'][item].update({'source': uri }) %}
+                {%- endif %}
+            {%- endfor %}
+        {%- endif %}
     {%- endif %}
 {%- endfor %}
 

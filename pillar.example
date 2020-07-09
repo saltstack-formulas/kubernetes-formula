@@ -12,6 +12,13 @@ kubernetes:
   added_in_defaults: defaults_value
   winner: defaults
 
+  operators:
+    # https:// operatorhub.io
+    wanted:
+      - grafana-operator
+      - prometheus-operator
+      - akka-cluster-operator
+      - istio-operator
   client:
     version: 1.18.2
     pkg:
