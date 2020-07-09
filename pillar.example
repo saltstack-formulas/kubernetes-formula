@@ -12,6 +12,13 @@ kubernetes:
   added_in_defaults: defaults_value
   winner: defaults
 
+  tools:
+    kubectx:
+      version: '0.9.1'
+      pkg:
+        archive:
+          source_hash: ce689516f3ae916492bb8f9ee3344da03f6b5a098c1ce2c4a5107b8e9e1cf445  # x86_64
+
   operators:
     # https:// operatorhub.io
     wanted:

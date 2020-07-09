@@ -19,6 +19,7 @@ Formula to manage kubernetes on MacOS and GNU/Linux. Currently supports:
 * `minikube`
 * `octant`
 * `operators`
+* `tools`
 
 
 |img_travis| |img_sr|
@@ -84,12 +85,12 @@ This state removes kubernetes package repository only (see https://kubernetes.io
 ``kubernetes.client``
 ^^^^^^^^^^^^^^^^^^^^^^
 
-This state installs kubernetes cli and libraries only (see https://kubernetes.io/docs/reference/kubectl and https://kubernetes.io/docs/reference/using-api/client-libraries)
+This state installs kubernetes cli and libraries only  (see https://kubernetes.io/docs/reference/kubectl and https://kubernetes.io/docs/reference/using-api/client-libraries)
 
 ``kubernetes.client.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state uninstalls kubernetes cli and libraries only (see https://kubernetes.io/docs/reference/kubectl)
+This state uninstalls kubernetes cli and libraries only  (see https://kubernetes.io/docs/reference/kubectl)
 
 ``kubernetes.server``
 ^^^^^^^^^^^^^^^^^^^^^
@@ -134,12 +135,12 @@ This state uninstalls kubernetes devspace only (see https://devspace.sh)
 ``kubernetes.k3s``
 ^^^^^^^^^^^^^^^^^^
 
-This state installs k3s only (see https://k3s.io)
+This state installs k3s only  (see https://k3s.io)
 
 ``kubernetes.k3s.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state uninstalls k3s only (see https://k3s.io)
+This state uninstalls k3s only  (see https://k3s.io)
 
 ``kubernetes.kudo``
 ^^^^^^^^^^^^^^^^^^^
@@ -204,12 +205,22 @@ This state uninstalls linkerd2 only(see https://github.com/linkerd/linkerd2)
 ``kubernetes.operators``
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state installs operator archives only(see https://operatorhub.io)
+This state installs operator archives only (see https://operatorhub.io)
 
 ``kubernetes.operators.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state uninstalls operator archives only(see https://operatorhub.io)
+This state uninstalls operator archives only (see https://operatorhub.io)
+
+``kubernetes.tools``
+^^^^^^^^^^^^^^^^^^^^
+
+This state installs selected kubernetes developer tools (i.e. `kubectx`, `kubens`, etc)
+
+``kubernetes.tools.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls selected kubernetes developer tools (i.e. `kubectx`, `kubens`, etc)
 
 
 Main Sub-states
@@ -246,7 +257,7 @@ This state installs server packages from repo.
 ``kubernetes.server.package.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state uninstalls server packages only
+This state uninstalls server packages only 
 
 ``kubernetes.server.archive``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -266,7 +277,7 @@ This state installs node packages from repo.
 ``kubernetes.node.package.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state uninstalls node packages only
+This state uninstalls node packages only 
 
 ``kubernetes.node.archive``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -371,17 +382,17 @@ This state uninstalls kubebuilder archive  only
 ``kubernetes.kubebuilder.archive.alternatives``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state installs kubebuilder linux alternatives only
+This state installs kubebuilder linux alternatives only 
 
 ``kubernetes.kubebuilder.archive.alternatives.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state uninstalls kubebuilder linux alternatives only
+This state uninstalls kubebuilder linux alternatives only 
 
 ``kubernetes.client.libs``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state installs kubernetes api client libs only
+This state installs kubernetes api client libs only 
 
 ``kubernetes.client.libs.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

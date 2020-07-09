@@ -86,6 +86,18 @@
             'source': uri if comp in ('minikube', 'devspace', 'kudo', 'kind') else url }) %}
 
     {%- endif %}
+    {%- if comp == ('tools',) %}
+        {%- if 'wanted' in d[comp] and d[comp]['wanted'] %}
+            {%- for item in d[comp]['wanted'] %}
+                {%- if item in d[comp] and d[comp][item] %}
+                    {%- set uri = '%s/v%s/%s_v%s_%s_%s.%s'|format(d[comp][item]['pkg']['uri'],
+                                  d[comp][item]['version'], item, d[comp][item]['version'],
+                                  grains.kernel|lower, d.arch, d[comp][item]['pkg']['suffix']) %}
+                    {%- do d[comp][item]['pkg']['archive'].update({'source': uri }) %}
+                {%- endif %}
+            {%- endfor %}
+        {%- endif %}
+    {%- endif %}
 
     {%- if comp == ('client', 'operators') %}
         {%- set sw = d[comp] if 'comp' == 'operators' else d[comp]['libs'] %}
@@ -100,7 +112,7 @@
                         {%- set uri = '%s/%s%s.tar.gz'|format(sw['pkg'][item]['uri'], item, name,
                                                               sw['pkg'][item]['version']) %}
                     {%- endif %}
-                        {%- do sw['pkg'][item].update({'source': uri }) %}
+                    {%- do sw['pkg'][item].update({'source': uri }) %}
                 {%- endif %}
             {%- endfor %}
         {%- endif %}

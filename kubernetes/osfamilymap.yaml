@@ -137,6 +137,17 @@ Windows:
     pkg:
       archive:
         source_hash: cecf094c3d8f6c55236cf02c7e4c3916ca0e5c430ef5dff647665a2a16a20c8c
+  tools:
+    kubectx:
+      pkg:
+        suffix: zip
+        archive:
+          source_hash: 50da8ffd2ac9ca7f41c8aa6bf47a7fbd91d17603827b24267b8618fc30e7923f  # x86_64
+    kubens:
+      pkg:
+        suffix: zip
+        archive:
+          source_hash: bd60e0bd71ef0c0d628dcf09600902e2d67998a29cc5998a404b200fe2d98de8  # x86_64
 
 MacOS:
   identity:
@@ -190,3 +201,14 @@ MacOS:
     pkg:
       use_upstream_binary: true
       use_upstream_script: false
+  tools:
+    kubectx:
+      pkg:
+        suffix: tar.gz
+        archive:
+          source_hash: a46c5cf1f6ba8f6aa4dc75fc5a7086d294a28a19cf2fbbf18ac54108a7f713e1  # x86_64
+    kubens:
+      pkg:
+        suffix: tar.gz
+        archive:
+          source_hash: 4ae390ba702d57355d5fb9f2bba04c9b00ae39f740c59044c2d39cd6bfa0ab18  # x86_64

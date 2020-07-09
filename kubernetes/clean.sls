@@ -15,3 +15,4 @@ include:
   - .node.clean
   - .server.clean
   - .client.clean
+  - .tools.clean

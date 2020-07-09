@@ -12,6 +12,15 @@
 ---
 arm64:
   arch: arm64
+  tools:
+    kubectx:
+      pkg:
+        archive:
+          source_hash: f49c015f0ae2b6d88387a337b6f7af899101066571d1f908c70468e172d1b140
+    kubens:
+      pkg:
+        archive:
+          source_hash: 097f0473fefd9651c3fd87726aed867ed6e8e3ac70dbdc129faee781e19c84d2
   octant:
     pkg:
       archive:
@@ -83,9 +92,6 @@ ppc64le:
 amd64:
   arch: amd64
 
-x86_64:
-  arch: amd64
-
 386:
   arch: 386
   client:
@@ -106,8 +112,29 @@ armv6l:
       archive:
         source_hash: d3627b763606557a6c9a5766c34198ec00b3a3cd72a55bc2cb47731060d31c4af93543fb53f53791062bb5ace2f15cbaa8592ac29009641e41bd656b0983a079  # noqa 204
 
+armhf:
+  arch: armhf
+  tools:
+    kubectx:
+      pkg:
+        archive:
+          source_hash: f00b075672051449f3e3092c03c12fcbc257cae2f0d8e1934640b48a0c696710
+    kubens:
+      pkg:
+        archive:
+          source_hash: 6b3cad24f2a80a35edf2abe54a0eba4346b99d129c9348741ec06262b44f6c69
+
 armv7l:
-  arch: armv6l
+  arch: armv7l
+  tools:
+    kubectx:
+      pkg:
+        archive:
+          source_hash: 174cd7d4ad453ed1db826dcd595f64aa9735f7eec3c351e931177c904617750c
+    kubens:
+      pkg:
+        archive:
+          source_hash: e7dd55345b3592667b0f667e69b0779800aaa65a8b4473681136ee95a6c7b24d
   client:
     pkg:
       use_upstream_archive: true

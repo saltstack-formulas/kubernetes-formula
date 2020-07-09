@@ -40,6 +40,28 @@ kubernetes:
       enabled: 1
       gpgcheck: 1
 
+  tools:
+    kubectx:
+      version: '0.9.1'
+      pkg:
+        use_upstream_archive: true
+        uri: https://github.com/ahmetb/kubectx/releases/download  # set in map.jinja
+        suffix: tar.gz
+        commands:
+          - kubectx
+        archive:
+          source_hash: ce689516f3ae916492bb8f9ee3344da03f6b5a098c1ce2c4a5107b8e9e1cf445  # x86_64
+    kubens:
+      version: '0.9.1'
+      pkg:
+        use_upstream_archive: true
+        uri: https://github.com/ahmetb/kubectx/releases/download  # set in map.jinja
+        suffix: tar.gz
+        commands:
+          - kubens
+        archive:
+          source_hash: dea7839158e4847b8b52709dbfbe9ff2d974df4416b8ea8a86ce4bd622786f52  # x86_64
+
   client:
     version: 1.18.0
     config_file: /etc/default/kubernetes-node.ini
