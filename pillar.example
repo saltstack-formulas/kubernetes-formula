@@ -18,6 +18,17 @@ kubernetes:
       use_upstream_package: true
       binary:
         source_hash: 6ea8261b503c6c63d616878837dc70b758d4a3aeb9996ade8e83b51aedac9698
+    libs:
+      wanted:
+        - python
+        - javascript
+      python:
+        name: v
+        version: '11.0.0'
+        source_hash: '3ec0a0887bef32589ebb46efe7fbd30758c1da3c37f28d4394e9f4620172951a'
+      javascript:
+        version: '0.10.1'
+        source_hash: '9b7d2c7a2afd30fc6b42fc060fa64221de8221aa8211ffc8d275b1ac54b9717a'
   minikube:
     version: 1.2.0
     pkg:
@@ -27,6 +38,8 @@ kubernetes:
     version: 4.13.1
   kudo:
     version: 0.12.0
+  kind:
+    version: 0.8.1
   kubebuiler:
     version: 2.3.1
     pkg:

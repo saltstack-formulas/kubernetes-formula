@@ -10,3 +10,4 @@ include:
   - .kubebuilder
   - .k3s
   - .kudo
+  - .kind

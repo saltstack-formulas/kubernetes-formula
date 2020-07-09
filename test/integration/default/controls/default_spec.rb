@@ -20,6 +20,15 @@ control 'kubernetes archive' do
     it { should be_directory }
     its('type') { should eq :directory }
   end
+  describe file('/usr/local/kubernetes-kind-v0.8.1/bin') do
+    it { should exist }
+    it { should be_directory }
+    its('type') { should eq :directory }
+  end
+  describe file('/usr/local/kubernetes-kind-v0.8.1/bin/kind') do
+    it { should exist }
+    its('mode') { should cmp '0755' }
+  end
   describe file('/usr/local/kubernetes-node-v1.18.0/bin/kubectl') do
     it { should exist }
     its('mode') { should cmp '0755' }
@@ -113,5 +122,22 @@ control 'kubernetes archive' do
     it { should be_symlink }
     it { should be_file }
     it { should_not be_directory }
+  end
+  describe file('/usr/local/bin/kind') do
+    it { should be_symlink }
+    it { should be_file }
+    it { should_not be_directory }
+  end
+  describe file('/usr/local/src/kubernetes/python') do
+    it { should be_directory }
+  end
+  describe file('/usr/local/src/kubernetes/java') do
+    it { should be_directory }
+  end
+  describe file('/usr/local/src/kubernetes/javascript') do
+    it { should be_directory }
+  end
+  describe file('/usr/local/src/kubernetes/csharp') do
+    it { should be_directory }
   end
 end

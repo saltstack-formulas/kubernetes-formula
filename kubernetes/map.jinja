@@ -46,10 +46,7 @@
         {%- if comp in ('client', 'server', 'node') %}
             {%- set uri = '%s/v%s/bin/%s/%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
                                                       grains.kernel|lower, d.arch) %}
-        {%- elif comp == 'minikube' %}
-            {%- set uri = '%s/v%s/%s-%s-%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
-                                                     comp, grains.kernel|lower, d.arch) %}
-        {%- elif comp == 'devspace' %}
+        {%- elif comp in ('minikube', 'devspace', 'kind') %}
             {%- set uri = '%s/v%s/%s-%s-%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
                                                      comp, grains.kernel|lower, d.arch) %}
         {%- elif comp == 'kudo' %}
@@ -67,10 +64,22 @@
         {%- else %}
             {%- do d[comp]['pkg']['binary'].update({'source_hash': uri ~ '.sha256'}) %}
         {%- endif %}
+        {%- set fallback_url = uri + '/' + d[comp]['pkg']['name'] %}
 
         {%- do d[comp]['pkg']['binary'].update({
             'name': d.dir.binary + '/' + dirname,
-            'source': uri if comp in ('minikube', 'devspace', 'kudo') else uri + '/' + d[comp]['pkg']['name'] }) %}
+            'source': uri if comp in ('minikube', 'devspace', 'kudo', 'kind') else fallback_url }) %}
+
+    {%- endif %}
+    {%- if comp == 'client' and 'libs' in d[comp] and 'wanted' in d[comp]['libs'] and d[comp]['libs']['wanted'] %}
+        {%- for lib in d[comp]['libs']['wanted'] %}
+            {%- if lib in d[comp]['libs'] and d[comp]['libs'][lib] %}
+                {%- set name = '' if 'name' not in d[comp]['libs'][lib] else d[comp]['libs'][lib]['name'] %}
+                {%- set uri = '%s/%s/archive/%s%s.tar.gz'|format(d[comp]['libs']['uri'], lib, name,
+                                                                 d[comp]['libs'][lib]['version']) %}
+                {%- do d[comp]['libs'][lib].update({'source': uri }) %}
+            {%- endif %}
+        {%- endfor %}
     {%- endif %}
 {%- endfor %}
 

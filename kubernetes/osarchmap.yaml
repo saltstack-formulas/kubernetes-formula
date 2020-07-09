@@ -38,6 +38,10 @@ arm64:
       use_upstream_repo: false
       archive:
         source_hash: 842910a7013f61a60d670079716b207705750d55a9e4f1f93696d19d39e191644488170ac94d8740f8e3aa3f7f28f61a4347f69d7e93d149c69ac0efcf3688fe  # noqa 204
+  kind:
+    pkg:
+      binary:
+        source_hash: b33be1df8cdd842b0b6dfa306125fbf5ada9811c3e6db840854c89a66a194f3f
 
 ppc64le:
   arch: ppc64le
@@ -67,6 +71,10 @@ ppc64le:
       use_upstream_repo: false
       archive:
         source_hash: 95c5b952ac1c4127a5c3b519b664972ee1fb5e8e902551ce71c04e26ad44b39da727909e025614ac1158c258dc60f504b9a354c5ab7583c2ad769717b30b3836  # noqa 204
+  kind:
+    pkg:
+      binary:
+        source_hash: be3b7d766bf75ba0368921c73691c6028651207ef132c6435bda9ca40b5f6d00
 
 amd64:
   arch: amd64
