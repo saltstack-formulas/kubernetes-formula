@@ -5,6 +5,8 @@
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
 
+    {%- if d.k3s.pkg.use_upstream_script %}
+
 {{ formula }}-k3s-script-install-prerequisites:
   pkg.installed:
     - names: {{ d.pkg.deps|json }}
@@ -55,3 +57,5 @@
       {%- endif %}
     - require:
       - file: {{ formula }}-k3s-script-download
+
+    {%- endif %}

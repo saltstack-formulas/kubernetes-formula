@@ -80,10 +80,10 @@
         {%- if 'source_hash' not in d[comp]['pkg']['binary'] %}
             {%- do d[comp]['pkg']['binary'].update({'source_hash': uri ~ '.sha256'}) %}
         {%- endif %}
-        {%- set fallback_url = uri + '/' + d[comp]['pkg']['name'] %}
+        {%- set url = uri if 'name' not in d[comp]['pkg'] else uri + '/' + d[comp]['pkg']['name'] %}
         {%- do d[comp]['pkg']['binary'].update({
             'name': d.dir.binary + '/' + dirname,
-            'source': uri if comp in ('minikube', 'devspace', 'kudo', 'kind') else fallback_url }) %}
+            'source': uri if comp in ('minikube', 'devspace', 'kudo', 'kind') else url }) %}
 
     {%- endif %}
 

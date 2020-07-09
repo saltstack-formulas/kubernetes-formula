@@ -5,6 +5,8 @@
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
 
+    {%- if d.k3s.pkg.use_upstream_script %}
+
 {{ formula }}-k3s-script-clean-killall:
   cmd.run:
     - name: {{ d.k3s.pkg.script.killall }}
@@ -26,3 +28,5 @@
     - require:
       - cmd: {{ formula }}-k3s-script-clean-killall
       - cmd: {{ formula }}-k3s-script-clean-uninstall
+
+    {%- endif %}

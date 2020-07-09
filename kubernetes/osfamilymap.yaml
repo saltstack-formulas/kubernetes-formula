@@ -153,6 +153,7 @@ MacOS:
         source_hash: 7b9bdc2dc8604e590052a58456ac648d3afd1b436e609118538a6ffe07579cc6
       archive:
         source_hash: 803a0fed122ef6b85f7a120b5485723eaade765b7bc8306d0c0da03bd3df15d800699d15ea2270bb7797fa9ce6a81da90e730dc793ea4ed8c0149b63d26eca30  # noqa 204
+
   minikube:
     check: sysctl -a | grep machdep.cpu.features
     pkg:
@@ -185,3 +186,7 @@ MacOS:
       name: kind      # homebrew
       binary:
         source_hash: cdd8dfe7dff764429badcd636179b0e3eb937640cfe56749dd9b8f9c048cb7db
+  k3s:
+    pkg:
+      use_upstream_binary: true
+      use_upstream_script: false

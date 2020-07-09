@@ -106,7 +106,7 @@ kubernetes:
         version: 3.4.0
         uri: https://github.com/integr8ly/grafana-operator/archive
         source_hash: 3921adb8656c74a201e9e189931357d6be767e807d7312e7bd902efb607db089
-      prometheus-operator
+      prometheus-operator:
         version: '0.40.0'
         uri: https://github.com/coreos/prometheus-operator/archive
         source_hash: e9771685650803d2d07c0c8f455508e736e0516606d3182bc109f7986380cbc1
