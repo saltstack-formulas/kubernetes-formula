@@ -1,5 +1,13 @@
 # Changelog
 
+# [1.5.0](https://github.com/saltstack-formulas/kubernetes-formula/compare/v1.4.1...v1.5.0) (2020-07-09)
+
+
+### Features
+
+* **clientlibs:** kubernetes api client libs ([](https://github.com/saltstack-formulas/kubernetes-formula/commit/983227e))
+* **kind:** add kind support ([](https://github.com/saltstack-formulas/kubernetes-formula/commit/b4cdb90))
+
 ## [1.4.1](https://github.com/saltstack-formulas/kubernetes-formula/compare/v1.4.0...v1.4.1) (2020-07-08)
 
 
