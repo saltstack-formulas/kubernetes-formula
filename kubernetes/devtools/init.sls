@@ -2,5 +2,4 @@
 # vim: ft=sls
 
 include:
-  - .kubectx
-  - .kubens
+  - .install

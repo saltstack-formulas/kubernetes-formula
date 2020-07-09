@@ -12,7 +12,12 @@ kubernetes:
   added_in_defaults: defaults_value
   winner: defaults
 
-  tools:
+  devtools:
+    wanted:
+      - kubectx
+      - kubens
+      - cue
+      - audit2rbac
     kubectx:
       version: '0.9.1'
       pkg:

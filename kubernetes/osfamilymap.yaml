@@ -148,6 +148,14 @@ Windows:
         suffix: zip
         archive:
           source_hash: bd60e0bd71ef0c0d628dcf09600902e2d67998a29cc5998a404b200fe2d98de8  # x86_64
+    cue:
+      pkg:
+        archive:
+          source_hash: b705cd47d3d568b231ed94c8d3e947f9e1d9b54eab0483d9a00b1c6645be32e9  # x86_64
+    audit2rbac:
+      pkg:
+        archive:
+          source_hash: 57e1b6f108141da818eb29ad5755d386f56be067737302fabfa092e335c6ce57
 
 MacOS:
   identity:
@@ -204,11 +212,17 @@ MacOS:
   devtools:
     kubectx:
       pkg:
-        suffix: tar.gz
         archive:
           source_hash: a46c5cf1f6ba8f6aa4dc75fc5a7086d294a28a19cf2fbbf18ac54108a7f713e1  # x86_64
     kubens:
       pkg:
-        suffix: tar.gz
         archive:
           source_hash: 4ae390ba702d57355d5fb9f2bba04c9b00ae39f740c59044c2d39cd6bfa0ab18  # x86_64
+    cue:
+      pkg:
+        archive:
+          source_hash: 2b2038feaa2732f25bfb8c563627f990fa890bc654acee34c915bafa5279bc04  # x86_64
+    audit2rbac:
+      pkg:
+        archive:
+          source_hash: e89d9e7e6e68d7fdf135ab0912f57afda0fea07931ac443a367d35671f83d1b1

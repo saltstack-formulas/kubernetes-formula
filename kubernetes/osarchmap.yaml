@@ -21,6 +21,14 @@ arm64:
       pkg:
         archive:
           source_hash: 097f0473fefd9651c3fd87726aed867ed6e8e3ac70dbdc129faee781e19c84d2
+    cue:
+      pkg:
+        archive:
+          source_hash: 66986314a9c4c160544f54b8b4a30eb5b9d3418ed444711951026e629f4ef9e7
+    audit2rbac:
+      pkg:
+        archive:
+          source_hash: 819361a9b61ce02dc86bbe789b1da54dd887c2841f1a92ed0abb790738efc7f2
   octant:
     pkg:
       archive:
@@ -88,12 +96,30 @@ ppc64le:
     pkg:
       binary:
         source_hash: be3b7d766bf75ba0368921c73691c6028651207ef132c6435bda9ca40b5f6d00
+  devtools:
+    audit2rbac:
+      pkg:
+        archive:
+          source_hash: f992061aad5ebacbf5694f63cefa4d4e0f12515322196bd8eaf3c040852491c6
+
+ppc64:
+  arch: ppc64
+  devtools:
+    audit2rbac:
+      pkg:
+        archive:
+          source_hash: 4c297670d26d7eefddb20d60ba1e4c389245c81ddb9c80c8efb330b06314db28
 
 amd64:
   arch: amd64
 
 386:
   arch: 386
+  devtools:
+    audit2rbac:
+      pkg:
+        archive:
+          source_hash: 11ec8ed082fe8555c0537e437aa0448e00a135322fff05410594f691d3632398
   client:
     pkg:
       use_upstream_archive: true

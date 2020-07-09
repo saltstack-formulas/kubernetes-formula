@@ -16,3 +16,4 @@ include:
   - .server.clean
   - .client.clean
   - .devtools.clean
+  - .devlibs.clean

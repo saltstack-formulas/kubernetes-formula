@@ -84,35 +84,48 @@
         {%- do d[comp]['pkg']['binary'].update({
             'name': d.dir.binary + '/' + dirname,
             'source': uri if comp in ('minikube', 'devspace', 'kudo', 'kind') else url }) %}
-
     {%- endif %}
+
     {%- if comp == ('devtools',) %}
         {%- if 'wanted' in d[comp] and d[comp]['wanted'] %}
             {%- for item in d[comp]['wanted'] %}
                 {%- if item in d[comp] and d[comp][item] %}
-                    {%- set uri = '%s/v%s/%s_v%s_%s_%s.%s'|format(d[comp][item]['pkg']['uri'],
-                                  d[comp][item]['version'], item, d[comp][item]['version'],
-                                  grains.kernel|lower, d.arch, d[comp][item]['pkg']['suffix']) %}
-                    {%- do d[comp][item]['pkg']['archive'].update({'source': uri }) %}
+
+                    {%- if item in ('audit2rbac',) %}
+                        {%- set uri = '%s/v%s/%s-%s-%s.%s'|format(d[comp][item]['pkg']['uri'],
+                                       d[comp][item]['version'], item, grains.kernel|lower,
+                                       d.arch, d[comp][item]['pkg']['suffix']) %}
+                    {%- elif item in ('kubectx', 'kubens',) %}
+                        {%- set arch = 'x86_64' if d.arch in ('x86_64', 'amd64') else d.arch %}
+                        {%- set uri = '%s/v%s/%s_v%s_%s_%s.%s'|format(d[comp][item]['pkg']['uri'],
+                                      d[comp][item]['version'], item, d[comp][item]['version'],
+                                      grains.kernel|lower, arch, d[comp][item]['pkg']['suffix']) %}
+                    {%- elif item in ('cue',) %}
+                        {%- set arch = 'x86_64' if d.arch in ('x86_64', 'amd64') else d.arch %}
+                        {%- set uri = '%s/v%s/%s_v%s_%s_%s.%s'|format(d[comp][item]['pkg']['uri'],
+                                      d[comp][item]['version'], item, d[comp][item]['version'],
+                                      grains.kernel, arch, d[comp][item]['pkg']['suffix']) %}
+                    {%- endif %}
+                    {%- do d[comp][item]['pkg']['archive'].update({ 'path': d.dir.archive ~ '/' ~ dirname,
+                                                                    'source': uri }) %}
                 {%- endif %}
             {%- endfor %}
         {%- endif %}
     {%- endif %}
 
-    {%- if comp == ('client', 'operators') %}
-        {%- set sw = d[comp] if 'comp' == 'operators' else d[comp]['libs'] %}
-        {%- if 'wanted' in sw and sw['wanted'] %}
-            {%- for item in sw['wanted'] %}
-                {%- if item in sw and sw[item] %}
-                    {%- set name = 'v' if 'name' not in sw['pkg'][item] else sw['pkg'][item]['name'] %}
-                    {%- if comp == 'client' %}
-                        {%- set uri = '%s/%s/archive/%s%s.tar.gz'|format(sw['pkg'][item]['uri'], item, name,
-                                                                         sw['pkg'][item]['version']) %}
+    {%- if comp == ('devlibs', 'operators',) %}
+        {%- if 'wanted' in d[comp] and d[comp]['wanted'] %}
+            {%- for item in d[comp]['wanted'] %}
+                {%- if item in d[comp] and d[comp][item] %}
+                    {%- set name = 'v' if 'name' not in d[comp]['pkg'][item] else d[comp]['pkg'][item]['name'] %}
+                    {%- if comp == 'devlibs' %}
+                        {%- set uri = '%s/%s/archive/%s%s.tar.gz'|format(d[comp]['pkg'][item]['uri'], item, name,
+                                                                         d[comp]['pkg'][item]['version']) %}
                     {%- elif comp == 'operators' %}
-                        {%- set uri = '%s/%s%s.tar.gz'|format(sw['pkg'][item]['uri'], item, name,
-                                                              sw['pkg'][item]['version']) %}
+                        {%- set uri = '%s/%s%s.tar.gz'|format(d[comp]['pkg'][item]['uri'], item, name,
+                                                              d[comp]['pkg'][item]['version']) %}
                     {%- endif %}
-                    {%- do sw['pkg'][item].update({'source': uri }) %}
+                    {%- do d[comp]['pkg'][item].update({'source': uri }) %}
                 {%- endif %}
             {%- endfor %}
         {%- endif %}

@@ -15,3 +15,4 @@ include:
   - .minikube
   - .octant
   - .devtools
+  - .devlibs

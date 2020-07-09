@@ -7,4 +7,3 @@
 
 include:
   - {{ '.binary' if d.client.pkg.use_upstream_binary else '.archive' if d.client.pkg.use_upstream_archive else '.package' }}
-  - .libs

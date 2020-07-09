@@ -17,6 +17,7 @@ kubernetes:
     - kudo
     - minikube
     - operators
+    - devlibs
     - devtools
 
   identity:
@@ -42,26 +43,61 @@ kubernetes:
       gpgcheck: 1
 
   devtools:
+    wanted:
+      - kubectx
+      - kubens
+      - cue
+      - audit2rbac
     kubectx:
       version: '0.9.1'
       pkg:
         use_upstream_archive: true
-        uri: https://github.com/ahmetb/kubectx/releases/download  # set in map.jinja
+        uri: https://github.com/ahmetb/kubectx/releases/download
         suffix: tar.gz
         commands:
           - kubectx
         archive:
+          path: null  # set in map.jinja
+          source: null # set in map.jinja
           source_hash: ce689516f3ae916492bb8f9ee3344da03f6b5a098c1ce2c4a5107b8e9e1cf445  # x86_64
     kubens:
       version: '0.9.1'
       pkg:
         use_upstream_archive: true
-        uri: https://github.com/ahmetb/kubectx/releases/download  # set in map.jinja
+        uri: https://github.com/ahmetb/kubectx/releases/download
         suffix: tar.gz
         commands:
           - kubens
         archive:
+          source: null # set in map.jinja
+          path: null  # set in map.jinja
           source_hash: dea7839158e4847b8b52709dbfbe9ff2d974df4416b8ea8a86ce4bd622786f52  # x86_64
+    cue:
+      version: '0.2.1'
+      pkg:
+        use_upstream_archive: true
+        name: cue
+        uri: https://github.com/cuelang/cue/releases/download
+        suffix: tar.gz
+        commands:
+          - cue
+        archive:
+          path: null  # set in map.jinja
+          source: null # set in map.jinja
+          source_hash: 40078d02559595eec8e5a873f09ca89545502019bcac6f892f5a30bb8d49286c  # x86_64
+    audit2rbac:
+      version: '0.8.0'
+      pkg:
+        use_upstream_archive: true
+        name: audit2rbac
+        uri: https://github.com/liggitt/audit2rbac/releases/download
+        suffix: tar.gz
+        commands:
+          - audit2rbac
+        archive:
+          path: null  # set in map.jinja
+          source: null # set in map.jinja
+          source_hash: 819361a9b61ce02dc86bbe789b1da54dd887c2841f1a92ed0abb790738efc7f2  # x86_64
 
   client:
     version: 1.18.0
@@ -91,27 +127,43 @@ kubernetes:
         source: null   # set in map.jinja
         source_hash: 6ea8261b503c6c63d616878837dc70b758d4a3aeb9996ade8e83b51aedac9698
         trim_output: true
-    libs:
-      wanted:
-        - java
-        - python
-        - csharp
-        - javascript
-      uri: https://github.com/kubernetes-client
+
+  devlibs:
+    wanted:
+      - java
+      - python
+      - csharp
+      - javascript
+      - kopf
+      - k8s
+    pkg:
       java:
         name: 'client-java-parent-'
         version: '6.0.1'
+        uri: https://github.com/kubernetes-client
         source_hash: '51d0229a80b913ede5a973036e7c78c36efc1d425c3ccde10f81acb03e183aa2'
       python:
         name: v
         version: '11.0.0'
+        uri: https://github.com/kubernetes-client
         source_hash: '3ec0a0887bef32589ebb46efe7fbd30758c1da3c37f28d4394e9f4620172951a'
       csharp:
         version: '1.2.0'
+        uri: https://github.com/kubernetes-client
         source_hash: '0edcefd17f50d0e9d5b34ea318a6a5a13cf9448f918ffa9dec519da9457f9159'
       javascript:
         version: '0.10.1'
+        uri: https://github.com/kubernetes-client
         source_hash: '9b7d2c7a2afd30fc6b42fc060fa64221de8221aa8211ffc8d275b1ac54b9717a'
+      kopf:
+        name: ''
+        version: '0.27'
+        uri: https://github.com/zalando-incubator/kopf/archive
+        source_hash: '25a98ca73b3e7ea8bc38dc31cd5e3f2bd6d443490395166b61eeaeb02d9e1d4d'
+      k8s:
+        version: '1.2.0'
+        uri: https://github.com/ericchiang/k8s/archive
+        source_hash: 18f4c90d7b206d9abb69aff007a534e6cf2e723cbc7d4bb74cc32ec619c418ca
 
   operators:
     # https:// operatorhub.io

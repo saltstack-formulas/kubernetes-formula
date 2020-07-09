@@ -8,7 +8,6 @@ Formula to manage kubernetes on MacOS and GNU/Linux. Currently supports:
 * `server`
 * `node`
 * `client`
-* `client libs`
 * `devspace`
 * `istio`
 * `kind`
@@ -19,7 +18,10 @@ Formula to manage kubernetes on MacOS and GNU/Linux. Currently supports:
 * `minikube`
 * `octant`
 * `operators`
-* `tools`
+* `devtools`
+* `devlibs`
+
+Operators, Developer tools, and Developer library are easy to customize and extend.
 
 
 |img_travis| |img_sr|
@@ -185,42 +187,64 @@ This state uninstalls istio only (see https://istio.io)
 ``kubernetes.octant``
 ^^^^^^^^^^^^^^^^^^^^^
 
-This state installs octant only(see https://github.com/vmware-tanzu/octant)
+This state installs octant only (see https://github.com/vmware-tanzu/octant)
 
 ``kubernetes.octant.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state uninstalls octant only(see https://github.com/vmware-tanzu/octant)
+This state uninstalls octant only (see https://github.com/vmware-tanzu/octant)
 
 ``kubernetes.linkerd2``
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-This state installs linkerd2 only(see https://github.com/linkerd/linkerd2)
+This state installs linkerd2 only (see https://github.com/linkerd/linkerd2)
 
 ``kubernetes.linkerd2.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state uninstalls linkerd2 only(see https://github.com/linkerd/linkerd2)
+This state uninstalls linkerd2 only (see https://github.com/linkerd/linkerd2)
 
 ``kubernetes.operators``
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state installs operator archives only (see https://operatorhub.io)
+This state installs operator archives only
+
+* https://operatorhub.io
+* https://github.com/flant/shell-operator
+* https://github.com/ahmetb/kubectx
 
 ``kubernetes.operators.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state uninstalls operator archives only (see https://operatorhub.io)
+This state uninstalls operator archives only
 
-``kubernetes.tools``
-^^^^^^^^^^^^^^^^^^^^
+``kubernetes.devtools``
+^^^^^^^^^^^^^^^^^^^^^^^
 
-This state installs selected kubernetes developer tools (i.e. `kubectx`, `kubens`, etc)
+This state installs selected kubernetes developer tools only
 
-``kubernetes.tools.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+* https://github.com/ahmetb/kubectx
+* https://github.com/cuelang/cue
+* https://github.com/liggitt/audit2rbac
 
-This state uninstalls selected kubernetes developer tools (i.e. `kubectx`, `kubens`, etc)
+``kubernetes.devtools.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls selected kubernetes developer tools only
+
+``kubernetes.devlibs``
+^^^^^^^^^^^^^^^^^^^^^^
+
+This state installs selected kubernetes developer libraries
+
+* https://github.com/kubernetes-client
+* https://github.com/zalando-incubator/kopf
+* https://github.com/ericchiang/k8s
+
+``kubernetes.devlibs.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls selected kubernetes developer libraries (i.e. kubernetes client libraries, kopf, etc).
 
 
 Main Sub-states
@@ -232,12 +256,12 @@ Main Sub-states
 ``kubernetes.minikube.package``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state installs minikube package only(MacOS).
+This state installs minikube package only (MacOS).
 
 ``kubernetes.minikube.package.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state uninstalls the minikube package only(MacOS).
+This state uninstalls the minikube package only (MacOS).
 
 ``kubernetes.minikube.binary``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
