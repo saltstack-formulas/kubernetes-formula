@@ -2,14 +2,28 @@
 # vim: ft=yaml
 ---
 kubernetes:
+  supported:
+    - server
+    - client
+    - node
+    - devspace
+    - istio
+    - linkerd2
+    - kubebuilder
+    - octant
+    - kind
+    - kudo
+    - minikube
+    - operators
+
   kubectl:
     environ:
       a: b
     linux:
       altpriority: 1000
     pkg:
-      use_upstream_repo: true
-      use_upstream_binary: false
+      use_upstream_repo: false
+      use_upstream_binary: true
   minikube:
     environ:
       a: b

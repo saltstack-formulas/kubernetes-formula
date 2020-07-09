@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-title 'kubernetes archives profile'
+title 'kubernetes redhat profile'
 
 control 'kubernetes archive' do
   impact 1.0
@@ -75,11 +75,11 @@ control 'kubernetes archive' do
     it { should be_file }
     it { should_not be_directory }
   end
-  describe file('/usr/local/kubernetes-k3s-v1.18.4+k3s1/bin') do
-    it { should exist }
-    it { should be_directory }
-    its('type') { should eq :directory }
-  end
+  # describe file('/usr/local/kubernetes-k3s-v1.18.4+k3s1/bin') do
+  #   it { should exist }
+  #   it { should be_directory }
+  #   its('type') { should eq :directory }
+  # end
   describe file('/tmp/kubernetes-tmp/k3s-bootstrap.sh') do
     it { should exist }
     its('mode') { should cmp '0755' }

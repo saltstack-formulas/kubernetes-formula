@@ -2,6 +2,21 @@
 # vim: ft=yaml
 ---
 kubernetes:
+  supported:
+    - server
+    - client
+    - node
+    - devspace
+    - istio
+    - linkerd2
+    - kubebuilder
+    - octant
+    - k3s
+    - kind
+    - kudo
+    - minikube
+    - operators
+
   kubectl:
     environ:
       a: b
