@@ -137,7 +137,7 @@ Windows:
     pkg:
       archive:
         source_hash: cecf094c3d8f6c55236cf02c7e4c3916ca0e5c430ef5dff647665a2a16a20c8c
-  tools:
+  devtools:
     kubectx:
       pkg:
         suffix: zip
@@ -201,7 +201,7 @@ MacOS:
     pkg:
       use_upstream_binary: true
       use_upstream_script: false
-  tools:
+  devtools:
     kubectx:
       pkg:
         suffix: tar.gz

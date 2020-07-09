@@ -6,26 +6,26 @@
 {%- set formula = d.formula %}
 {%- from tplroot ~ "/files/macros.jinja" import format_kwargs with context %}
 
-{{ formula }}-tools-kubens-archive-install:
+{{ formula }}-devtools-kubectx-archive-install:
   pkg.installed:
     - names: {{ d.pkg.deps|json }}
     - require_in:
-      - file: {{ formula }}-tools-kubens-archive-install
+      - file: {{ formula }}-devtools-kubectx-archive-install
   file.directory:
-    - name: {{ d.kubens.pkg.archive.name }}
+    - name: {{ d.devtools.kubectx.pkg.archive.name }}
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
     - mode: 755
     - makedirs: True
     - clean: True
     - require_in:
-      - archive: {{ formula }}-tools-kubens-archive-install
+      - archive: {{ formula }}-devtools-kubectx-archive-install
     - recurse:
         - user
         - group
         - mode
   archive.extracted:
-    {{- format_kwargs(d.kubens.pkg.archive) }}
+    {{- format_kwargs(d.devtools.kubectx.pkg.archive) }}
     - retry: {{ d.retry_option|json }}
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
@@ -33,26 +33,26 @@
         - user
         - group
     - require:
-      - file: {{ formula }}-tools-kubens-archive-install
+      - file: {{ formula }}-devtools-kubectx-archive-install
 
         {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
-            {%- for cmd in d.kubens.pkg.commands %}
+            {%- for cmd in d.devtools.kubectx.pkg.commands %}
 
-{{ formula }}-tools-kubens-archive-install-symlink-{{ cmd }}:
+{{ formula }}-devtools-kubectx-archive-install-symlink-{{ cmd }}:
   file.symlink:
     - name: /usr/local/bin/{{ cmd }}
-    - target: {{ d.kubens.pkg.archive.name }}/{{ cmd }}
+    - target: {{ d.devtools.kubectx.pkg.archive.name }}/{{ cmd }}
     - force: True
     - require:
-      - archive: {{ formula }}-tools-kubens-archive-install
+      - archive: {{ formula }}-devtools-kubectx-archive-install
 
             {%- endfor %}
         {%- endif %}
     {%- else %}
 
-{{ formula }}-tools-kubens-archive-install-other:
+{{ formula }}-devtools-kubectx-archive-install-other:
   test.show_notification:
     - text: |
-        The kubens archive is unavailable for {{ salt['grains.get']('finger', grains.os_family) }}
+        The kubectx archive is unavailable for {{ salt['grains.get']('finger', grains.os_family) }}
 
     {%- endif %}

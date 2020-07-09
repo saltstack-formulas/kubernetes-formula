@@ -9,13 +9,13 @@
 include:
   - {{ sls_alternatives_clean }}
 
-{{ formula }}-tools-kubectx-archive-absent:
+{{ formula }}-devtools-kubectx-archive-absent:
   file.absent:
     - names:
       - {{ d.dir.tmp }}/kubectx*
-      - {{ d.kubectx.pkg.archive.name }}
+      - {{ d.devtools.kubectx.pkg.archive.name }}
         {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
-            {%- for cmd in d.kubectx.pkg.commands %}
+            {%- for cmd in d.devtools.kubectx.pkg.commands %}
       - /usr/local/bin/{{ cmd }}
             {%- endfor %}
         {%- endif %}

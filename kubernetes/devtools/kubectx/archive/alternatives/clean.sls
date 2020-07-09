@@ -7,17 +7,17 @@
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
 
-        {%- if d.kubectx.pkg.use_upstream_archive and d.linux.altpriority|int > 0 %}
+        {%- if d.devtools.kubectx.pkg.use_upstream_archive and d.linux.altpriority|int > 0 %}
 
 include:
   - {{ sls_archive_clean }}
 
-            {%- for cmd in d.kubectx.pkg.commands %}
+            {%- for cmd in d.devtools.kubectx.pkg.commands %}
 
-{{ formula }}-tools-kubectx-archive-alternatives-remove-{{ cmd }}:
+{{ formula }}-devtools-kubectx-archive-alternatives-remove-{{ cmd }}:
   alternatives.remove:
     - name: link-k8s-kubectx-{{ cmd }}
-    - path: {{ d.kubectx.pkg.archive.name }}/{{ cmd }}
+    - path: {{ d.devtools.kubectx.pkg.archive.name }}/{{ cmd }}
     - onlyif: update-alternatives --get-selections |grep ^link-k8s-kubectx-{{ cmd }}
     - require:
       - sls: {{ sls_archive_clean }}

@@ -86,7 +86,7 @@
             'source': uri if comp in ('minikube', 'devspace', 'kudo', 'kind') else url }) %}
 
     {%- endif %}
-    {%- if comp == ('tools',) %}
+    {%- if comp == ('devtools',) %}
         {%- if 'wanted' in d[comp] and d[comp]['wanted'] %}
             {%- for item in d[comp]['wanted'] %}
                 {%- if item in d[comp] and d[comp][item] %}

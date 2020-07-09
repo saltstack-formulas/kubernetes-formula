@@ -14,4 +14,4 @@ include:
   - .linkerd2
   - .minikube
   - .octant
-  - .tools
+  - .devtools

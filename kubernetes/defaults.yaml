@@ -17,6 +17,7 @@ kubernetes:
     - kudo
     - minikube
     - operators
+    - devtools
 
   identity:
     rootuser: root
@@ -40,7 +41,7 @@ kubernetes:
       enabled: 1
       gpgcheck: 1
 
-  tools:
+  devtools:
     kubectx:
       version: '0.9.1'
       pkg:
@@ -119,6 +120,7 @@ kubernetes:
       - prometheus-operator
       - akka-cluster-operator
       - istio-operator
+      - shell-operator   # part-operator
     pkg:
       akka-cluster-operator:
         version: 1.0.0
@@ -137,6 +139,10 @@ kubernetes:
         version: '0.2.0'
         uri: https://github.com/banzaicloud/istio-operator/archive
         source_hash: 8bbcf1c201707d9e01f204f3b2a698827b76757a8cdd593de943af64fe1e72d1
+      shell-operator:
+        version: 1.0..0-beta.10
+        uri: https://github.com/flant/shell-operator/archive
+        source_hash: b920a2a8c21edc2c89d828ef4e90e4980ec46a9e69b92cee02b9ff6e20c7df47
 
   server:
     version: 1.18.0
