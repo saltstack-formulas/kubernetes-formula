@@ -57,6 +57,9 @@
         {%- elif comp in ('minikube', 'devspace', 'kind') %}
             {%- set uri = '%s/v%s/%s-%s-%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
                                                      comp, grains.kernel|lower, d.arch) %}
+        {%- elif comp in ('linkerd2',) %}
+            {%- set uri = '%s/edge-%s/linkerd2-cli-edge-%s-%s'|format(d[comp]['pkg']['binary']['uri'],
+                                                      d[comp]['version'], d[comp]['version'], d.arch) %}
         {%- elif comp == 'kudo' %}
             {%- set arch = 'x86_64' if d.arch == 'amd64' else d.arch %}
             {%- set uri = '%s/v%s/kubectl-%s_%s_%s_%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],

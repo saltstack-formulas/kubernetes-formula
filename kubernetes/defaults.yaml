@@ -222,7 +222,6 @@ kubernetes:
           # K3S_TOKEN: ''
           # K3S_TOKEN_FILE: ''
           # KUBECONFIG: /etc/rancher/k3s/k3s.yaml
-
   kudo:
     version: 0.12.0
     pkg:
@@ -234,6 +233,15 @@ kubernetes:
         name: kubectl-kudo
         source: null   # set in map.jinja
         source_hash: 5df22a42021d78a199d00f055faedd47a86ad3001bd06da31549c0a477a403a9
+  linkerd2:
+    version: 20.7.1
+    pkg:
+      use_upstream_binary: true
+      binary:
+        uri: 'https://github.com/linkerd/linkerd2/releases/download'
+        name: linkerd2-cli-edge
+        source: null  # set in map.jinja
+        source_hash: null  # set in map.jinja
   kind:
     version: 0.8.1
     pkg:

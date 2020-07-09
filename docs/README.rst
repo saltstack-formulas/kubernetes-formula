@@ -12,6 +12,7 @@ Formula to manage kubernetes on MacOS and GNU/Linux. Currently supports:
 * `kind`
 * `k3s`
 * `istio`
+* `linkerd2`
 * `kubebuilder`
 * `minikube`
 * `kudo`
@@ -177,6 +178,16 @@ This state installs istio only.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state uninstalls istio only.
+
+``kubernetes.linkerd2``
+^^^^^^^^^^^^^^^^^^^^^^^
+
+This state installs linkerd2 only.
+
+``kubernetes.linkerd2.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls linkerd2 only.
 
 
 Main Sub-states
