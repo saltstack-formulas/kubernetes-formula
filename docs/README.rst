@@ -5,16 +5,17 @@ kubernetes-formula
 
 Formula to manage kubernetes on MacOS and GNU/Linux. Currently supports:
 
-* `client`
-* `client libs`
 * `server`
 * `node`
+* `client`
 * `devspace`
 * `kind`
 * `k3s`
+* `istio`
 * `kubebuilder`
 * `minikube`
 * `kudo`
+* `client libs`
 
 
 |img_travis| |img_sr|
@@ -166,6 +167,16 @@ This state installs kubebuilder only.
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state uninstalls kubebuilder only.
+
+``kubernetes.istio``
+^^^^^^^^^^^^^^^^^^^^
+
+This state installs istio only.
+
+``kubernetes.istio.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls istio only.
 
 
 Main Sub-states
