@@ -17,9 +17,9 @@ Formula to manage kubernetes on MacOS and GNU/Linux. Currently supports:
 * `linkerd2`
 * `minikube`
 * `octant`
-* `operators`
-* `devtools`
-* `devlibs`
+* `operators` (any from https://operatorhub.io)
+* `devtools` (kubectx, kubens, cue, attr2rbac, etc)
+* `devlibs`  (kubernetes clients)
 
 Operators, Developer tools, and Developer library are easy to customize and extend.
 
@@ -74,7 +74,7 @@ This state installs the kubernetes solution (see https://kubernetes.io)
 
 This state removes the kubernetes solution (see https://kubernetes.io)
 
-``kubernetes.package.repo`
+``kubernetes.package.repo``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state installs kubernetes package repository only (see https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-using-native-package-management)
