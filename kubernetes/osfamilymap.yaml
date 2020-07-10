@@ -153,6 +153,10 @@ Windows:
       audit2rbac:
         archive:
           source_hash: 57e1b6f108141da818eb29ad5755d386f56be067737302fabfa092e335c6ce57
+      stern:
+        binary:
+          suffix: exe
+          source_hash: 75708b9acf6ef0eeffbe1f189402adc0405f1402e6b764f1f5152ca288e3109e  # amd64
       dive:
         archive:
           suffix: zip
@@ -221,6 +225,9 @@ MacOS:
       cue:
         archive:
           source_hash: 2b2038feaa2732f25bfb8c563627f990fa890bc654acee34c915bafa5279bc04  # x86_64
+      stern:
+        archive:
+          source_hash: 7aea3b6691d47b3fb844dfc402905790665747c1e6c02c5cabdd41994533d7e9  # x86_64
       dive:
         archive:
           source_hash: 1da3581355d432db38154d80ca9929fc3bca55c473ba286e7869814718f6d578  # x86_64

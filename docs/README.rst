@@ -18,7 +18,7 @@ Formula to manage kubernetes on MacOS and GNU/Linux. Currently supports:
 * `minikube`  (https://github.com/kubernetes/minikube)
 * `octant`    (https://github.com/vmware-tanzu/octant)
 * `operators` (https://operatorhub.io)
-* `devtools` (kubectx, kubens, cue, attr2rbac, etc)
+* `devtools` (kubectx, kubens, cue, attr2rbac, dive, stern, etc)
 * `devlibs`  (kubernetes clients)
 
 Operators, Developer tools, and Developer library can be extended.
@@ -226,6 +226,8 @@ This state installs selected kubernetes developer tools only
 * https://github.com/ahmetb/kubectx
 * https://github.com/cuelang/cue
 * https://github.com/liggitt/audit2rbac
+* https://github.com/wagoodman/dive
+* https://github.com/wercker/stern
 
 ``kubernetes.devtools.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

@@ -49,6 +49,7 @@ kubernetes:
       - cue
       - audit2rbac
       - dive
+      - stern
     pkg:
       dive:
         version: '0.9.2'
@@ -61,7 +62,17 @@ kubernetes:
           name: null  # set in map.jinja
           source: null # set in map.jinja
           source_hash: fb0b6ee68831fbfc59a06d88638becea09e85da3bb2093a1de4a47ebd4e40296  # x86_64
-        
+      stern:
+        version: '1.11.0'
+        use_upstream_archive: true
+        uri: https://github.com/wercker/stern/releases/download
+        suffix: tar.gz
+        commands:
+          - stern
+        binary:
+          name: null  # set in map.jinja
+          source: null # set in map.jinja
+          source_hash: 	e0b39dc26f3a0c7596b2408e4fb8da533352b76aaffdc18c7ad28c833c9eb7db  # x86_64
       kubectx:
         version: '0.9.1'
         use_upstream_archive: true

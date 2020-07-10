@@ -114,14 +114,24 @@
                 {%- set url = '%s/v%s/%s_%s_%s_%s.%s'|format(d[comp]['pkg'][item]['uri'],
                                d[comp]['pkg'][item]['version'], item, d[comp]['pkg'][item]['version'],
                                grains.kernel, arch, d[comp]['pkg'][item]['suffix']) %}
+
             {%- elif item in ('dive',) %}
                 {%- set arch = 'amd64' if d.arch in ('x86_64', 'amd64') else d.arch %}
                 {%- set url = '%s/v%s/%s_%s_%s_%s.%s'|format(d[comp]['pkg'][item]['uri'],
                                d[comp]['pkg'][item]['version'], item, d[comp]['pkg'][item]['version'],
                                grains.kernel, arch, d[comp]['pkg'][item]['suffix']) %}
-            {%- endif %}
 
-            {%- do d[comp]['pkg'][item]['archive'].update({'name': d.dir.archive ~ '/' ~ dirname, 'source': url }) %}
+            {%- elif item in ('stern',) %}
+                {%- set arch = 'amd64' if d.arch in ('x86_64', 'amd64') else d.arch %}
+                {%- set url = '%s/%s/%s_%s_%s'|format(d[comp]['pkg'][item]['uri'], d[comp]['pkg'][item]['version'],
+                                                      item, grains.kernel, arch) %}
+            {%- endif %}
+            {%- if 'binary' in d[comp]['pkg'][item] %}
+                {%- do d[comp]['pkg'][item]['binary'].update({'name': d.dir.binary~'/'~dirname, 'source': url }) %}
+            {%- endif %}
+            {%- if 'archive' in d[comp]['pkg'][item] %}
+                {%- do d[comp]['pkg'][item]['archive'].update({'name': d.dir.archive~'/'~dirname, 'source': url }) %}
+            {%- endif %}
         {%- endfor %}
 
     {%- elif comp in ('devlibs', 'operators',) and 'wanted' in d[comp] and d[comp]['wanted'] %}

@@ -6,6 +6,9 @@
 {%- set formula = d.formula %}
 
     {%- if 'wanted' in d.devtools and d.devtools.wanted %}
+include:
+  - .binary
+
         {%- for tool in d.devtools.wanted %}
             {%- if 'pkg' in d.devtools and tool in d.devtools['pkg'] and d.devtools['pkg'][tool] %}
 
