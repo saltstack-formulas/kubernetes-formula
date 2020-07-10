@@ -15,7 +15,7 @@ include:
       - {{ d.dir.tmp }}/octant*
       - {{ d.octant.pkg.archive.name }}/octant
         {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
-            {%- for cmd in d.octant.pkg.commands %}
+            {%- for cmd in d.octant.pkg.commands|unique %}
       - /usr/local/bin/{{ cmd }}
             {%- endfor %}
         {%- endif %}

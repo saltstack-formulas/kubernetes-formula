@@ -9,7 +9,7 @@ include:
   - .binary.clean
 
     {%- if 'wanted' in d.devtools and d.devtools.wanted %}
-        {%- for tool in d.devtools.wanted %}
+        {%- for tool in d.devtools.wanted|unique %}
             {%- if 'pkg' in d.devtools and tool in d.devtools['pkg'] and d.devtools['pkg'][tool] %}
                 {%- if 'archive' in d.devtools['pkg'][tool] %}
 
@@ -18,7 +18,7 @@ include:
     - names:
       - {{ d.devtools['pkg'][tool]['archive']['name'] }}
                     {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
-                        {%- for cmd in d.devtools['pkg'][tool]['commands'] %}
+                        {%- for cmd in d.devtools['pkg'][tool]['commands']|unique %}
       - /usr/local/bin/{{ cmd }}
                         {%- endfor %}
                     {%- endif %}

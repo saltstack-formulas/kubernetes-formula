@@ -6,7 +6,7 @@
 {%- set formula = d.formula %}
 
     {%- if 'wanted' in d.operators and d.operators.wanted %}
-        {%- for operator in d.operators.wanted %}
+        {%- for operator in d.operators.wanted|unique %}
             {%- if 'pkg' in d.operators and d.operators['pkg'] and operator in d.operators['pkg'] %}
 
 {{ formula }}-operator-install-{{ operator }}:

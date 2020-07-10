@@ -6,7 +6,7 @@
 {%- set formula = d.formula %}
 
 {%- if 'wanted' in d.devlibs and d.devlibs.wanted %}
-    {%- for lib in d.devlibs.wanted %}
+    {%- for lib in d.devlibs.wanted|unique %}
         {%- if 'pkg' in d.devlibs and d.devlibs['pkg'] and lib in d.devlibs['pkg'] and d.devlibs['pkg'][lib] %}
 
 {{ formula }}-devlibs-{{ lib }}-install:

@@ -38,7 +38,7 @@
       - file: {{ formula }}-istio-archive-install
 
         {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
-            {%- for cmd in d.istio.pkg.commands %}
+            {%- for cmd in d.istio.pkg.commands|unique %}
 
 {{ formula }}-istio-archive-install-symlink-{{ cmd }}:
   file.symlink:

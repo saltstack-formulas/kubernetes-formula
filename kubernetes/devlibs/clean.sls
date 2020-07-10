@@ -6,7 +6,7 @@
 {%- set formula = d.formula %}
 
 {%- if 'wanted' in d.devlibs and d.devlibs.wanted %}
-    {%- for lib in d.devlibs.wanted %}
+    {%- for lib in d.devlibs.wanted|unique %}
 
 {{ formula }}-devlibs-clean-{{ lib }}:
   file.absent:

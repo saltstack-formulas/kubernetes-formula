@@ -18,7 +18,7 @@ include:
 
 {{ formula }}-server-package-install-pkgs:
   pkg.installed:
-    - names: {{ d.server.pkg.commands|json }}
+    - names: {{ d.server.pkg.commands|unique|json }}
     - runas: {{ d.identity.rootuser }}
     - reload_modules: true
         {%- if d.server.pkg.use_upstream_repo %}

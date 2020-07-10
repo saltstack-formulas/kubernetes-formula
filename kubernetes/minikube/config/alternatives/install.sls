@@ -1,16 +1,14 @@
 # -*- coding: utf-8 -*-
 # vim: ft=sls
 
-    {%- if grains.kernel|lower == 'linux' and grains.os_family not in ('Arch',) %}
+{%- if grains.kernel|lower == 'linux' and grains.os_family not in ('Arch',) %}
+    {%- set tplroot = tpldir.split('/')[0] %}
+    {%- from tplroot ~ "/map.jinja" import data as d with context %}
+    {%- set formula = d.formula %}
 
-{%- set tplroot = tpldir.split('/')[0] %}
-{%- from tplroot ~ "/map.jinja" import data as d with context %}
-{%- set formula = d.formula %}
-
-        {%- if not d.minikube.pkg.use_upstream_repo and d.linux.altpriority|int > 0 %}
-            {%- set sls_binary_install = tplroot ~ '.minikube.binary.install' %}
-            {%- set sls_package_install = tplroot ~ '.minikube.package.install' %}
-
+    {%- if not d.minikube.pkg.use_upstream_repo and d.linux.altpriority|int > 0 %}
+        {%- set sls_binary_install = tplroot ~ '.minikube.binary.install' %}
+        {%- set sls_package_install = tplroot ~ '.minikube.package.install' %}
 include:
   - {{ sls_binary_install if d.minikube.pkg.use_upstream_binary else sls_package_install }}
 
@@ -42,5 +40,5 @@ include:
       - {{ grains.os_family in ('Suse','Arch') }}
       - {{ d.minikube.pkg.use_upstream_repo }}
 
-        {%- endif %}
     {%- endif %}
+{%- endif %}

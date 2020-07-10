@@ -6,7 +6,7 @@
 {%- set formula = d.formula %}
 
     {%- if 'wanted' in d.devtools and d.devtools.wanted %}
-        {%- for tool in d.devtools.wanted %}
+        {%- for tool in d.devtools.wanted|unique %}
             {%- if tool in d.devtools['pkg'] and 'binary' in d.devtools['pkg'][tool] %}
 
 {{ formula }}-devtools-{{ tool }}-binary-install:
@@ -39,7 +39,7 @@
       {%- endif %}
 
                 {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
-                    {%- for cmd in d.devtools['pkg'][tool]['commands'] %}
+                    {%- for cmd in d.devtools['pkg'][tool]['commands']|unique %}
 
 {{ formula }}-devtools-{{ tool }}-binary-install-symlink-{{ cmd }}:
   file.symlink:

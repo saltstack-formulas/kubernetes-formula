@@ -18,7 +18,7 @@ include:
 
 {{ formula }}-node-package-install-pkgs:
   pkg.installed:
-    - names: {{ d.node.pkg.commands|json }}
+    - names: {{ d.node.pkg.commands|unique|json }}
     - runas: {{ d.identity.rootuser }}
     - reload_modules: true
         {%- if d.node.pkg.use_upstream_repo %}

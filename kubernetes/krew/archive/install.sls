@@ -34,7 +34,7 @@
       - file: {{ formula }}-krew-archive-install
 
         {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
-            {%- for cmd in d.krew.pkg.commands %}
+            {%- for cmd in d.krew.pkg.commands|unique %}
 
 {{ formula }}-archive-install-symlink-{{ cmd }}:
   file.symlink:

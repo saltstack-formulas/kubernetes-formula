@@ -6,7 +6,7 @@
 {%- set formula = d.formula %}
 
     {%- if 'wanted' in d.devtools and d.devtools.wanted %}
-        {%- for tool in d.devtools.wanted %}
+        {%- for tool in d.devtools.wanted|unique %}
             {%- if 'pkg' in d.devtools and tool in d.devtools['pkg'] %}
                 {%- if 'binary' in d.devtools['pkg'][tool] %}
 

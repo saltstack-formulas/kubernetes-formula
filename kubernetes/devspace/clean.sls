@@ -2,5 +2,4 @@
 # vim: ft=sls
 
 include:
-  - .config.clean
   - .binary.clean

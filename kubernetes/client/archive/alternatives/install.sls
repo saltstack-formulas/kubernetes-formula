@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-
 # vim: ft=sls
 
-    {%- if grains.kernel|lower == 'linux' and grains.os_family not in ('Arch',) %}
+{%- if grains.kernel|lower == 'linux' and grains.os_family not in ('Arch',) %}
+    {%- set tplroot = tpldir.split('/')[0] %}
+    {%- from tplroot ~ "/map.jinja" import data as d with context %}
+    {%- set formula = d.formula %}
 
-{%- set tplroot = tpldir.split('/')[0] %}
-{%- from tplroot ~ "/map.jinja" import data as d with context %}
-{%- set formula = d.formula %}
-
-        {%- if d.client.pkg.use_upstream_archive and d.linux.altpriority|int > 0 %}
-
+    {%- if d.client.pkg.use_upstream_archive and d.linux.altpriority|int > 0 %}
+        {%- set sls_archive_install = tplroot ~ '.client.archive.install' %}
 include:
   - {{ sls_archive_install }}
 
-            {%- for cmd in d.client.pkg.commands %}
+        {%- for cmd in d.client.pkg.commands|unique %}
 
 {{ formula }}-client-archive-alternatives-install-{{ cmd }}:
   alternatives.install:
@@ -37,6 +36,6 @@ include:
       - alternatives: {{ formula }}-client-archive-alternatives-install-{{ cmd }}
       - sls: {{ sls_archive_install }}
 
-            {%- endfor %}
-        {%- endif %}
+        {%- endfor %}
     {%- endif %}
+{%- endif %}

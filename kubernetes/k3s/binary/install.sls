@@ -3,7 +3,7 @@
 
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
-{%- set formula = d.k3s.formula %}
+{%- set formula = d.formula %}
 
 {{ formula }}-k3s-binary-prerequisites:
   pkg.installed:
@@ -29,7 +29,7 @@
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
     - mode: 755
-    - retry: {{ d.k3s.retry_option|json }}
+    - retry: {{ d.retry_option|json }}
     - require:
       - file: {{ formula }}-k3s-binary-prerequisites
 

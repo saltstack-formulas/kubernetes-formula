@@ -14,7 +14,7 @@ include:
 
 {{ formula }}-node-package-clean-pkgs:
   pkg.removed:
-    - names: {{ d.node.pkg.commands|json }}
+    - names: {{ d.node.pkg.commands|unique|json }}
     - reload_modules: true
         {%- if d.node.pkg.use_upstream_repo %}
     - require:

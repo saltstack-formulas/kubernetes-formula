@@ -7,4 +7,3 @@
 
 include:
   {{ '- .binary' if d.devspace.pkg.use_upstream_binary else '' }}
-  - .config

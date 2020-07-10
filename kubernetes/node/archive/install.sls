@@ -38,7 +38,7 @@
       - file: {{ formula }}-node-archive-install
 
         {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
-            {%- for cmd in d.node.pkg.commands %}
+            {%- for cmd in d.node.pkg.commands|unique %}
 
 {{ formula }}-node-archive-install-symlink-{{ cmd }}:
   file.symlink:

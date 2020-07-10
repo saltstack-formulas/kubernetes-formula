@@ -15,7 +15,7 @@ include:
       - {{ d.dir.tmp }}/istio*
       - {{ d.istio.pkg.archive.name }}/bin
         {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
-            {%- for cmd in d.istio.pkg.commands %}
+            {%- for cmd in d.istio.pkg.commands|unique %}
       - /usr/local/bin/{{ cmd }}
             {%- endfor %}
         {%- endif %}

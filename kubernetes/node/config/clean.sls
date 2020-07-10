@@ -16,7 +16,6 @@ include:
   file.absent:
     - names:
       - {{ d.node.config_file }}
-      - {{ d.node.environ_file }}
     - require:
       - sls: {{ sls_archive_clean }}
       - sls: {{ sls_package_clean }}

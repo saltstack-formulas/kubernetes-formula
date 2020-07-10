@@ -15,7 +15,7 @@ include:
 
 {{ formula }}-client-aliases-file-managed-environ_file:
   file.managed:
-    - name: {{ d.client.environ_file }}
+    - name: {{ d.client.aliases_file }}
     - source: {{ files_switch(['aliases.sh.jinja'],
                               lookup='k8s-client-aliases-file-managed-environ_file'
                  )
@@ -27,5 +27,3 @@ include:
     - template: jinja
     - require:
       - sls: {{ sls_archive_install if d.client.pkg.use_upstream_archive else sls_binary_install if d.client.pkg.use_upstream_binary else sls_package_install }}  # noqa 204
-
-    {%- endif %}

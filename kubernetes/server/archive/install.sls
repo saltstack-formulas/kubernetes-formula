@@ -38,7 +38,7 @@
       - file: {{ formula }}-server-archive-install
 
         {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
-            {%- for cmd in d.server.pkg.commands %}
+            {%- for cmd in d.server.pkg.commands|unique %}
 
 {{ formula }}-server-archive-install-symlink-{{ cmd }}:
   file.symlink:
