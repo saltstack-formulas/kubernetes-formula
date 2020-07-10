@@ -12,6 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+if [ -x /usr/local/bin/kubectl ]; then
+    if [ "${0}" == "bash" ]];then
+        source <(kubectl completion bash)
+    elif [ "${0}" == "zsh" ]];then
+        compaudit | xargs chmod g-w 2>/dev/null
+        source <(kubectl completion zsh)
+    elif [ "${0}" == "-zsh" ]];then
+        compaudit | xargs chmod g-w 2>/dev/null
+        source <(kubectl completion zsh)
+    endif
+endif
+
 alias k='kubectl'
 alias ksys='kubectl --namespace=kube-system'
 alias ka='kubectl apply --recursive -f'

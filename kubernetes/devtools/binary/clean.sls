@@ -7,7 +7,7 @@
 
     {%- if 'wanted' in d.devtools and d.devtools.wanted %}
         {%- for tool in d.devtools.wanted %}
-            {%- if 'pkg' in d.devtools and tool in d.devtools['pkg'] and d.devtools['pkg'][tool] %}
+            {%- if 'pkg' in d.devtools and tool in d.devtools['pkg'] %}
                 {%- if 'binary' in d.devtools['pkg'][tool] %}
 
 {{ formula }}-devtools-{{ tool }}-binary-clean:

@@ -16,7 +16,7 @@ include:
 {{ formula }}-server-config-file-managed-environ_file:
   file.managed:
     - name: {{ d.server.environ_file }}
-    - source: {{ files_switch(['aliases.sh'],
+    - source: {{ files_switch(['aliases.sh.jinja'],
                               lookup='k8s-server-config-file-managed-environ_file'
                  )
               }}

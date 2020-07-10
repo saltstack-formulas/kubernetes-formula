@@ -62,7 +62,7 @@ kubernetes:
         archive:
           name: null  # set in map.jinja
           source: null # set in map.jinja
-          source_hash: fb0b6ee68831fbfc59a06d88638becea09e85da3bb2093a1de4a47ebd4e40296  # x86_64
+          source_hash: 'fb0b6ee68831fbfc59a06d88638becea09e85da3bb2093a1de4a47ebd4e40296'  # x86_64
       stern:
         version: '1.11.0'
         use_upstream_archive: true
@@ -73,7 +73,7 @@ kubernetes:
         binary:
           name: null  # set in map.jinja
           source: null # set in map.jinja
-          source_hash: 	e0b39dc26f3a0c7596b2408e4fb8da533352b76aaffdc18c7ad28c833c9eb7db  # x86_64
+          source_hash: 'e0b39dc26f3a0c7596b2408e4fb8da533352b76aaffdc18c7ad28c833c9eb7db'  # x86_64
       kubectx:
         version: '0.9.1'
         use_upstream_archive: true
@@ -84,7 +84,7 @@ kubernetes:
         archive:
           name: null  # set in map.jinja
           source: null # set in map.jinja
-          source_hash: ce689516f3ae916492bb8f9ee3344da03f6b5a098c1ce2c4a5107b8e9e1cf445  # x86_64
+          source_hash: 'ce689516f3ae916492bb8f9ee3344da03f6b5a098c1ce2c4a5107b8e9e1cf445'  # x86_64
       kubens:
         version: '0.9.1'
         use_upstream_archive: true
@@ -95,7 +95,7 @@ kubernetes:
         archive:
           name: null  # set in map.jinja
           source: null # set in map.jinja
-          source_hash: dea7839158e4847b8b52709dbfbe9ff2d974df4416b8ea8a86ce4bd622786f52  # x86_64
+          source_hash: 'dea7839158e4847b8b52709dbfbe9ff2d974df4416b8ea8a86ce4bd622786f52'  # x86_64
       cue:
         version: '0.2.1'
         use_upstream_archive: true
@@ -107,7 +107,7 @@ kubernetes:
         archive:
           name: null  # set in map.jinja
           source: null # set in map.jinja
-          source_hash: 40078d02559595eec8e5a873f09ca89545502019bcac6f892f5a30bb8d49286c  # x86_64
+          source_hash: '40078d02559595eec8e5a873f09ca89545502019bcac6f892f5a30bb8d49286c'  # x86_64
       audit2rbac:
         version: '0.8.0'
         use_upstream_archive: true
@@ -119,7 +119,7 @@ kubernetes:
         archive:
           name: null  # set in map.jinja
           source: null # set in map.jinja
-          source_hash: 7703cbf3c9c555ea91d4120acf106502fce64c6afdbe1c5aec603a4864560631  # x86_64
+          source_hash: '7703cbf3c9c555ea91d4120acf106502fce64c6afdbe1c5aec603a4864560631'  # x86_64
 
   client:
     version: 1.18.0
@@ -144,7 +144,7 @@ kubernetes:
         name: kubernetes-client
         uri: https://storage.googleapis.com/kubernetes-release/release
         source: null   # set in map.jinja
-        source_hash: 6ea8261b503c6c63d616878837dc70b758d4a3aeb9996ade8e83b51aedac9698
+        source_hash: '6ea8261b503c6c63d616878837dc70b758d4a3aeb9996ade8e83b51aedac9698'
         trim_output: true
 
   devlibs:
@@ -191,7 +191,7 @@ kubernetes:
         version: '1.2.0'
         uri: https://github.com/ericchiang/k8s/archive
         source: null   # set in map.jinja
-        source_hash: 18f4c90d7b206d9abb69aff007a534e6cf2e723cbc7d4bb74cc32ec619c418ca
+        source_hash: '18f4c90d7b206d9abb69aff007a534e6cf2e723cbc7d4bb74cc32ec619c418ca'
 
   operators:
     # https:// operatorhub.io
@@ -206,28 +206,28 @@ kubernetes:
         version: 1.0.0
         uri: https://github.com/lightbend/akka-cluster-operator/archive
         source: null   # set in map.jinja
-        source_hash: cf5b8b5a16dc3cba76fce0046ae79b226356ddfde84da54602b63edaeb8ae85f
+        source_hash: 'cf5b8b5a16dc3cba76fce0046ae79b226356ddfde84da54602b63edaeb8ae85f'
       grafana-operator:
         version: 3.4.0
         uri: https://github.com/integr8ly/grafana-operator/archive
         source: null   # set in map.jinja
-        source_hash: 3921adb8656c74a201e9e189931357d6be767e807d7312e7bd902efb607db089
+        source_hash: '3921adb8656c74a201e9e189931357d6be767e807d7312e7bd902efb607db089'
       prometheus-operator:
         version: '0.40.0'
         uri: https://github.com/coreos/prometheus-operator/archive
         source: null   # set in map.jinja
-        source_hash: e9771685650803d2d07c0c8f455508e736e0516606d3182bc109f7986380cbc1
+        source_hash: 'e9771685650803d2d07c0c8f455508e736e0516606d3182bc109f7986380cbc1'
       istio-operator:
         name: ''
         version: '0.6.5'
         uri: https://github.com/banzaicloud/istio-operator/archive
         source: null   # set in map.jinja
-        source_hash: 8bbcf1c201707d9e01f204f3b2a698827b76757a8cdd593de943af64fe1e72d1
+        source_hash: '8bbcf1c201707d9e01f204f3b2a698827b76757a8cdd593de943af64fe1e72d1'
       shell-operator:
         version: '1.0.0-beta.10'
         uri: https://github.com/flant/shell-operator/archive
         source: null   # set in map.jinja
-        source_hash: b920a2a8c21edc2c89d828ef4e90e4980ec46a9e69b92cee02b9ff6e20c7df47
+        source_hash: 'b920a2a8c21edc2c89d828ef4e90e4980ec46a9e69b92cee02b9ff6e20c7df47'
 
   server:
     version: 1.18.0
@@ -255,7 +255,7 @@ kubernetes:
         name: null  # set in map.jinja
         uri: 'https://dl.k8s.io'
         source: null  # set in map.jinja
-        source_hash: a92f8d201973d5dfa44a398e95fcf6a7b4feeb1ef879ab3fee1c54370e21f59f725f27a9c09ace8c42c96ac202e297fd458e486c489e05f127a5cade53b8d7c4  # noqa 204
+        source_hash: 'a92f8d201973d5dfa44a398e95fcf6a7b4feeb1ef879ab3fee1c54370e21f59f725f27a9c09ace8c42c96ac202e297fd458e486c489e05f127a5cade53b8d7c4'  # noqa 204
         trim_output: true
         enforce_toplevel: false
         options: '--strip-components=2'
@@ -280,7 +280,7 @@ kubernetes:
         name: null  # set in map.jinja
         uri: 'https://dl.k8s.io'
         source: null  # set in map.jinja
-        source_hash: f714f80feecb0756410f27efb4cf4a1b5232be0444fbecec9f25cb85a7ccccdcb5be588cddee935294f460046c0726b90f7acc52b20eeb0c46a7200cf10e351a  # noqa 204
+        source_hash: 'f714f80feecb0756410f27efb4cf4a1b5232be0444fbecec9f25cb85a7ccccdcb5be588cddee935294f460046c0726b90f7acc52b20eeb0c46a7200cf10e351a'  # noqa 204
         trim_output: true
         enforce_toplevel: false
         options: '--strip-components=2'
@@ -300,7 +300,7 @@ kubernetes:
         name: minikube
         uri: https://github.com/kubernetes/minikube/releases/download
         source: null       # see map.jinja
-        source_hash: 3121f933bf8d608befb24628a045ce536658738c14618504ba46c92e656ea6b5
+        source_hash: '3121f933bf8d608befb24628a045ce536658738c14618504ba46c92e656ea6b5'
         trim_output: true
 
   devspace:
@@ -317,7 +317,7 @@ kubernetes:
         uri: https://github.com/devspace-cloud/devspace/releases/download
         name: devspace
         source: null   # set in map.jinja
-        source_hash: 19faec36f190d0c3a3447f47c05378fabbe9f01e27f8b7475d51796e288bdbd4
+        source_hash: '19faec36f190d0c3a3447f47c05378fabbe9f01e27f8b7475d51796e288bdbd4'
         trim_output: true
 
   k3s:
@@ -329,10 +329,10 @@ kubernetes:
         uri: https://github.com/rancher/k3s/releases/download
         name: k3s
         source: null   # set in map.jinja
-        source_hash: 0c19d64dde77c8bb3af1dfbac5aecea59ab4679d97dcfaa62419aaa795380490
+        source_hash: '0c19d64dde77c8bb3af1dfbac5aecea59ab4679d97dcfaa62419aaa795380490'
       script:
         source: https://get.k3s.io
-        source_hash: b2856cee3432cf0148513b644b5369db8fa8b039793959f410aa7dfdb496b2b9
+        source_hash: 'b2856cee3432cf0148513b644b5369db8fa8b039793959f410aa7dfdb496b2b9'
         killall: /usr/local/bin/k3s-killall.sh
         uninstall: /usr/local/bin/k3s-uninstall.sh
         env:
@@ -373,7 +373,7 @@ kubernetes:
         uri: https://github.com/kudobuilder/kudo/releases/download
         name: kubectl-kudo
         source: null   # set in map.jinja
-        source_hash: 5df22a42021d78a199d00f055faedd47a86ad3001bd06da31549c0a477a403a9
+        source_hash: '5df22a42021d78a199d00f055faedd47a86ad3001bd06da31549c0a477a403a9'
   linkerd2:
     version: 20.7.1
     pkg:
@@ -391,7 +391,7 @@ kubernetes:
         uri: 'https://github.com/kubernetes-sigs/kind/releases/download'
         name: kind
         source: null  # set in map.jinja
-        source_hash: 781c3db479b805d161b7c2c7a31896d1a504b583ebfcce8fcd49538c684d96bc
+        source_hash: '781c3db479b805d161b7c2c7a31896d1a504b583ebfcce8fcd49538c684d96bc'
   istio:
     version: 1.6.5
     pkg:

@@ -7,12 +7,11 @@
 
     {%- if 'wanted' in d.devtools and d.devtools.wanted %}
         {%- for tool in d.devtools.wanted %}
-            {%- if 'pkg' in d.devtools and tool in d.devtools['pkg'] and d.devtools['pkg'][tool] %}
-                {%- if 'binary' in d.devtools['pkg'][tool] %}
+            {%- if tool in d.devtools['pkg'] and 'binary' in d.devtools['pkg'][tool] %}
 
 {{ formula }}-devtools-{{ tool }}-binary-install:
   file.directory:
-    - name: {{ d.devtools[tool]['pkg']['binary']['name'] }}/bin
+    - name: {{ d.devtools['pkg'][tool]['binary']['name'] }}/bin
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
     - mode: 755
@@ -25,22 +24,22 @@
         - mode
   cmd.run:
     - names:
-      - curl -Lo {{ d.devtools[tool]['pkg']['binary']['name'] }}/bin/[tool] {{ d[tool]['pkg']['binary']['source'] }}
-      - chmod '0755' {{ d.devtools[tool]['pkg']['binary']['name'] }}/bin/[tool] 2>/dev/null
+      - curl -Lo {{ d.devtools['pkg'][tool]['binary']['name'] }}/bin/{{ tool }} {{ d.devtools['pkg'][tool]['binary']['source'] }}  # noqa 204
+      - chmod '0755' {{ d.devtools['pkg'][tool]['binary']['name'] }}/bin/{{ tool }} 2>/dev/null
     - retry: {{ d.retry_option|json }}
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
-      {%- if 'source_hash' in d.devtools[tool]['pkg']['binary'] and d[tool]['pkg']['binary']['source_hash'] %}
+      {%- if 'source_hash' in d.devtools['pkg'][tool]['binary'] and d.devtools['pkg'][tool]['binary']['source_hash'] %}  # noqa 204
   module.run:
     - name: file.check_hash
-    - path: {{ d.devtools[tool]['pkg']['binary']['name'] }}/bin/{{ tool }}
-    - file_hash: {{ d.devtools[tool]['pkg']['binary']['source_hash'] }}
+    - path: {{ d.devtools['pkg'][tool]['binary']['name'] }}/bin/{{ tool }}
+    - file_hash: {{ d.devtools['pkg'][tool]['binary']['source_hash'] }}
     - require:
       - cmd: {{ formula }}-devtools-{{ tool }}-binary-install
       {%- endif %}
 
-                    {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
-                        {%- for cmd in d.devtools['pkg'][tool]['commands'] %}
+                {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
+                    {%- for cmd in d.devtools['pkg'][tool]['commands'] %}
 
 {{ formula }}-devtools-{{ tool }}-binary-install-symlink-{{ cmd }}:
   file.symlink:
@@ -53,8 +52,7 @@
       - {{ d.linux.altpriority|int > 0 }}
       - {{ grains.os_family|lower in ('windows',) }}
 
-                        {% endfor %}
-                    {% endif %}
+                    {% endfor %}
                 {% endif %}
 
             {% endif %}
