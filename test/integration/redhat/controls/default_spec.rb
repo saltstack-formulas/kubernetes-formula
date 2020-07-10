@@ -225,4 +225,20 @@ control 'kubernetes archive' do
   describe file('/usr/local/src/kubernetes/shell-operator') do
     it { should be_directory }
   end
+  describe file('/usr/local/kubernetes-devtools-stern-1.11.0/') do
+    it { should be_directory }
+  end
+  describe file('/usr/local/bin/stern') do
+    it { should be_symlink }
+    it { should be_file }
+    it { should_not be_directory }
+  end
+  describe file('/usr/local/kubernetes-devtools-dive-0.9.2/') do
+    it { should be_directory }
+  end
+  describe file('/usr/local/bin/dive') do
+    it { should be_symlink }
+    it { should be_file }
+    it { should_not be_directory }
+  end
 end

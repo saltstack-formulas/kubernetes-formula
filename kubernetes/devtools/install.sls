@@ -8,6 +8,7 @@
     {%- if 'wanted' in d.devtools and d.devtools.wanted %}
         {%- for tool in d.devtools.wanted %}
             {%- if 'pkg' in d.devtools and tool in d.devtools['pkg'] and d.devtools['pkg'][tool] %}
+                {%- if 'archive' in d.devtools['pkg'][tool] %}
 
 {{ formula }}-devtools-{{ tool }}-archive-install:
   file.directory:
@@ -35,12 +36,12 @@
     - recurse:
         - user
         - group
-                {%- if tool not in ('audit2rbac',) %} {# tarbombs #}
+                    {%- if tool not in ('audit2rbac',) %} {# tarbombs #}
     - options: '--strip-components=1'
-                {%- endif %}
+                    {%- endif %}
 
-                {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
-                    {%- for cmd in d.devtools['pkg'][tool]['commands'] %}
+                    {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
+                        {%- for cmd in d.devtools['pkg'][tool]['commands'] %}
 
 {{ formula }}-devtools-{{ tool }}-archive-install-symlink-{{ cmd }}:
   file.symlink:
@@ -50,7 +51,8 @@
     - require:
       - archive: {{ formula }}-devtools-{{ tool }}-archive-install
 
-                    {% endfor %}
+                        {% endfor %}
+                    {% endif %}
                 {% endif %}
 
             {% endif %}
