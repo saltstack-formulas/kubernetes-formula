@@ -14,11 +14,13 @@ kubernetes:
     - octant
     - k3s
     - kind
+    - krew
     - kudo
     - minikube
     - operators
     - devlibs
     - devtools
+    - skaffold
 
   identity:
     rootuser: root
@@ -263,8 +265,6 @@ kubernetes:
     version: 1.18.0
     config_file: /etc/default/kubernetes-node.ini
     config: {}
-    environ_file: /etc/default/kubernetes-node.sh
-    environ: []
     service: {}
     pkg:
       name: kubernetes-node
@@ -392,6 +392,16 @@ kubernetes:
         name: kind
         source: null  # set in map.jinja
         source_hash: '781c3db479b805d161b7c2c7a31896d1a504b583ebfcce8fcd49538c684d96bc'
+  skaffold:
+    version: 1.12.0
+    pkg:
+      use_upstream_binary: true
+      use_upstream_repo: false
+      binary:
+        uri: 'https://storage.googleapis.com/skaffold/releases'
+        name: skaffold
+        source: null  # set in map.jinja
+        source_hash: null  # set in map.jinja
   istio:
     version: 1.6.5
     pkg:
@@ -425,7 +435,22 @@ kubernetes:
         trim_output: true
         enforce_toplevel: false
         options: '--strip-components=1'
-
+  krew:
+    version: '0.3.4'
+    pkg:
+      name: krew
+      use_upstream_archive: true
+      suffix: tar.gz
+      commands:
+        - krew
+      archive:
+        name: null  # set in map.jinja
+        uri: 'https://github.com/kubernetes-sigs/krew/releases/download'
+        source: null  # set in map.jinja
+        source_hash: null  # set in map.jinja
+        trim_output: true
+        enforce_toplevel: false
+        options: '--strip-components=1'
   kubebuilder:
     version: 2.3.1
     pkg:

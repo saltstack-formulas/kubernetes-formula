@@ -237,3 +237,5 @@ MacOS:
       audit2rbac:
         archive:
           source_hash: 'e89d9e7e6e68d7fdf135ab0912f57afda0fea07931ac443a367d35671f83d1b1'
+  skaffold:
+    use_upstream_package: false   # homebrew

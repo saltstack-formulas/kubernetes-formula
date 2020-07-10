@@ -5,7 +5,8 @@
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
 
-{{ formula }}-client-aliases-clean:
+{{ formula }}-skaffold-binary-clean:
   file.absent:
     - names:
-      - {{ d.client.aliases_file }}
+      - /usr/local/bin/skaffold
+      - {{ d.skaffold.pkg.binary.name }}/bin/skaffold

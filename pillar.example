@@ -15,9 +15,11 @@ kubernetes:
     - octant
     - k3s
     - kind
+    - krew
     - kudo
     - minikube
     - operators
+    - skaffold
     - devlibs
     - devtools
   devtools:

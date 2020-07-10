@@ -42,6 +42,11 @@
             {%- set url = '%s/v%s/%s_%s_%s_%s.%s'|format(d[comp]['pkg']['archive']['uri'], d[comp]['version'],
                            comp, d[comp]['version'], grains.kernel|lower, d.arch, d[comp]['pkg']['suffix']) %}
 
+        {%- elif comp in ('krew',) %}
+https://github.com/kubernetes-sigs/krew/releases/download/v0.3.4/krew.tar.gz
+            {%- set url = '%s/v%s/%s.%s'|format(d[comp]['pkg']['archive']['uri'], d[comp]['version'], comp,
+                                                d[comp]['pkg']['suffix']) %}
+
         {%- elif comp in ('istio',) %}
             {%- set kernel = 'osx' if grains.kernel == 'Darwin' else grains.kernel %}
             {%- set kernel = 'win' if kernel == 'Windows' else kernel %}
@@ -68,7 +73,8 @@
         {%- if comp in ('client', 'server', 'node') %}
             {%- set url = '%s/v%s/bin/%s/%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
                                                       grains.kernel|lower, d.arch) %}
-        {%- elif comp in ('minikube', 'devspace', 'kind') %}
+
+        {%- elif comp in ('minikube', 'devspace', 'kind', 'skaffold') %}
             {%- set url = '%s/v%s/%s-%s-%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
                                                      comp, grains.kernel|lower, d.arch) %}
         {%- elif comp in ('linkerd2',) %}
@@ -88,7 +94,6 @@
         {%- if not ('source_hash' in d[comp]['pkg']['binary'] or d[comp]['pkg']['binary']['source_hash']) %}
             {%- do d[comp]['pkg']['binary'].update({'source_hash': url ~ '.sha256'}) %}
         {%- endif %}
-
         {%- do d[comp]['pkg']['binary'].update({ 'name': d.dir.binary + '/' + dirname, 'source': url }) %}
     {%- endif %}
 

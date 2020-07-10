@@ -29,6 +29,11 @@ control 'kubernetes archive' do
     it { should exist }
     its('mode') { should cmp '0755' }
   end
+  describe file('/usr/local/bin/kind') do
+    it { should be_symlink }
+    it { should be_file }
+    it { should_not be_directory }
+  end
   describe file('/usr/local/kubernetes-node-v1.18.0/bin/kubectl') do
     it { should exist }
     its('mode') { should cmp '0755' }
@@ -122,11 +127,6 @@ control 'kubernetes archive' do
     it { should_not be_directory }
   end
   describe file('/usr/local/bin/kubebuilder') do
-    it { should be_symlink }
-    it { should be_file }
-    it { should_not be_directory }
-  end
-  describe file('/usr/local/bin/kind') do
     it { should be_symlink }
     it { should be_file }
     it { should_not be_directory }
@@ -225,8 +225,8 @@ control 'kubernetes archive' do
   describe file('/usr/local/src/kubernetes/shell-operator') do
     it { should be_directory }
   end
-  describe file('/usr/local/kubernetes-devtools-stern-1.11.0/') do
-    it { should be_directory }
+  describe file('/usr/local/kubernetes-devtools-stern-1.11.0/bin/stern') do
+    it { should be_file }
   end
   describe file('/usr/local/bin/stern') do
     it { should be_symlink }
@@ -240,5 +240,8 @@ control 'kubernetes archive' do
     it { should be_symlink }
     it { should be_file }
     it { should_not be_directory }
+  end
+  describe file('/etc/default/aliases.sh') do
+    it { should be_file }
   end
 end

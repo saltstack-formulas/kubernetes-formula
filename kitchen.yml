@@ -279,7 +279,7 @@ suites:
             '*':
               - kubernetes
       pillars_from_files:
-        kubernetes.sls: test/salt/pillar/redhat.sls
+        kubernetes.sls: test/salt/pillar/default.sls
     verifier:
       inspec_tests:
         - path: test/integration/redhat

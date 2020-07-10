@@ -18,6 +18,7 @@ Formula to manage kubernetes on MacOS and GNU/Linux. Currently supports:
 * `minikube`  (https://github.com/kubernetes/minikube)
 * `octant`    (https://github.com/vmware-tanzu/octant)
 * `operators` (https://operatorhub.io)
+* `skaffold`  (https://skaffold.dev)
 * `devtools` (kubectx, kubens, cue, attr2rbac, dive, stern, etc)
 * `devlibs`  (kubernetes clients)
 
@@ -248,6 +249,17 @@ This state installs selected kubernetes developer libraries
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state uninstalls selected kubernetes developer libraries (i.e. kubernetes client libraries, kopf, etc).
+
+``kubernetes.skaffold``
+^^^^^^^^^^^^^^^^^^^^^^^
+
+This state installs kind only (https://github.com/GoogleContainerTools/skaffold)
+
+``kubernetes.skaffold.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls skaffold only.
+
 
 
 Main Sub-states

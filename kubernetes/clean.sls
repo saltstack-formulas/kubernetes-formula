@@ -2,6 +2,7 @@
 # vim: ft=sls
 
 include:
+  - .skaffold.clean
   - .octant.clean
   - .minikube.clean
   - .linkerd2.clean
@@ -9,6 +10,7 @@ include:
   - .kudo.clean
   - .k3s.clean
   - .kind.clean
+  - .krew.clean
   - .istio.clean
   - .devspace.clean
   - .node.clean

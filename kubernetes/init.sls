@@ -8,6 +8,7 @@ include:
   - .devspace
   - .istio
   - .kind
+  - .krew
   - .k3s
   - .kudo
   - .kubebuilder
@@ -15,5 +16,6 @@ include:
   - .minikube
   - .octant
   - .operators
+  - .skaffold
   - .devtools
   - .devlibs
