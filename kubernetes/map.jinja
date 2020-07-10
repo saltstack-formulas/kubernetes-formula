@@ -114,6 +114,11 @@
                 {%- set url = '%s/v%s/%s_%s_%s_%s.%s'|format(d[comp]['pkg'][item]['uri'],
                                d[comp]['pkg'][item]['version'], item, d[comp]['pkg'][item]['version'],
                                grains.kernel, arch, d[comp]['pkg'][item]['suffix']) %}
+            {%- elif item in ('dive',) %}
+                {%- set arch = 'amd64' if d.arch in ('x86_64', 'amd64') else d.arch %}
+                {%- set url = '%s/v%s/%s_%s_%s_%s.%s'|format(d[comp]['pkg'][item]['uri'],
+                               d[comp]['pkg'][item]['version'], item, d[comp]['pkg'][item]['version'],
+                               grains.kernel, arch, d[comp]['pkg'][item]['suffix']) %}
             {%- endif %}
 
             {%- do d[comp]['pkg'][item]['archive'].update({'name': d.dir.archive ~ '/' ~ dirname, 'source': url }) %}

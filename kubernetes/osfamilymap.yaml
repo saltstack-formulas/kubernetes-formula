@@ -153,6 +153,10 @@ Windows:
       audit2rbac:
         archive:
           source_hash: 57e1b6f108141da818eb29ad5755d386f56be067737302fabfa092e335c6ce57
+      dive:
+        archive:
+          suffix: zip
+          source_hash: 4e8e48263077f94fccfb1f1c385a95640ef3c7a48fd8ca41cc7e5889ba82da28  # amd64
 
 MacOS:
   identity:
@@ -217,6 +221,9 @@ MacOS:
       cue:
         archive:
           source_hash: 2b2038feaa2732f25bfb8c563627f990fa890bc654acee34c915bafa5279bc04  # x86_64
+      dive:
+        archive:
+          source_hash: 1da3581355d432db38154d80ca9929fc3bca55c473ba286e7869814718f6d578  # x86_64
       audit2rbac:
         archive:
           source_hash: e89d9e7e6e68d7fdf135ab0912f57afda0fea07931ac443a367d35671f83d1b1

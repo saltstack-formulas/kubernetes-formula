@@ -48,7 +48,20 @@ kubernetes:
       - kubens
       - cue
       - audit2rbac
+      - dive
     pkg:
+      dive:
+        version: '0.9.2'
+        use_upstream_archive: true
+        uri: https://github.com/wagoodman/dive/releases/download
+        suffix: tar.gz
+        commands:
+          - dive
+        archive:
+          name: null  # set in map.jinja
+          source: null # set in map.jinja
+          source_hash: fb0b6ee68831fbfc59a06d88638becea09e85da3bb2093a1de4a47ebd4e40296  # x86_64
+        
       kubectx:
         version: '0.9.1'
         use_upstream_archive: true
