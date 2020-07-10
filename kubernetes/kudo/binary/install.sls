@@ -39,7 +39,7 @@
 {{ formula }}-kudo-binary-install-symlink:
   file.symlink:
     - name: /usr/local/bin/kubectl-kudo
-    - target: {{ d.kudo.pkg.binary.name }}/bin/{{ d.kudo.pkg.name }}
+    - target: {{ d.kudo.pkg.binary.name }}/bin/kubectl-kudo
     - force: True
     - require:
       - cmd: {{ formula }}-kudo-binary-install

@@ -2,13 +2,18 @@
 # vim: ft=sls
 
 include:
-  - .devspace.clean
-  - .k3s.clean
-  - .kudo.clean
-  - .kubebuilder.clean
-  - .client.clean
-  - .server.clean
-  - .node.clean
+  - .octant.clean
   - .minikube.clean
+  - .linkerd2.clean
+  - .kubebuilder.clean
+  - .kudo.clean
+  - .k3s.clean
   - .kind.clean
-  - .client.libs.clean
+  - .istio.clean
+  - .devspace.clean
+  - .node.clean
+  - .server.clean
+  - .client.clean
+  - .operators.clean
+  - .devtools.clean
+  - .devlibs.clean

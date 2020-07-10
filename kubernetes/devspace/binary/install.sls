@@ -39,7 +39,7 @@
 {{ formula }}-devspace-binary-install-symlink:
   file.symlink:
     - name: /usr/local/bin/devspace
-    - target: {{ d.devspace.pkg.binary.name }}/bin/{{ d.devspace.pkg.name }}
+    - target: {{ d.devspace.pkg.binary.name }}/bin/devspace
     - force: True
     - require:
       - cmd: {{ formula }}-devspace-binary-install

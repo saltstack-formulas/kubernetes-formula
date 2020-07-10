@@ -27,6 +27,7 @@
 {%- set d = salt['grains.filter_by']( {'defaults': defaults}, default='defaults', merge=_config) %}
 
 {%- for comp in d.supported %}
+    {%- set url = None %}
     {%- set dirname = 'kubernetes' %}
     {%- if 'version' in d[comp] %}
         {%- set dirname = dirname ~ '-' ~ comp ~ '-v%s'|format(d[comp]['version']) %}
@@ -34,53 +35,111 @@
 
     {%- if 'use_upstream_archive' in d[comp]['pkg'] and d[comp]['pkg']['use_upstream_archive'] %}
         {%- if comp in ('client', 'server', 'node') %}
-            {%- set uri = '%s/v%s/kubernetes-%s-%s-%s.%s'|format(d[comp]['pkg']['archive']['uri'],
+            {%- set url = '%s/v%s/kubernetes-%s-%s-%s.%s'|format(d[comp]['pkg']['archive']['uri'],
                            d[comp]['version'], comp, grains.kernel|lower, d.arch, d[comp]['pkg']['suffix']) %}
-        {%- elif comp == 'kubebuilder' %}
-            {%- set uri = '%s/v%s/%s_%s_%s_%s.%s'|format(d[comp]['pkg']['archive']['uri'], d[comp]['version'],
-                          comp, d[comp]['version'], grains.kernel|lower, d.arch, d[comp]['pkg']['suffix']) %}
+
+        {%- elif comp in ('kubebuilder',) %}
+            {%- set url = '%s/v%s/%s_%s_%s_%s.%s'|format(d[comp]['pkg']['archive']['uri'], d[comp]['version'],
+                           comp, d[comp]['version'], grains.kernel|lower, d.arch, d[comp]['pkg']['suffix']) %}
+
+        {%- elif comp in ('istio',) %}
+            {%- set kernel = 'osx' if grains.kernel == 'Darwin' else grains.kernel %}
+            {%- set kernel = 'win' if kernel == 'Windows' else kernel %}
+            {%- set url = '%s/%s/%s-%s-%s-%s.%s'|format(d[comp]['pkg']['uri'], d[comp]['version'], comp,
+                           d[comp]['version'], grains.kernel|lower, d.arch, d[comp]['pkg']['suffix']) %}
+
+        {%- elif comp in ('octant',) %}
+            {%- set kernel = 'macOS' if grains.kernel == 'Darwin' else grains.kernel %}
+            {%- set arch = '64bit' if d.arch in ('x86_64', 'amd64') else d.arch %}
+            {%- set arch = 'arm' if d.arch|lower in ('arm',) else arch %}
+            {%- set arch = 'arm64' if d.arch|lower in ('arm64',) else arch %}
+            {%- set url = '%s/v%s/%s_%s_%s-%s.%s'|format(d[comp]['pkg']['archive']['uri'], d[comp]['version'],
+                           comp, d[comp]['version'], kernel, arch, d[comp]['pkg']['suffix']) %}
         {%- endif %}
-        {%- do d[comp]['pkg']['archive'].update({ 'name': d.dir.archive + '/' + dirname, 'source': uri }) %}
+
+        {%- if url %}
+            {%- if 'source_hash' not in d[comp]['pkg']['archive'] or not d[comp]['pkg']['archive']['source_hash'] %}
+                {%- do d[comp]['pkg']['archive'].update({'source_hash': url ~ '.sha256'}) %}
+            {%- endif %}
+            {%- do d[comp]['pkg']['archive'].update({ 'name': d.dir.archive + '/' + dirname, 'source': url }) %}
+        {%- endif %}
 
     {%- elif 'use_upstream_binary' in d[comp]['pkg'] and d[comp]['pkg']['use_upstream_binary'] %}
         {%- if comp in ('client', 'server', 'node') %}
-            {%- set uri = '%s/v%s/bin/%s/%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
+            {%- set url = '%s/v%s/bin/%s/%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
                                                       grains.kernel|lower, d.arch) %}
         {%- elif comp in ('minikube', 'devspace', 'kind') %}
-            {%- set uri = '%s/v%s/%s-%s-%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
+            {%- set url = '%s/v%s/%s-%s-%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
                                                      comp, grains.kernel|lower, d.arch) %}
-        {%- elif comp == 'kudo' %}
+        {%- elif comp in ('linkerd2',) %}
+            {%- set url = '%s/edge-%s/linkerd2-cli-edge-%s-%s'|format(d[comp]['pkg']['binary']['uri'],
+                                                      d[comp]['version'], d[comp]['version'], d.arch) %}
+        {%- elif comp in ('kudo',) %}
             {%- set arch = 'x86_64' if d.arch == 'amd64' else d.arch %}
-            {%- set uri = '%s/v%s/kubectl-%s_%s_%s_%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
+            {%- set url = '%s/v%s/kubectl-%s_%s_%s_%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
                                                          comp, d[comp]['version'], grains.kernel|lower, arch) %}
-        {%- elif comp == 'k3s' %}
+        {%- elif comp in ('k3s',) %}
             {%- set arch = '' if d.arch == 'amd64' else d.arch %}
-            {%- set uri = '%s/v%s/%s-%s-%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
-                                                    comp, grains.kernel|lower, arch) %}
+            {%- set url = '%s/v%s/%s-%s-%s'|format(d[comp]['pkg']['binary']['uri'], d[comp]['version'],
+                                                     comp, grains.kernel|lower, arch) %}
+        {%- endif %}
+        {%- set url = url if 'name' not in d[comp]['pkg'] else url + '/' + d[comp]['pkg']['name'] %}
+
+        {%- if not ('source_hash' in d[comp]['pkg']['binary'] or d[comp]['pkg']['binary']['source_hash']) %}
+            {%- do d[comp]['pkg']['binary'].update({'source_hash': url ~ '.sha256'}) %}
         {%- endif %}
 
-        {%- if 'source_hash' in d[comp]['pkg']['binary'] and d[comp]['pkg']['binary']['source_hash'] %}
-            {%- do d[comp]['pkg']['binary'].update({'source_hash': d[comp]['pkg']['binary']['source_hash']}) %}
-        {%- else %}
-            {%- do d[comp]['pkg']['binary'].update({'source_hash': uri ~ '.sha256'}) %}
-        {%- endif %}
-        {%- set fallback_url = uri + '/' + d[comp]['pkg']['name'] %}
-
-        {%- do d[comp]['pkg']['binary'].update({
-            'name': d.dir.binary + '/' + dirname,
-            'source': uri if comp in ('minikube', 'devspace', 'kudo', 'kind') else fallback_url }) %}
-
+        {%- do d[comp]['pkg']['binary'].update({ 'name': d.dir.binary + '/' + dirname, 'source': url }) %}
     {%- endif %}
-    {%- if comp == 'client' and 'libs' in d[comp] and 'wanted' in d[comp]['libs'] and d[comp]['libs']['wanted'] %}
-        {%- for lib in d[comp]['libs']['wanted'] %}
-            {%- if lib in d[comp]['libs'] and d[comp]['libs'][lib] %}
-                {%- set name = '' if 'name' not in d[comp]['libs'][lib] else d[comp]['libs'][lib]['name'] %}
-                {%- set uri = '%s/%s/archive/%s%s.tar.gz'|format(d[comp]['libs']['uri'], lib, name,
-                                                                 d[comp]['libs'][lib]['version']) %}
-                {%- do d[comp]['libs'][lib].update({'source': uri }) %}
+
+    {%- if comp in ('devtools',) and 'wanted' in d[comp] and d[comp]['wanted'] %}
+        {%- for item in d[comp]['wanted'] %}
+            {%- if dirname == 'kubernetes' and 'version' in d[comp]['pkg'][item] %}
+                {%- set dirname = '%s-%s-%s-%s'|format(dirname, comp, item, d[comp]['pkg'][item]['version']) %}
             {%- endif %}
+
+            {%- if item in ('audit2rbac',) %}
+                {%- set url = '%s/v%s/%s-%s-%s.%s'|format(d[comp]['pkg'][item]['uri'],
+                               d[comp]['pkg'][item]['version'], item, grains.kernel|lower, d.arch,
+                               d[comp]['pkg'][item]['suffix']) %}
+
+            {%- elif item in ('kubectx', 'kubens',) %}
+                {%- set arch = 'x86_64' if d.arch in ('x86_64', 'amd64') else d.arch %}
+                {%- set url = '%s/v%s/%s_v%s_%s_%s.%s'|format(d[comp]['pkg'][item]['uri'],
+                               d[comp]['pkg'][item]['version'], item, d[comp]['pkg'][item]['version'],
+                               grains.kernel|lower, arch, d[comp]['pkg'][item]['suffix']) %}
+
+            {%- elif item in ('cue',) %}
+                {%- set arch = 'x86_64' if d.arch in ('x86_64', 'amd64') else d.arch %}
+                {%- set url = '%s/v%s/%s_%s_%s_%s.%s'|format(d[comp]['pkg'][item]['uri'],
+                               d[comp]['pkg'][item]['version'], item, d[comp]['pkg'][item]['version'],
+                               grains.kernel, arch, d[comp]['pkg'][item]['suffix']) %}
+            {%- endif %}
+
+            {%- do d[comp]['pkg'][item]['archive'].update({'name': d.dir.archive ~ '/' ~ dirname, 'source': url }) %}
+        {%- endfor %}
+
+    {%- elif comp in ('devlibs', 'operators',) and 'wanted' in d[comp] and d[comp]['wanted'] %}
+        {%- for item in d[comp]['wanted'] %}
+            {%- if dirname == 'kubernetes' and 'version' in d[comp]['pkg'][item] %}
+                {%- set dirname = '%s-%s-%s-%s'|format(dirname, comp, item, d[comp]['pkg'][item]['version']) %}
+            {%- endif %}
+            {%- if comp in ('operators',) %}
+                {%- set name = 'v' if 'name' not in d[comp]['pkg'][item] else d[comp]['pkg'][item]['name'] %}
+                {%- set url = '%s/%s%s.tar.gz'|format(d[comp]['pkg'][item]['uri'], name,
+                                                      d[comp]['pkg'][item]['version']) %}
+            {%- elif comp in ('devlibs',) and item in ('java', 'python', 'csharp', 'javascript',) %}
+                {%- set url = '%s/%s/archive/%s%s.tar.gz'|format(d[comp]['pkg'][item]['uri'], item,
+                                                                 d[comp]['pkg'][item]['name'],
+                                                                 d[comp]['pkg'][item]['version']) %}
+            {%- elif comp in ('devlibs',) %}
+                {%- set url = '%s/%s%s.tar.gz'|format(d[comp]['pkg'][item]['uri'], d[comp]['pkg'][item]['name'],
+                                                       d[comp]['pkg'][item]['version']) %}
+            {%- endif %}
+
+            {%- do d[comp]['pkg'][item].update({'name': d.dir.source ~ '/' ~ dirname, 'source': url }) %}
         {%- endfor %}
     {%- endif %}
-{%- endfor %}
 
+{%- endfor %}
 {%- set data = d %}

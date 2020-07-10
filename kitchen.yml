@@ -266,7 +266,7 @@ suites:
     verifier:
       inspec_tests:
         - path: test/integration/default
-  - name: pkgrepo
+  - name: redhat
     provisioner:
       state_top:
         base:
@@ -279,7 +279,7 @@ suites:
             '*':
               - kubernetes
       pillars_from_files:
-        kubernetes.sls: test/salt/pillar/pkgrepo.sls
+        kubernetes.sls: test/salt/pillar/redhat.sls
     verifier:
       inspec_tests:
-        - path: test/integration/pkgrepo
+        - path: test/integration/redhat

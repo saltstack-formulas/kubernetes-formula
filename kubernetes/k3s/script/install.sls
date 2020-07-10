@@ -5,18 +5,21 @@
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
 
+{%- if d.k3s.pkg.use_upstream_script %}
+    {%- if grains.os_family not in ('RedHat',) %}
+
 {{ formula }}-k3s-script-install-prerequisites:
   pkg.installed:
     - names: {{ d.pkg.deps|json }}
-      {%- if grains.os_family in ('CentOS',) and d.k3s.pkg.deps_url %}
+          {%- if grains.os_family in ('CentOS',) and d.k3s.pkg.deps_url %}
   cmd.run:
     - names:
-          {%- for pkg in d.pkg.deps_url %}
+              {%- for pkg in d.pkg.deps_url %}
       - yum install -y {{ pkg }}
-          {%- endfor %}
+              {%- endfor %}
     - require_in:
       - file: {{ formula }}-k3s-script-install-prerequisites
-      {%- endif %}
+          {%- endif %}
   file.directory:
     - names:
       - {{ d.dir.tmp }}
@@ -47,11 +50,22 @@
 {{ formula }}-k3s-script-install:
   cmd.run:
     - name: {{ d.dir.tmp }}/k3s-bootstrap.sh
-      {%- if 'env' in d.k3s.pkg.script and d.k3s.pkg.script.env %}
+          {%- if 'env' in d.k3s.pkg.script and d.k3s.pkg.script.env %}
     - env:
-          {%- for k,v in d.k3s.pkg.script.env.items() %}
+              {%- for k,v in d.k3s.pkg.script.env.items() %}
       - {{ k }}: {{ v }}
-          {%- endfor %}
-      {%- endif %}
+              {%- endfor %}
+          {%- endif %}
     - require:
       - file: {{ formula }}-k3s-script-download
+
+    {%- else %}
+
+{{ formula }}-server-package-install-other:
+  test.show_notification:
+    - text: |
+        The server package is unavailable for {{ salt['grains.get']('finger', grains.os_family) }}
+        RedHat is bugged
+
+    {%- endif %}
+{%- endif %}

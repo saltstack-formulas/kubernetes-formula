@@ -5,11 +5,11 @@
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
 
-    {%- if 'wanted' in d.client.libs and d.client.libs.wanted %}
-        {%- for lib in d.client.libs.wanted %}
-            {%- if 'libs' in d.client and lib in d.client.libs and d.client.libs[lib] %}
+{%- if 'wanted' in d.devlibs and d.devlibs.wanted %}
+    {%- for lib in d.devlibs.wanted %}
+        {%- if 'pkg' in d.devlibs and d.devlibs['pkg'] and lib in d.devlibs['pkg'] and d.devlibs['pkg'][lib] %}
 
-{{ formula }}-client-libs-install-{{ lib }}:
+{{ formula }}-devlibs-{{ lib }}-install:
   file.directory:
     - name: {{ d.dir.source }}/{{ lib }}
     - user: {{ d.identity.rootuser }}
@@ -18,15 +18,15 @@
     - clean: True
     - makedirs: True
     - require_in:
-      - archive: {{ formula }}-client-libs-install-{{ lib }}
+      - archive: {{ formula }}-devlibs-{{ lib }}-install
     - recurse:
         - user
         - group
         - mode
   archive.extracted:
     - name: {{ d.dir.source }}/{{ lib }}
-    - source: {{ d.client.libs[lib]['source'] }}
-    - source_hash: {{ d.client.libs[lib]['source_hash'] }}
+    - source: {{ d.devlibs['pkg'][lib]['source'] }}
+    - source_hash: {{ d.devlibs['pkg'][lib]['source_hash'] }}
     - retry: {{ d.retry_option }}
     - enforce_toplevel: false
     - options: '--strip-components=1'
@@ -37,6 +37,6 @@
         - user
         - group
 
-            {% endif %}
-        {% endfor %}
-    {% endif %}
+        {% endif %}
+    {% endfor %}
+{% endif %}
