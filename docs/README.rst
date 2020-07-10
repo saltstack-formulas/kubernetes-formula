@@ -7,7 +7,7 @@ Formula to manage kubernetes on MacOS and GNU/Linux. Currently supports:
 
 * `server`  (https://kubernetes.io)
 * `node`    (https://kubernetes.io)
-* `client`  (https://kubernetes.io)
+* `client`  (https://kubernetes.io, aliases)
 * `devspace`  (https://devspace.sh)
 * `istio`  (https://istio.io) 
 * `kind`  (https://github.com/kubernetes-sigs/kind)
@@ -242,6 +242,7 @@ This state installs selected kubernetes developer libraries
 * https://github.com/kubernetes-client
 * https://github.com/zalando-incubator/kopf
 * https://github.com/ericchiang/k8s
+* https://github.com/ahmetb/kubectl-aliases
 
 ``kubernetes.devlibs.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -320,7 +321,14 @@ This state uninstalls node archive only
 ``kubernetes.client.package``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state installs kubectl package onlyfrom repo.
+This state installs kubectl package only from repo.
+
+``kubernetes.client.aliases``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state installs kubernetes developer aliases to /etc/defaults.
+
+* https://github.com/ahmetb/kubectl-aliases
 
 ``kubernetes.client.package.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

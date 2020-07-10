@@ -4,3 +4,4 @@
 include:
   - .package.clean
   - .binary.clean
+  - .aliases.clean

@@ -241,4 +241,7 @@ control 'kubernetes archive' do
     it { should be_file }
     it { should_not be_directory }
   end
+  describe file('/etc/default/aliases.sh') do
+    it { should be_file }
+  end
 end

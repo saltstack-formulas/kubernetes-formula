@@ -163,11 +163,14 @@ Windows:
           source_hash: 4e8e48263077f94fccfb1f1c385a95640ef3c7a48fd8ca41cc7e5889ba82da28  # amd64
 
 MacOS:
+  dir:
+    default: /etc/defaults
   identity:
     rootuser: {{ macos_rootuser | d('') }}
     rootgroup: {{ macos_rootgroup | d('') }}
   server: {}
   client:
+    aliases_file: /etc/defaults/kubernetes-aliases.sh
     pkg:
       name: kubernetes-cli         # homebrew
       use_upstream_archive: false  # archive

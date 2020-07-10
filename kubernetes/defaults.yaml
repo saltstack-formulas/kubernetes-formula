@@ -25,8 +25,9 @@ kubernetes:
     rootgroup: root
   arch: ''
   dir:
-    binary: /usr/local
     archive: /usr/local
+    binary: /usr/local
+    default: /etc/default
     source: /usr/local/src/kubernetes
     tmp: /tmp/kubernetes-tmp
   pkg:
@@ -122,11 +123,7 @@ kubernetes:
 
   client:
     version: 1.18.0
-    config_file: /etc/default/kubernetes-node.ini
-    config: {}
-    environ_file: /etc/default/kubernetes-node.sh
-    environ: []
-    service: {}
+    aliases_file: /etc/default/kubernetes-aliases.sh
     pkg:
       name: kubectl
       use_upstream_repo: false

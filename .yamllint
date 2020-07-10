@@ -16,6 +16,7 @@ ignore: |
   kubernetes/defaults.yaml
   kubernetes/osarchmap.yaml
   pillar.example
+  kubernetes/files/defaults/aliases.sh
 
 yaml-files:
   # Default settings
