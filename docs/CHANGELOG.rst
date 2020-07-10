@@ -2,6 +2,15 @@
 Changelog
 =========
 
+`1.6.1 <https://github.com/saltstack-formulas/kubernetes-formula/compare/v1.6.0...v1.6.1>`_ (2020-07-10)
+------------------------------------------------------------------------------------------------------------
+
+Documentation
+^^^^^^^^^^^^^
+
+
+* **readme:** expanded documentation (\ ` <https://github.com/saltstack-formulas/kubernetes-formula/commit/8cae5c7>`_\ )
+
 `1.6.0 <https://github.com/saltstack-formulas/kubernetes-formula/compare/v1.5.0...v1.6.0>`_ (2020-07-10)
 ------------------------------------------------------------------------------------------------------------
 
