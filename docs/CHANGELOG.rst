@@ -2,6 +2,45 @@
 Changelog
 =========
 
+`1.6.0 <https://github.com/saltstack-formulas/kubernetes-formula/compare/v1.5.0...v1.6.0>`_ (2020-07-10)
+------------------------------------------------------------------------------------------------------------
+
+Bug Fixes
+^^^^^^^^^
+
+
+* **macos:** resolve `#31 <https://github.com/saltstack-formulas/kubernetes-formula/issues/31>`_ (\ ` <https://github.com/saltstack-formulas/kubernetes-formula/commit/ecd83ac>`_\ )
+* **syntax:** get travis ci passing (\ ` <https://github.com/saltstack-formulas/kubernetes-formula/commit/85969de>`_\ )
+
+Code Refactoring
+^^^^^^^^^^^^^^^^
+
+
+* **devtools:** consoldiate states (\ ` <https://github.com/saltstack-formulas/kubernetes-formula/commit/4ae1c36>`_\ )
+* **tools:** rename to devtools (\ ` <https://github.com/saltstack-formulas/kubernetes-formula/commit/acab20b>`_\ )
+
+Continuous Integration
+^^^^^^^^^^^^^^^^^^^^^^
+
+
+* **redhat:** standalone centos/fedora tests (\ ` <https://github.com/saltstack-formulas/kubernetes-formula/commit/ac0d984>`_\ )
+
+Documentation
+^^^^^^^^^^^^^
+
+
+* **readme:** fix readme (\ ` <https://github.com/saltstack-formulas/kubernetes-formula/commit/0ba0b77>`_\ )
+
+Features
+^^^^^^^^
+
+
+* **devtools:** add kubectx, kubens (\ ` <https://github.com/saltstack-formulas/kubernetes-formula/commit/b81b6ac>`_\ )
+* **istio:** support istio archive (\ ` <https://github.com/saltstack-formulas/kubernetes-formula/commit/6565ac2>`_\ )
+* **linkerd:** add linkerd2 support (\ ` <https://github.com/saltstack-formulas/kubernetes-formula/commit/80858a4>`_\ )
+* **octant:** add vmware-tanzur/octant support (\ ` <https://github.com/saltstack-formulas/kubernetes-formula/commit/dd55b72>`_\ )
+* **operators:** support for kubernetes operators (\ ` <https://github.com/saltstack-formulas/kubernetes-formula/commit/d3f30c7>`_\ )
+
 `1.5.0 <https://github.com/saltstack-formulas/kubernetes-formula/compare/v1.4.1...v1.5.0>`_ (2020-07-09)
 ------------------------------------------------------------------------------------------------------------
 
