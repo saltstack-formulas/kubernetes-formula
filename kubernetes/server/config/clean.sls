@@ -9,8 +9,7 @@
 {%- set sls_package_clean = tplroot ~ '.server.package.clean' %}
 
 include:
-  - {{ sls_archive_clean }}
-  - {{ sls_package_clean }}
+  - {{ sls_archive_clean if d.server.pkg.use_upstream == 'archive' else sls_package_clean }}
 
 {{ formula }}-server-config-clean:
   file.absent:
@@ -18,5 +17,4 @@ include:
       - {{ d.server.config_file }}
       - {{ d.server.environ_file }}
     - require:
-      - sls: {{ sls_archive_clean }}
-      - sls: {{ sls_package_clean }}
+      - sls: {{ sls_archive_clean if d.server.pkg.use_upstream == 'archive' else sls_package_clean }}

@@ -8,28 +8,23 @@ kubernetes:
     - server
     - client
     - node
-    - devspace
-    - istio
-    - linkerd2
-    - kubebuilder
-    - octant
     - k3s
-    - kind
-    - krew
-    - kudo
-    - minikube
     - operators
-    - skaffold
     - devlibs
     - devtools
-  devtools:
+    - sigs
+  sigs:
     wanted:
-      - kubectx
-      - kubens
-      - cue
-      - audit2rbac
-      - stern
-      - dive
+      - kind
+      - krew
+      - kubebuilder
+    pkg:
+      kind:
+        version: '0.8.1'
+      kubebuiler:
+        version: 2.3.1
+        archive:
+          source_hash: ff496970f209706763f2aba2bdcefc2de8d00085b3b972b5790117b59ea4ed10
   operators:
     wanted:
       - grafana-operator
@@ -46,46 +41,46 @@ kubernetes:
       - k8s
       - python
       - javascript
-
+  devtools:
+    wanted:
+      - audit2rbac
+      - cue
+      - devspace
+      - dive
+      - istio
+      - kubectx
+      - kubens
+      - kudo
+      - linkerd2
+      - minikube
+      - octant
+      - skaffold
+      - stern
+    pkg:
+      minikube:
+        version: 1.12.0
+        binary:
+          source_hash: '3501b6c2be48183affa9497e7db6d751d92e1536267268b73ad1a936a2977122'
+      devspace:
+        version: 4.13.1
+      kudo:
+        version: '0.12.0'
+      linkerd2:
+        version: 20.7.1
+      istio:
+        version: 1.6.4
+      octant:
+        version: '0.13.1'
+        archive:
+          source_hash: b0fdf8984ac1947986ccd990b0d4ba60c1f5a1070909e734a1c57189308ed977
   client:
-    version: 1.18.2
-    pkg:
-      use_upstream_package: true
-      binary:
-        source_hash: 6ea8261b503c6c63d616878837dc70b758d4a3aeb9996ade8e83b51aedac9698
-  minikube:
-    version: 1.2.0
-    pkg:
-      binary:
-        source_hash: 3121f933bf8d608befb24628a045ce536658738c14618504ba46c92e656ea6b5
-  devspace:
-    version: 4.13.1
-  kudo:
-    version: 0.12.0
-  kind:
-    version: 0.8.1
-  linkerd2:
-    version: 20.7.1
-  istio:
-    version: 1.6.4
-  octant:
-    version: '0.13.1'
-    pkg:
-      archive:
-        source_hash: b0fdf8984ac1947986ccd990b0d4ba60c1f5a1070909e734a1c57189308ed977
-
-  kubebuiler:
-    version: 2.3.1
-    pkg:
-      archive:
-        source_hash: ff496970f209706763f2aba2bdcefc2de8d00085b3b972b5790117b59ea4ed10
+    version: 1.18.0
   k3s:
     version: '1.18.4+k3s1'
     pkg:
-      use_upstream_binary: true
-      use_upstream_script: false
+      use_upstream: binary   # script
+      uri_b: 'https://github.com/rancher/k3s/releases/download'
       binary:
-        uri: 'https://github.com/rancher/k3s/releases/download'
         source_hash: 0c19d64dde77c8bb3af1dfbac5aecea59ab4679d97dcfaa62419aaa795380490
       script:
         source_hash: b2856cee3432cf0148513b644b5369db8fa8b039793959f410aa7dfdb496b2b9
@@ -122,10 +117,6 @@ kubernetes:
   linux:
     altpriority: 1000
 
-  dir:
-    archive: /opt/kubernetes
-    binary: /opt/kubernetes
-    source: /tmp/kubernetes
   # Just here for testing
   added_in_defaults: defaults_value
   winner: defaults

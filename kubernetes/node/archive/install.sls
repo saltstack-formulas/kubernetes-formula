@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 # vim: ft=sls
 
-    {%- if grains.kernel|lower in ('linux', 'darwin') %}
-
-{%- set tplroot = tpldir.split('/')[0] %}
-{%- from tplroot ~ "/map.jinja" import data as d with context %}
-{%- set formula = d.formula %}
-{%- from tplroot ~ "/files/macros.jinja" import format_kwargs with context %}
+{%- if grains.kernel|lower in ('linux', 'darwin') %}
+    {%- set tplroot = tpldir.split('/')[0] %}
+    {%- from tplroot ~ "/map.jinja" import data as d with context %}
+    {%- set formula = d.formula %}
+    {%- from tplroot ~ "/files/macros.jinja" import format_kwargs with context %}
+    {%- if d.node.pkg.use_upstream == 'archive' and 'archive' in d.node.pkg %}
 
 {{ formula }}-node-archive-install:
   pkg.installed:
@@ -14,7 +14,7 @@
     - require_in:
       - file: {{ formula }}-node-archive-install
   file.directory:
-    - name: {{ d.node.pkg.archive.name }}
+    - name: {{ d.node.pkg.path }}
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
     - mode: 755
@@ -27,10 +27,12 @@
         - group
         - mode
   archive.extracted:
-    {{- format_kwargs(d.node.pkg.archive) }}
+    {{- format_kwargs(d.node['pkg']['archive']) }}
     - retry: {{ d.retry_option|json }}
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
+    - enforce_toplevel: false
+    - trim_output: true
     - recurse:
         - user
         - group
@@ -43,18 +45,19 @@
 {{ formula }}-node-archive-install-symlink-{{ cmd }}:
   file.symlink:
     - name: /usr/local/bin/{{ cmd }}
-    - target: {{ d.node.pkg.archive.name }}/bin/{{ cmd }}
+    - target: {{ d.node.pkg.path }}/bin/{{ cmd }}
     - force: True
     - require:
       - archive: {{ formula }}-node-archive-install
 
             {%- endfor %}
         {%- endif %}
-    {%- else %}
+    {%- endif %}
+{%- else %}
 
 {{ formula }}-node-archive-install-other:
   test.show_notification:
     - text: |
         The node archive is unavailable for {{ salt['grains.get']('finger', grains.os_family) }}
 
-    {%- endif %}
+{%- endif %}

@@ -5,12 +5,13 @@
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
 
-    {%- if grains.os_family|lower in ('redhat', 'debian') %}
-        {%- if d.node.pkg.use_upstream_repo %}
-            {%- set sls_repo_install = tplroot ~ '.package.repo.install' %}
+    {%- if d.node.pkg.use_upstream in ('package', 'repo') %}
+        {%- if grains.os_family|lower in ('redhat', 'debian') %}
+            {%- if d.node.pkg.use_upstream == 'repo' %}
+                {%- set sls_repo_install = tplroot ~ '.package.repo.install' %}
 include:
   - {{ sls_repo_install }}
-        {%- endif %}
+            {%- endif %}
 
 {{ formula }}-node-package-install-deps:
   pkg.installed:
@@ -21,11 +22,12 @@ include:
     - names: {{ d.node.pkg.commands|unique|json }}
     - runas: {{ d.identity.rootuser }}
     - reload_modules: true
-        {%- if d.node.pkg.use_upstream_repo %}
+            {%- if d.node.pkg.use_upstream == 'repo' %}
     - require:
       - pkgrepo: {{ formula }}-package-repo-managed
-        {%- endif %}
+            {%- endif %}
 
+        {%- endif %}
     {%- else %}
 
 {{ formula }}-node-package-install-other:

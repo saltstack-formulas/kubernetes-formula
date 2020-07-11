@@ -9,13 +9,11 @@
 {%- set sls_package_clean = tplroot ~ '.node.package.clean' %}
 
 include:
-  - {{ sls_archive_clean }}
-  - {{ sls_package_clean }}
+  - {{ sls_archive_clean if d.node.pkg.use_upstream == 'archive' else sls_package_clean }}
 
 {{ formula }}-node-config-clean:
   file.absent:
     - names:
       - {{ d.node.config_file }}
     - require:
-      - sls: {{ sls_archive_clean }}
-      - sls: {{ sls_package_clean }}
+      - sls: {{ sls_archive_clean if d.node.pkg.use_upstream == 'archive' else sls_package_clean }}

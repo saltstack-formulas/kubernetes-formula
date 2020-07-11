@@ -254,7 +254,7 @@ suites:
       state_top:
         base:
           '*':
-            - kubernetes.clean
+            # kubernetes.clean
             - kubernetes
       pillars:
         top.sls:
@@ -271,7 +271,7 @@ suites:
       state_top:
         base:
           '*':
-            - kubernetes.clean
+            # kubernetes.clean
             - kubernetes
       pillars:
         top.sls:
@@ -279,7 +279,7 @@ suites:
             '*':
               - kubernetes
       pillars_from_files:
-        kubernetes.sls: test/salt/pillar/default.sls
+        kubernetes.sls: test/salt/pillar/redhat.sls
     verifier:
       inspec_tests:
         - path: test/integration/redhat

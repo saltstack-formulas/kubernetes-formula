@@ -12,6 +12,32 @@
 ---
 arm64:
   arch: arm64
+  client:
+    pkg:
+      use_upstream: archive 
+      archive:
+        source_hash: '594ca3eadc7974ec4d9e4168453e36ca434812167ef8359086cd64d048df525b7bd46424e7cc9c41e65c72bda3117326ba1662d1c9d739567f10f5684fd85bee'  # noqa 204
+  node:
+    pkg:
+      use_upstream: archive
+      archive:
+        source_hash: 'c207e9ab60587d135897b5366af79efe9d2833f33401e469b2a4e0d74ecd2cf6bb7d1e5bc18d80737acbe37555707f63dd581ccc6304091c1d98dafdd30130b7'  # noqa 204
+  server:
+    pkg:
+      use_upstream: archive
+      archive:
+        source_hash: '842910a7013f61a60d670079716b207705750d55a9e4f1f93696d19d39e191644488170ac94d8740f8e3aa3f7f28f61a4347f69d7e93d149c69ac0efcf3688fe'  # noqa 204
+
+  sigs:
+    pkg:
+      kubebuiler:
+        use_upstream: archive
+        archive:
+          source_hash: '153ff1bc656820917fe5b3eb393bf7b607e04c299f8602817f8088040ecffb40'
+      kind:
+        binary:
+          source_hash: 'b33be1df8cdd842b0b6dfa306125fbf5ada9811c3e6db840854c89a66a194f3f'
+
   devtools:
     pkg:
       kubectx:
@@ -26,78 +52,50 @@ arm64:
       audit2rbac:
         archive:
           source_hash: '819361a9b61ce02dc86bbe789b1da54dd887c2841f1a92ed0abb790738efc7f2'
-  octant:
-    pkg:
-      archive:
-        source_hash: '6713da801fba0d9192ac4e31761046cf09ef3d1e85863b13b06c33bdb1a1a03c'
-  kubebuiler:
-    pkg:
-      use_upstream_archive: true
-      use_upstream_binary: false
-      use_upstream_repo: false
-      archive:
-        source_hash: '153ff1bc656820917fe5b3eb393bf7b607e04c299f8602817f8088040ecffb40'
-  client:
-    pkg:
-      use_upstream_archive: true
-      use_upstream_binary: false
-      use_upstream_repo: false
-      archive:
-        source_hash: '594ca3eadc7974ec4d9e4168453e36ca434812167ef8359086cd64d048df525b7bd46424e7cc9c41e65c72bda3117326ba1662d1c9d739567f10f5684fd85bee'  # noqa 204
-  node:
-    pkg:
-      use_upstream_archive: true
-      use_upstream_repo: false
-      archive:
-        source_hash: 'c207e9ab60587d135897b5366af79efe9d2833f33401e469b2a4e0d74ecd2cf6bb7d1e5bc18d80737acbe37555707f63dd581ccc6304091c1d98dafdd30130b7'  # noqa 204
-  server:
-    pkg:
-      use_upstream_archive: true
-      use_upstream_repo: false
-      archive:
-        source_hash: '842910a7013f61a60d670079716b207705750d55a9e4f1f93696d19d39e191644488170ac94d8740f8e3aa3f7f28f61a4347f69d7e93d149c69ac0efcf3688fe'  # noqa 204
-  kind:
-    pkg:
-      binary:
-        source_hash: 'b33be1df8cdd842b0b6dfa306125fbf5ada9811c3e6db840854c89a66a194f3f'
+      octant:
+        archive:
+          source_hash: '6713da801fba0d9192ac4e31761046cf09ef3d1e85863b13b06c33bdb1a1a03c'
+      minikube:
+        binary:
+          source_hash: 'c4110205ba8ca130bbab89736b7fc7dd05ae98dde8b72f489f1882ea115f8764'
+          
 
 ppc64le:
   arch: ppc64le
-  kubebuiler:
-    pkg:
-      use_upstream_archive: true
-      use_upstream_binary: false
-      use_upstream_repo: false
-      archive:
-        source_hash: '25c684402841cbb1d87daf05d2c5d76a16e9f8d3c2ad949a439dd947b5e52150'
   client:
     pkg:
-      use_upstream_archive: true
-      use_upstream_binary: false
-      use_upstream_repo: false
+      use_upstream: archive 
       archive:
         source_hash: 'f80fb3769358cb20820ff1a1ce9994de5ed194aabe6c73fb8b8048bffc394d1b926de82c204f0e565d53ffe7562faa87778e97a3ccaaaf770034a992015e3a86'  # noqa 204
   node:
     pkg:
-      use_upstream_archive: true
-      use_upstream_repo: false
+      use_upstream: archive
       archive:
         source_hash: 'a542ed5ed02722af44ef12d1602f363fcd4e93cf704da2ea5d99446382485679626835a40ae2ba47a4a26dce87089516faa54479a1cfdee2229e8e35aa1c17d7'  # noqa 204
   server:
     pkg:
-      use_upstream_archive: true
-      use_upstream_repo: false
+      use_upstream: archive
       archive:
         source_hash: '95c5b952ac1c4127a5c3b519b664972ee1fb5e8e902551ce71c04e26ad44b39da727909e025614ac1158c258dc60f504b9a354c5ab7583c2ad769717b30b3836'  # noqa 204
-  kind:
+
+  sigs:
     pkg:
-      binary:
-        source_hash: 'be3b7d766bf75ba0368921c73691c6028651207ef132c6435bda9ca40b5f6d00'
+      kubebuiler:
+        use_upstream: archive
+        archive:
+          source_hash: '25c684402841cbb1d87daf05d2c5d76a16e9f8d3c2ad949a439dd947b5e52150'
+      kind:
+        binary:
+          source_hash: 'be3b7d766bf75ba0368921c73691c6028651207ef132c6435bda9ca40b5f6d00'
+
   devtools:
     pkg:
       audit2rbac:
         archive:
           source_hash: 'f992061aad5ebacbf5694f63cefa4d4e0f12515322196bd8eaf3c040852491c6'
+      minikube:
+        binary:
+          source_hash: '3bba3a06a5b36ab22e953a55eae463625435de235536029404fc3237e7081af1'
 
 ppc64:
   arch: ppc64
@@ -122,9 +120,7 @@ x86_64:
           source_hash: '11ec8ed082fe8555c0537e437aa0448e00a135322fff05410594f691d3632398'
   client:
     pkg:
-      use_upstream_archive: true
-      use_upstream_binary: false
-      use_upstream_repo: false
+      use_upstream: archive
       archive:
         source_hash: '110844511b70f9f3ebb92c15105e6680a05a562cd83f79ce2d2e25c2dd70f0dbd91cae34433f61364ae1ce4bd573b635f2f632d52de8f72b54acdbc95a15e3f0'  # noqa 204
 
@@ -132,9 +128,7 @@ armv6l:
   arch: armv6l
   client:
     pkg:
-      use_upstream_archive: true
-      use_upstream_binary: false
-      use_upstream_repo: false
+      use_upstream: archive 
       archive:
         source_hash: 'd3627b763606557a6c9a5766c34198ec00b3a3cd72a55bc2cb47731060d31c4af93543fb53f53791062bb5ace2f15cbaa8592ac29009641e41bd656b0983a079'  # noqa 204
 
@@ -161,9 +155,7 @@ armv7l:
           source_hash: 'e7dd55345b3592667b0f667e69b0779800aaa65a8b4473681136ee95a6c7b24d'
   client:
     pkg:
-      use_upstream_archive: true
-      use_upstream_binary: false
-      use_upstream_repo: false
+      use_upstream: archive
       archive:
         source_hash: 'd3627b763606557a6c9a5766c34198ec00b3a3cd72a55bc2cb47731060d31c4af93543fb53f53791062bb5ace2f15cbaa8592ac29009641e41bd656b0983a079'  # noqa 204
 
@@ -171,20 +163,21 @@ s390x:
   arch: s390x
   client:
     pkg:
-      use_upstream_archive: true
-      use_upstream_binary: false
-      use_upstream_repo: false
+      use_upstream: archive
       archive:
         source_hash: 'a9b658108b6803d60fa3cd4e76d9e58bf75201017164fe54054b7ccadbb68c4ad7ba7800746940bc518d90475e6c0a96965a26fa50882f4f0e56df404f4ae586'  # noqa 204
   node:
     pkg:
-      use_upstream_archive: true
-      use_upstream_repo: false
+      use_upstream: archive
       archive:
         source_hash: '651e0db73ee67869b2ae93cb0574168e4bd7918290fc5662a6b12b708fa628282e3f64be2b816690f5a2d0f4ff8078570f8187e65dee499a876580a7a63d1d19'  # noqa 204
   server:
     pkg:
-      use_upstream_archive: true
-      use_upstream_repo: false
+      use_upstream: archive
       archive:
         source_hash: 'a46522d2119a0fd58074564c1fa95dd8a929a79006b82ba3c4245611da8d2db9fd785c482e1b61a9aa361c5c9a6d73387b0e15e6a7a3d84fffb3f65db3b9deeb'  # noqa 204
+  devtools:
+    pkg:
+      minikube:
+        binary:
+          source_hash: '959c44f18f7279cfb2225bea664a7a71473c4b6685f2bf036ebccebfbcef6578'

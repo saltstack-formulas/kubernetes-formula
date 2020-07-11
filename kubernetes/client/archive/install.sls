@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 # vim: ft=sls
 
-    {%- if grains.kernel|lower in ('linux', 'darwin') %}
-
-{%- set tplroot = tpldir.split('/')[0] %}
-{%- from tplroot ~ "/map.jinja" import data as d with context %}
-{%- set formula = d.formula %}
-{%- from tplroot ~ "/files/macros.jinja" import format_kwargs with context %}
+{%- if grains.kernel|lower in ('linux', 'darwin') %}
+    {%- set tplroot = tpldir.split('/')[0] %}
+    {%- from tplroot ~ "/map.jinja" import data as d with context %}
+    {%- set formula = d.formula %}
+    {%- from tplroot ~ "/files/macros.jinja" import format_kwargs with context %}
+    {%- if d.client.pkg.use_upstream == 'archive' and 'pkg' in d.client and 'archive' in d.client['pkg'] %}
 
 {{ formula }}-client-archive-install:
   pkg.installed:
@@ -14,7 +14,7 @@
     - require_in:
       - file: {{ formula }}-client-archive-install
   file.directory:
-    - name: {{ d.client.pkg.archive.name }}
+    - name: {{ d.client.pkg.path }}
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
     - mode: 755
@@ -27,10 +27,12 @@
         - group
         - mode
   archive.extracted:
-    {{- format_kwargs(d.client.pkg.archive) }}
+    {{- format_kwargs(d.client['pkg']['archive']) }}
     - retry: {{ d.retry_option|json }}
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
+    - enforce_toplevel: false
+    - trim_output: true
     - recurse:
         - user
         - group
@@ -43,18 +45,19 @@
 {{ formula }}-client-archive-install-symlink-{{ cmd }}:
   file.symlink:
     - name: /usr/local/bin/{{ cmd }}
-    - target: {{ d.client.pkg.archive.name }}/bin/{{ cmd }}
+    - target: {{ d.client.pkg.path }}/bin/{{ cmd }}
     - force: True
     - require:
       - archive: {{ formula }}-client-archive-install
 
             {%- endfor %}
         {%- endif %}
-    {%- else %}
+    {%- endif %}
+{%- else %}
 
 {{ formula }}-client-archive-install-other:
   test.show_notification:
     - text: |
         The client archive is unavailable for {{ salt['grains.get']('finger', grains.os_family) }}
 
-    {%- endif %}
+{%- endif %}

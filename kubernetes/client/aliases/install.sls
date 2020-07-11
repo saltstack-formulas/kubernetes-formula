@@ -4,14 +4,13 @@
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
+{%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
 
 {%- set sls_archive_install = tplroot ~ '.client.archive.install' %}
 {%- set sls_binary_install = tplroot ~ '.client.binary.install' %}
 {%- set sls_package_install = tplroot ~ '.client.package.install' %}
-{%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
-
 include:
-  - {{ sls_archive_install if d.client.pkg.use_upstream_archive else sls_binary_install if d.client.pkg.use_upstream_binary else sls_package_install }}  # noqa 204
+  - {{ sls_archive_install if d.client.pkg.use_upstream == 'archive' else sls_binary_install if d.client.pkg.use_upstream == 'binary' else sls_package_install }}   # noqa 204
 
 {{ formula }}-client-aliases-file-managed-environ_file:
   file.managed:
@@ -26,4 +25,4 @@ include:
     - makedirs: True
     - template: jinja
     - require:
-      - sls: {{ sls_archive_install if d.client.pkg.use_upstream_archive else sls_binary_install if d.client.pkg.use_upstream_binary else sls_package_install }}  # noqa 204
+      - sls: {{ sls_archive_install if d.client.pkg.use_upstream == 'archive' else sls_binary_install if d.client.pkg.use_upstream == 'binary' else sls_package_install }}   # noqa 204

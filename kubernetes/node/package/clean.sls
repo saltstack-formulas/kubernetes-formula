@@ -5,22 +5,24 @@
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
 
-    {%- if grains.os_family|lower in ('redhat', 'debian') %}
-        {%- if d.node.pkg.use_upstream_repo %}
-            {%- set sls_repo_clean = tplroot ~ '.package.repo.clean' %}
+    {%- if d.node.pkg.use_upstream in ('package', 'repo') %}
+        {%- if grains.os_family|lower in ('redhat', 'debian') %}
+            {%- if d.node.pkg.use_upstream == 'repo' %}
+                {%- set sls_repo_clean = tplroot ~ '.package.repo.clean' %}
 include:
   - {{ sls_repo_clean }}
-        {%- endif %}
+            {%- endif %}
 
 {{ formula }}-node-package-clean-pkgs:
   pkg.removed:
     - names: {{ d.node.pkg.commands|unique|json }}
     - reload_modules: true
-        {%- if d.node.pkg.use_upstream_repo %}
+            {%- if d.node.pkg.use_upstream == 'repo' %}
     - require:
       - pkgrepo: {{ formula }}-package-repo-absent
-        {%- endif %}
+            {%- endif %}
 
+        {%- endif %}
     {%- else %}
 
 {{ formula }}-node-package-clean-other:

@@ -9,6 +9,6 @@
   file.absent:
     - names:
       - /usr/local/bin/k3s
-           {%- if d.k3s.pkg.use_upstream_binary and d.k3s.pkg.binary.name %}
-      - {{ d.k3s.pkg.binary.name }}/
+           {%- if d.k3s.pkg.use_upstream == 'binary' %}
+      - {{ d.k3s.pkg.path }}/
            {%- endif %}

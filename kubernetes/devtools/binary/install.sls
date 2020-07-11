@@ -5,56 +5,55 @@
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
 
-    {%- if 'wanted' in d.devtools and d.devtools.wanted %}
-        {%- for tool in d.devtools.wanted|unique %}
-            {%- if tool in d.devtools['pkg'] and 'binary' in d.devtools['pkg'][tool] %}
+{%- if 'wanted' in d.devtools and d.devtools.wanted %}
+    {%- for tool in d.devtools.wanted|unique %}
+        {%- if d.devtools.pkg[tool]['use_upstream'] == 'binary' %}
+            {%- set p = d.devtools['pkg'] %}
+            {%- if tool in p and 'binary' in p[tool] and 'source' in p[tool]['binary'] %}
 
-{{ formula }}-devtools-{{ tool }}-binary-install:
+{{ formula }}-devtools-binary-{{ tool }}-install:
   file.directory:
-    - name: {{ d.devtools['pkg'][tool]['binary']['name'] }}/bin
+    - name: {{ p[tool]['path'] }}/bin
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
     - mode: 755
     - makedirs: True
     - require_in:
-      - cmd: {{ formula }}-devtools-{{ tool }}-binary-install
+      - cmd: {{ formula }}-devtools-binary-{{ tool }}-install
     - recurse:
         - user
         - group
         - mode
   cmd.run:
     - names:
-      - curl -Lo {{ d.devtools['pkg'][tool]['binary']['name'] }}/bin/{{ tool }} {{ d.devtools['pkg'][tool]['binary']['source'] }}  # noqa 204
-      - chmod '0755' {{ d.devtools['pkg'][tool]['binary']['name'] }}/bin/{{ tool }} 2>/dev/null
+      - curl -Lo {{ p[tool]['path'] }}/bin/{{ tool }} {{ p[tool]['binary']['source'] }}
+      - chmod '0755' {{ p[tool]['path'] }}/bin/{{ tool }} 2>/dev/null
     - retry: {{ d.retry_option|json }}
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
-      {%- if 'source_hash' in d.devtools['pkg'][tool]['binary'] and d.devtools['pkg'][tool]['binary']['source_hash'] %}  # noqa 204
+                {%- if 'source_hash' in p[tool]['binary'] and p[tool]['binary']['source_hash'] %}
   module.run:
     - name: file.check_hash
-    - path: {{ d.devtools['pkg'][tool]['binary']['name'] }}/bin/{{ tool }}
-    - file_hash: {{ d.devtools['pkg'][tool]['binary']['source_hash'] }}
+    - path: {{ p[tool]['path'] }}/bin/{{ tool }}
+    - file_hash: {{ p[tool]['binary']['source_hash'] }}
     - require:
-      - cmd: {{ formula }}-devtools-{{ tool }}-binary-install
-      {%- endif %}
+      - cmd: {{ formula }}-devtools-binary-{{ tool }}-install
+                {%- endif %}
 
                 {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
-                    {%- for cmd in d.devtools['pkg'][tool]['commands']|unique %}
-
-{{ formula }}-devtools-{{ tool }}-binary-install-symlink-{{ cmd }}:
+                    {%- for cmd in p[tool]['commands']|unique %}
+{{ formula }}-devtools-binary-{{ tool }}-install-symlink-{{ cmd }}:
   file.symlink:
     - name: /usr/local/bin/{{ cmd }}
-    - target: {{ d.devtools['pkg'][tool]['binary']['name'] }}/{{ tool }}
+    - target: {{ p[tool]['path'] }}/bin/{{ tool }}
     - force: True
+    - onlyif: test -f {{ p[tool]['path'] }}/bin/{{ tool }}
     - require:
-      - cmd: {{ formula }}-devtools-{{ tool }}-binary-install
-    - unless:
-      - {{ d.linux.altpriority|int > 0 }}
-      - {{ grains.os_family|lower in ('windows',) }}
-
+      - binary: {{ formula }}-devtools-binary-{{ tool }}-install
                     {% endfor %}
                 {% endif %}
 
             {% endif %}
-        {%- endfor %}
-    {%- endif %}
+        {% endif %}
+    {%- endfor %}
+{%- endif %}

@@ -5,13 +5,14 @@
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
 
-    {%- if 'config' in d.k3s and d.k3s.config %}
-        {%- set sls_binary_install = tplroot ~ '.k3s.binary.install' %}
-        {%- set sls_package_install = tplroot ~ '.k3s.package.install' %}
-        {%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
+{%- if 'config' in d.k3s and d.k3s.config %}
+    {%- set sls_archive_install = tplroot ~ '.k3s.archive.install' %}
+    {%- set sls_binary_install = tplroot ~ '.k3s.binary.install' %}
+    {%- set sls_package_install = tplroot ~ '.k3s.package.install' %}
+    {%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
 
 include:
-  - {{ sls_binary_install if d.k3s.pkg.use_upstream_binary else sls_package_install }}
+  - {{ sls_archive_install if d.k3s.pkg.use_upstream == 'archive' else sls_binary_install if d.k3s.pkg.use_upstream == 'binary' else sls_package_install }}   # noqa 204
 
 {{ formula }}-k3s-config-file-install-file-managed:
   file.managed:
@@ -28,6 +29,6 @@ include:
     - context:
         config: {{ d.k3s.config|json }}
     - require:
-      - sls: {{ sls_binary_install if d.k3s.pkg.use_upstream_binary else sls_package_install }}
+      - sls: {{ sls_archive_install if d.k3s.pkg.use_upstream == 'archive' else sls_binary_install if d.k3s.pkg.use_upstream == 'binary' else sls_package_install }}   # noqa 204
 
-    {%- endif %}
+{%- endif %}
