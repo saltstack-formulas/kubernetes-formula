@@ -5,12 +5,12 @@
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
 
-    {%- if grains.kernel|lower in ('linux',) %}
-        {%- if d.client.pkg.use_upstream_repo %}
-            {%- set sls_repo_install = tplroot ~ '.package.repo.install' %}
+    {%- if d.client.pkg.use_upstream in ('package', 'repo') %}
+        {%- if grains.kernel|lower in ('linux',) %}
+            {%- if d.client.pkg.use_upstream == 'repo' %}
 include:
-  - {{ sls_repo_install }}
-        {%- endif %}
+  - .package.repo.install
+            {%- endif %}
 
 {{ formula }}-client-package-install-deps:
   pkg.installed:
@@ -21,12 +21,12 @@ include:
     - name: {{ d.client.pkg.name }}
     - runas: {{ d.identity.rootuser }}
     - reload_modules: true
-        {%- if d.client.pkg.use_upstream_repo %}
+            {%- if d.client.pkg.use_upstream == 'repo' %}
     - require:
       - pkgrepo: {{ formula }}-package-repo-managed
-        {%- endif %}
+            {%- endif %}
 
-    {%- elif grains.os_family == 'MacOS' %}
+        {%- elif grains.kernel|lower in ('MacOS',) %}
 
 {{ formula }}-client-package-install-brew:
   cmd.run:
@@ -40,17 +40,5 @@ include:
     - runas: {{ d.identity.rootuser }}
     - unless: test -x /usr/local/bin/kubectl  # if binary is missing
 
-    {%- elif grains.kernel|lower == 'linux' %}
-
-{{ formula }}-client-package-install-snap:
-  pkg.installed:
-    - name: snapd
-  service.running:
-    - name: snapd
-  cmd.run:
-    - name: snap install {{ d.client.pkg.name }} --classic
-    - onlyif: test -x /usr/bin/snap || test -x /usr/local/bin/snap
-    - require:
-      - service: {{ formula }}-client-package-install-snap
-
+        {%- endif %}
     {%- endif %}

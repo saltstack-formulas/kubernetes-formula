@@ -5,13 +5,12 @@
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
 
-    {%- if 'environ' in d.node and d.node.environ %}
-        {%- set sls_archive_install = tplroot ~ '.node.archive.install' %}
-        {%- set sls_package_install = tplroot ~ '.node.package.install' %}
-        {%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
-
+{%- if 'environ' in d.node and d.node.environ %}
+    {%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
+    {%- set sls_archive_install = tplroot ~ '.node.archive.install' %}
+    {%- set sls_package_install = tplroot ~ '.node.package.install' %}
 include:
-  - {{ sls_archive_install if d.node.pkg.use_upstream_archive else sls_package_install }}
+  - {{ sls_archive_install if d.node.pkg.use_upstream == 'archive' else sls_package_install }}
 
 {{ formula }}-node-config-file-managed-environ_file:
   file.managed:
@@ -28,6 +27,6 @@ include:
     - context:
         environ: {{ d.node.environ|json }}
     - require:
-      - sls: {{ sls_archive_install if d.node.pkg.use_upstream_archive else sls_package_install }}
+      - sls: {{ sls_archive_install if d.node.pkg.use_upstream == 'archive' else sls_package_install }}
 
     {%- endif %}

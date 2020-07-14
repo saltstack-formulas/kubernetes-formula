@@ -5,3 +5,4 @@ include:
   - .config.clean
   - .package.clean
   - .archive.clean
+  - .alternatives.clean

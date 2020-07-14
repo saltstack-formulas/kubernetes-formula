@@ -3,11 +3,26 @@
 kubernetes-formula
 ==================
 
-Formula to manage kubernetes on MacOS and GNU/Linux. Currently supports:
+Highly extensible formula to manage kubernetes on MacOS and GNU/Linux. Currently supports:
 
 * `server`  (https://kubernetes.io)
 * `node`    (https://kubernetes.io)
-* `client`  (https://kubernetes.io)
+* `client`  (https://kubernetes.io, aliases)
+* `operators` (https://operatorhub.io)
+* `devtools` (extensive collection of tools, kubectx, kubens, cue, attr2rbac, dive, stern, etc)
+* `devlibs`  (kubernetes clients, source software)
+* `sigs`  (https://github.com/kubernetes-sigs, special interest groups)
+
+
+The default `kubernetes.sigs` state includes the following:
+
+* `kind` (https://github.com/kubernetes-sigs/kind)
+* `krew` (https://github.com/kubernetes-sigs/krew
+* `kubebuilder` (https://github.com/kubernetes-sigs/kubebuilder
+
+
+The default `kubernetes.devtools` state inclues the following:
+
 * `devspace`  (https://devspace.sh)
 * `istio`  (https://istio.io) 
 * `kind`  (https://github.com/kubernetes-sigs/kind)
@@ -17,11 +32,26 @@ Formula to manage kubernetes on MacOS and GNU/Linux. Currently supports:
 * `linkerd2`  (https://linkerd.io)
 * `minikube`  (https://github.com/kubernetes/minikube)
 * `octant`    (https://github.com/vmware-tanzu/octant)
-* `operators` (https://operatorhub.io)
-* `devtools` (kubectx, kubens, cue, attr2rbac, etc)
-* `devlibs`  (kubernetes clients)
+* `skaffold`  (https://skaffold.dev)
 
-Operators, Developer tools, and Developer library can be extended.
+
+The default `kubernetes.operators` state includes the following (from https://operatorhub.io):
+
+* `akka-cluster` (https://github.com/lightbend/akka-cluster-operator)
+* `grafana` (https://github.com/integr8ly/grafana-operator)
+* `prometheus` (https://github.com/coreos/prometheus-operator)
+* `istio` (https://github.com/banzaicloud/istio-operator)
+* `shell-operator` (https://github.com/flant/shell-operator)
+
+
+The default `kubernetes.devlibs` state includes the following:
+
+* https://github.com/kubernetes-client/java
+* https://github.com/kubernetes-client/python
+* https://github.com/kubernetes-client/csharp
+* https://github.com/kubernetes-client/javascript
+* https://github.com/zalando-incubator/kopf
+* https://github.com/ericchiang/k8s
 
 
 |img_travis| |img_sr|
@@ -114,95 +144,17 @@ This state installs kubernetes node GNU/Linux only (see https://kubernetes.io/do
 
 This state uninstalls kubernetes node GNU/Linux only.
 
-``kubernetes.minikube``
-^^^^^^^^^^^^^^^^^^^^^^^
-
-This state installs minikube only (see https://github.com/kubernetes/minikube)
-
-``kubernetes.minikube.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state uninstalls minikube only.
-
-``kubernetes.devspace``
-^^^^^^^^^^^^^^^^^^^^^^^
-
-This state installs devspace only (see https://devspace.sh)
-
-``kubernetes.devspace.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state uninstalls kubernetes devspace only.
-
-``kubernetes.k3s``
-^^^^^^^^^^^^^^^^^^
-
-This state installs k3s only  (see https://k3s.io)
-
-``kubernetes.k3s.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state uninstalls k3s only.
-
-``kubernetes.kudo``
+``kubernetes.sigs``
 ^^^^^^^^^^^^^^^^^^^
 
-This state installs kudo only (see https://kudo.dev)
+This state installs operator archives only
 
-``kubernetes.kudo.clean``
+* https://operatorhub.io
+
+``kubernetes.sigs.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state uninstalls kudo only.
-
-``kubernetes.kind``
-^^^^^^^^^^^^^^^^^^^
-
-This state installs kind only (see https://github.com/kubernetes-sigs/kind)
-
-``kubernetes.kind.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state uninstalls kind only.
-
-``kubernetes.kubebuilder``
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state installs kubebuilder only (see https://github.com/kubernetes-sigs/kubebuilder)
-
-``kubernetes.kubebuilder.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state uninstalls kubebuilder only. 
-
-``kubernetes.istio``
-^^^^^^^^^^^^^^^^^^^^
-
-This state installs istio only (see https://istio.io)
-
-``kubernetes.istio.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state uninstalls istio only.
-
-``kubernetes.octant``
-^^^^^^^^^^^^^^^^^^^^^
-
-This state installs octant only (see https://github.com/vmware-tanzu/octant)
-
-``kubernetes.octant.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state uninstalls octant only.
-
-``kubernetes.linkerd2``
-^^^^^^^^^^^^^^^^^^^^^^^
-
-This state installs linkerd2 only (see https://linkerd.io, and https://github.com/linkerd/linkerd2)
-
-``kubernetes.linkerd2.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state uninstalls linkerd2 only.
+This state uninstalls operator archives only
 
 ``kubernetes.operators``
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -226,6 +178,18 @@ This state installs selected kubernetes developer tools only
 * https://github.com/ahmetb/kubectx
 * https://github.com/cuelang/cue
 * https://github.com/liggitt/audit2rbac
+* https://github.com/wagoodman/dive
+* https://github.com/wercker/stern
+* https://github.com/kubernetes/minikube
+* https://devspace.sh
+* https://k3s.io
+* https://kudo.dev
+* https://github.com/kubernetes-sigs/kind
+* https://github.com/kubernetes-sigs/kubebuilder
+* https://istio.io
+* https://github.com/vmware-tanzu/octant
+* https://linkerd.io, and https://github.com/linkerd/linkerd2
+* https://github.com/GoogleContainerTools/skaffold
 
 ``kubernetes.devtools.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -240,11 +204,18 @@ This state installs selected kubernetes developer libraries
 * https://github.com/kubernetes-client
 * https://github.com/zalando-incubator/kopf
 * https://github.com/ericchiang/k8s
+* https://github.com/ahmetb/kubectl-aliases
 
 ``kubernetes.devlibs.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state uninstalls selected kubernetes developer libraries (i.e. kubernetes client libraries, kopf, etc).
+
+``kubernetes.skaffold.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls skaffold only.
+
 
 
 Main Sub-states
@@ -254,26 +225,6 @@ This list may be incomplete.
 
 .. contents::
    :local:
-
-``kubernetes.minikube.package``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state installs minikube package only (MacOS).
-
-``kubernetes.minikube.package.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state uninstalls the minikube package only (MacOS).
-
-``kubernetes.minikube.binary``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state installs minikube binary only
-
-``kubernetes.minikube.binary.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state uninstalls minikube binary only
 
 ``kubernetes.server.package``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -318,7 +269,14 @@ This state uninstalls node archive only
 ``kubernetes.client.package``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state installs kubectl package onlyfrom repo.
+This state installs kubectl package only from repo.
+
+``kubernetes.client.aliases``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state installs kubernetes developer aliases to /etc/defaults.
+
+* https://github.com/ahmetb/kubectl-aliases
 
 ``kubernetes.client.package.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -345,16 +303,6 @@ This state installs kubectl binary only
 
 This state uninstalls kubectl binary only
 
-``kubernetes.devspace.binary``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state installs devspace binary only
-
-``kubernetes.devspace.binary.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state uninstalls devspace binary only
-
 ``kubernetes.k3s.binary``
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
@@ -375,45 +323,6 @@ This state installs k3s script only
 
 This state uninstalls k3s script only
 
-``kubernetes.kudo.binary``
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state installs kudo binary only
-
-``kubernetes.kudo.binary.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state uninstalls kudo binary only
-
-``kubernetes.kudo.package``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state installs kudo package only
-
-``kubernetes.kudo.package.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state uninstalls kudo package only
-
-``kubernetes.kubebuilder.archive``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state installs kubebuilder archive and linux alternatives.
-
-``kubernetes.kubebuilder.archive.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state uninstalls kubebuilder archive  only
-
-``kubernetes.kubebuilder.archive.alternatives``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state installs kubebuilder linux alternatives only 
-
-``kubernetes.kubebuilder.archive.alternatives.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state uninstalls kubebuilder linux alternatives only 
 
 
 Testing

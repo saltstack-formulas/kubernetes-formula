@@ -4,7 +4,7 @@
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
-{%- set sls_alternatives_clean = tplroot ~ '.client.archive.alternatives.clean' %}
+{%- set sls_alternatives_clean = tplroot ~ '.client.alternatives.clean' %}
 
 include:
   - {{ sls_alternatives_clean }}
@@ -13,9 +13,9 @@ include:
   file.absent:
     - names:
       - {{ d.dir.tmp }}/client*
-      - {{ d.client.pkg.archive.name }}/bin
+      - {{ d.client.pkg.path }}/bin
         {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
-            {%- for cmd in d.client.pkg.commands %}
+            {%- for cmd in d.client.pkg.commands|unique %}
       - /usr/local/bin/{{ cmd }}
             {%- endfor %}
         {%- endif %}

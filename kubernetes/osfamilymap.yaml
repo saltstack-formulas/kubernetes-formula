@@ -23,20 +23,17 @@ Debian:
       key_url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
   node:
     pkg:
-      use_upstream_archive: true
-      use_upstream_repo: false
+      use_upstream: archive
   server:
     pkg:
-      use_upstream_archive: true
-      use_upstream_repo: false
+      use_upstream: archive
   client:
     pkg:
-      use_upstream_archive: true
-      use_upstream_binary: false
-      use_upstream_repo: false
-  minikube:
+      use_upstream: archive
+  devtools:
     pkg:
-      use_upstream_binary: true
+      minikube:
+        use_upstream: binary
 
 RedHat:
   pkg:
@@ -50,17 +47,13 @@ RedHat:
       repo_gpgcheck: 1
   node:
     pkg:
-      use_upstream_archive: true
-      use_upstream_repo: false
+      use_upstream: archive
   server:
     pkg:
-      use_upstream_archive: true
-      use_upstream_repo: false
+      use_upstream: archive
   client:
     pkg:
-      use_upstream_archive: true
-      use_upstream_binary: false
-      use_upstream_repo: false
+      use_upstream: archive
 
 Suse: {}
 Gentoo: {}
@@ -81,26 +74,22 @@ FreeBSD:
     rootgroup: wheel
   client:
     pkg:
-      use_upstream_archive: false
-      use_upstream_binary: false
-      use_upstream_repo: false
-  minikube:
+      use_upstream: false
+  devtools:
     pkg:
-      use_upstream_repo: false
-      use_upstream_binary: false
+      minikube:
+        use_upstream: false
 
 OpenBSD:
   identity:
     rootgroup: wheel
   client:
     pkg:
-      use_upstream_archive: false
-      use_upstream_binary: false
-      use_upstream_repo: false
-  minikube:
+      use_upstream: false
+  devtools:
     pkg:
-      use_upstream_repo: false
-      use_upstream_binary: false
+      minikube:
+        use_upstream: archive
 
 Windows:
   dir:
@@ -111,112 +100,128 @@ Windows:
     pkg:
       name: kubectl.exe
       binary:
-        source_hash: 974d351e7e0ad1e1ed0901770d65188e8d4c4cdd2494474d14a2b2c325751293
+        source_hash: '974d351e7e0ad1e1ed0901770d65188e8d4c4cdd2494474d14a2b2c325751293'
   node:
     pkg:
-      use_upstream_archive: true
-      use_upstream_repo: false
+      use_upstream: archive
       archive:
-        source_hash: d726ed904f9f7fe7e8831df621dc9094b87e767410a129aa675ee08417b662ddec314e165f29ecb777110fbfec0dc2893962b6c71950897ba72baaa7eb6371ed  # noqa 204
+        source_hash: 'd726ed904f9f7fe7e8831df621dc9094b87e767410a129aa675ee08417b662ddec314e165f29ecb777110fbfec0dc2893962b6c71950897ba72baaa7eb6371ed'  # noqa 204
   server: {}
-  minikube:
+  sigs:
     pkg:
-      name: minikube-windows-amd64.exe
-      binary:
-        source_hash: 426586f33d88a484fdc5a3b326b0651d57860e9305a4f9d4180640e3beccaf6b
-  devspace:
-    pkg:
-      name: devspace-windows-amd64.exe
-      binary:
-        source_hash: a696bd3ae755222fd63884fa654ba91e24d46826bb78358fcba592fc2b4013c0
-  kind:
-    pkg:
-      binary:
-        source_hash: 10d0a4adc7485a0525831b2cd67062dd75d551ec0133f09e3a7d2b2674f7efc5
-  octant:
-    pkg:
-      archive:
-        source_hash: cecf094c3d8f6c55236cf02c7e4c3916ca0e5c430ef5dff647665a2a16a20c8c
+      kind:
+        binary:
+          source_hash: '10d0a4adc7485a0525831b2cd67062dd75d551ec0133f09e3a7d2b2674f7efc5'
+
   devtools:
     pkg:
+      minikube:
+        name: minikube-windows-amd64.exe
+        binary:
+          source_hash: 'a5f8666d762146cc7d85916bcb2d6b7246162e4706f10e5c12a795b9d07ea6c4'
+      devspace:
+        name: devspace-windows-amd64.exe
+        binary:
+          source_hash: 'a696bd3ae755222fd63884fa654ba91e24d46826bb78358fcba592fc2b4013c0'
+      octant:
+        archive:
+          source_hash: 'cecf094c3d8f6c55236cf02c7e4c3916ca0e5c430ef5dff647665a2a16a20c8c'
       kubectx:
         suffix: zip
         archive:
-          source_hash: 50da8ffd2ac9ca7f41c8aa6bf47a7fbd91d17603827b24267b8618fc30e7923f  # x86_64
+          source_hash: '50da8ffd2ac9ca7f41c8aa6bf47a7fbd91d17603827b24267b8618fc30e7923f'  # x86_64
       kubens:
         suffix: zip
         archive:
-          source_hash: bd60e0bd71ef0c0d628dcf09600902e2d67998a29cc5998a404b200fe2d98de8  # x86_64
+          source_hash: 'bd60e0bd71ef0c0d628dcf09600902e2d67998a29cc5998a404b200fe2d98de8'  # x86_64
       cue:
         archive:
-          source_hash: b705cd47d3d568b231ed94c8d3e947f9e1d9b54eab0483d9a00b1c6645be32e9  # x86_64
+          source_hash: 'b705cd47d3d568b231ed94c8d3e947f9e1d9b54eab0483d9a00b1c6645be32e9'  # x86_64
       audit2rbac:
         archive:
-          source_hash: 57e1b6f108141da818eb29ad5755d386f56be067737302fabfa092e335c6ce57
+          source_hash: '57e1b6f108141da818eb29ad5755d386f56be067737302fabfa092e335c6ce57'
+      stern:
+        binary:
+          suffix: exe
+          source_hash: '75708b9acf6ef0eeffbe1f189402adc0405f1402e6b764f1f5152ca288e3109e'  # amd64
+      dive:
+        archive:
+          suffix: zip
+          source_hash: '4e8e48263077f94fccfb1f1c385a95640ef3c7a48fd8ca41cc7e5889ba82da28'  # amd64
+      linkerd2:
+        binary:
+          source_hash: '076b71c9afa0e7bb867e7006934438f35f5cff0edcbf0ec3293f7cdf0b6a6b13'
 
 MacOS:
+  dir:
+    default: /etc/defaults
   identity:
     rootuser: {{ macos_rootuser | d('') }}
     rootgroup: {{ macos_rootgroup | d('') }}
   server: {}
   client:
+    aliases_file: /etc/defaults/kubernetes-aliases.sh
     pkg:
       name: kubernetes-cli         # homebrew
-      use_upstream_archive: false  # archive
-      use_upstream_repo: true      # homebrew
-      use_upstream_binary: false   # binary
+      use_upstream: archive
       binary:
-        source_hash: 7b9bdc2dc8604e590052a58456ac648d3afd1b436e609118538a6ffe07579cc6
+        source_hash: '7b9bdc2dc8604e590052a58456ac648d3afd1b436e609118538a6ffe07579cc6'
       archive:
-        source_hash: 803a0fed122ef6b85f7a120b5485723eaade765b7bc8306d0c0da03bd3df15d800699d15ea2270bb7797fa9ce6a81da90e730dc793ea4ed8c0149b63d26eca30  # noqa 204
+        source_hash: '803a0fed122ef6b85f7a120b5485723eaade765b7bc8306d0c0da03bd3df15d800699d15ea2270bb7797fa9ce6a81da90e730dc793ea4ed8c0149b63d26eca30'  # noqa 204
 
-  minikube:
-    check: sysctl -a | grep machdep.cpu.features
+  sigs:
     pkg:
-      name: minikube               # homebrew
-      use_upstream_repo: false     # homebrew
-      use_upstream_binary: true    # binary
-      binary:
-        source_hash: f27016246850b3145e1509e98f7ed060fd9575ac4d455c7bdc15277734372e85
-  devspace:
-    pkg:
-      use_upstream_binary: true   # binary
-      binary:
-        source_hash: 92a8a50de12b06d5255aa2242dca77e879b7a63b1bcf214cd49e998831be9c1c
-  kudo:
-    pkg:
-      name: kudo-cli    # homebrew
-      tapname: kudobuilder/tap
-      binary:
-        source_hash: df8ca9034ef78000638e9cb08e65c7f054938b4827368755b613a63a8ea8efc7
-  kubebuilder:
-    pkg:
-      archive:
-        source_hash: 39314d45053b6c31eb17e35c9b8d923f8a38277a9a136448345dd4b7f0f308f4
-  octant:
-    pkg:
-      archive:
-        source_hash: f3ac074585bd3afbf529da7e37e5e8844150504fdb420f0cc930f31e766ce24a
-  kind:
-    pkg:
-      name: kind      # homebrew
-      binary:
-        source_hash: cdd8dfe7dff764429badcd636179b0e3eb937640cfe56749dd9b8f9c048cb7db
-  k3s:
-    pkg:
-      use_upstream_binary: true
-      use_upstream_script: false
+      kubebuilder:
+        archive:
+          source_hash: '39314d45053b6c31eb17e35c9b8d923f8a38277a9a136448345dd4b7f0f308f4'
+      kind:
+        name: kind      # homebrew
+        binary:
+          source_hash: 'cdd8dfe7dff764429badcd636179b0e3eb937640cfe56749dd9b8f9c048cb7db'
+
   devtools:
     pkg:
+      minikube:
+        check: sysctl -a | grep machdep.cpu.features
+        name: minikube               # homebrew
+        use_upstream: binary
+        binary:
+          source_hash: '7f6c6eeca19d6b16c9043cfc96a42408bbdec8ba90c01bd025249ca855a1362c'
+      devspace:
+        use_upstream: binary
+        binary:
+          source_hash: '92a8a50de12b06d5255aa2242dca77e879b7a63b1bcf214cd49e998831be9c1c'
+      kudo:
+        name: kudo-cli    # homebrew
+        tapname: kudobuilder/tap
+        binary:
+          source_hash: 'df8ca9034ef78000638e9cb08e65c7f054938b4827368755b613a63a8ea8efc7'
+      octant:
+        archive:
+          source_hash: 'f3ac074585bd3afbf529da7e37e5e8844150504fdb420f0cc930f31e766ce24a'
+      linkerd2:
+        binary:
+          source_hash: '1adc9c53fe968383020b6c4047d42452754e05bc90d1a65f2261d729c6fab4df'
+      k3s:
+        use_upstream: binary
       kubectx:
         archive:
-          source_hash: a46c5cf1f6ba8f6aa4dc75fc5a7086d294a28a19cf2fbbf18ac54108a7f713e1  # x86_64
+          source_hash: 'a46c5cf1f6ba8f6aa4dc75fc5a7086d294a28a19cf2fbbf18ac54108a7f713e1'  # x86_64
       kubens:
         archive:
-          source_hash: 4ae390ba702d57355d5fb9f2bba04c9b00ae39f740c59044c2d39cd6bfa0ab18  # x86_64
+          source_hash: '4ae390ba702d57355d5fb9f2bba04c9b00ae39f740c59044c2d39cd6bfa0ab18'  # x86_64
       cue:
         archive:
-          source_hash: 2b2038feaa2732f25bfb8c563627f990fa890bc654acee34c915bafa5279bc04  # x86_64
+          source_hash: '2b2038feaa2732f25bfb8c563627f990fa890bc654acee34c915bafa5279bc04'  # x86_64
+      stern:
+        archive:
+          source_hash: '7aea3b6691d47b3fb844dfc402905790665747c1e6c02c5cabdd41994533d7e9'  # x86_64
+      dive:
+        archive:
+          source_hash: '1da3581355d432db38154d80ca9929fc3bca55c473ba286e7869814718f6d578'  # x86_64
       audit2rbac:
         archive:
-          source_hash: e89d9e7e6e68d7fdf135ab0912f57afda0fea07931ac443a367d35671f83d1b1
+          source_hash: 'e89d9e7e6e68d7fdf135ab0912f57afda0fea07931ac443a367d35671f83d1b1'
+      skaffold:
+        binary:
+          source_hash: '271350426a34d8f3f0048c902e4d543ea994eca1a91cb881f8d7ebd9176de1a3'
