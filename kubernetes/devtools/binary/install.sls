@@ -49,7 +49,7 @@
     - force: True
     - onlyif: test -f {{ p[tool]['path'] }}/bin/{{ tool }}
     - require:
-      - binary: {{ formula }}-devtools-binary-{{ tool }}-install
+      - cmd: {{ formula }}-devtools-binary-{{ tool }}-install
                     {% endfor %}
                 {% endif %}
 
