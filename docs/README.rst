@@ -21,7 +21,7 @@ The default `kubernetes.sigs` state includes the following:
 * `kubebuilder` (https://github.com/kubernetes-sigs/kubebuilder
 
 
-The default `kubernetes.devtools` state inclues the following:
+The default `kubernetes.devtools` state includes the following:
 
 * `devspace`  (https://devspace.sh)
 * `istio`  (https://istio.io) 
