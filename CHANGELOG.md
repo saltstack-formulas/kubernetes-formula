@@ -1,5 +1,36 @@
 # Changelog
 
+# [2.0.0](https://github.com/saltstack-formulas/kubernetes-formula/compare/v1.6.1...v2.0.0) (2020-07-14)
+
+
+### Bug Fixes
+
+* **jinja:** fixup various things ([](https://github.com/saltstack-formulas/kubernetes-formula/commit/c350d58))
+
+
+### Code Refactoring
+
+* **formula:** more simplified design ([](https://github.com/saltstack-formulas/kubernetes-formula/commit/622e132))
+
+
+### Features
+
+* **aliases:** basic kubectl-aliases support ([](https://github.com/saltstack-formulas/kubernetes-formula/commit/a4bd703))
+* **develop:** krew & skaffold support ([](https://github.com/saltstack-formulas/kubernetes-formula/commit/1922196))
+* **docker:** dive tool support ([](https://github.com/saltstack-formulas/kubernetes-formula/commit/d28ced0))
+* **kubectl:** shell completion support ([](https://github.com/saltstack-formulas/kubernetes-formula/commit/7ba5e77))
+* **stern:** add stern container viewer ([](https://github.com/saltstack-formulas/kubernetes-formula/commit/161acc1))
+
+
+### Tests
+
+* **devtools:** more tests ([](https://github.com/saltstack-formulas/kubernetes-formula/commit/a9b2fa7))
+
+
+### BREAKING CHANGES
+
+* **formula:** consolidation of states under few headings
+
 ## [1.6.1](https://github.com/saltstack-formulas/kubernetes-formula/compare/v1.6.0...v1.6.1) (2020-07-10)
 
 
