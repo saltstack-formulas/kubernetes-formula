@@ -7,125 +7,201 @@ kubernetes:
     - server
     - client
     - node
-    - devspace
-    - istio
-    - linkerd2
-    - kubebuilder
-    - octant
     - k3s
-    - kind
-    - kudo
-    - minikube
     - operators
     - devlibs
     - devtools
-
-  identity:
-    rootuser: root
-    rootgroup: root
-  arch: ''
-  dir:
-    binary: /usr/local
-    archive: /usr/local
-    source: /usr/local/src/kubernetes
-    tmp: /tmp/kubernetes-tmp
-  pkg:
-    deps:
-      - curl
-      - tar
-      - gzip
-    repo:
-      humanname: kubernetes
-      name: kubernetes
-      comments:
-        - installed by salt
-      enabled: 1
-      gpgcheck: 1
-
+    - sigs
+  sigs:
+    wanted:
+      - kind
+      - krew
+      - kubebuilder
+    pkg:
+      kind:
+        version: 0.8.1
+        use_upstream: binary
+        uri_b: 'https://github.com/kubernetes-sigs/kind/releases/download'
+        suffix: ''
+        commands: {}
+          # kind
+        binary:
+          source_hash: '781c3db479b805d161b7c2c7a31896d1a504b583ebfcce8fcd49538c684d96bc'
+          options: '--strip-components=1'
+      krew:
+        version: '0.3.4'
+        use_upstream: archive
+        uri_a: 'https://github.com/kubernetes-sigs/krew/releases/download'
+        suffix: tar.gz
+        commands:
+          - krew
+        archive:
+          options: '--strip-components=1'
+      kubebuilder:
+        version: '2.3.1'
+        use_upstream: archive
+        uri_a: 'https://github.com/kubernetes-sigs/kubebuilder/releases/download'
+        suffix: tar.gz
+        commands:
+          - etcd
+          - kube-apiserver
+          - kubebuilder
+          - kubectl
+        archive:
+          source_hash: 'ff496970f209706763f2aba2bdcefc2de8d00085b3b972b5790117b59ea4ed10'
+          options: '--strip-components=1'
   devtools:
     wanted:
+      - audit2rbac
+      - cue
+      - devspace
+      - dive
+      - istio
       - kubectx
       - kubens
-      - cue
-      - audit2rbac
+      - kudo
+      - linkerd2
+      - minikube
+      - octant
+      - skaffold
+      - stern     # binary
     pkg:
+      devspace:
+        version: 4.13.1
+        use_upstream: binary
+        uri_b: 'https://github.com/devspace-cloud/devspace/releases/download'
+        suffix: tar.gz
+        commands:
+          - devspace
+        binary:
+          source_hash: '19faec36f190d0c3a3447f47c05378fabbe9f01e27f8b7475d51796e288bdbd4'
+          options: '--strip-components=1'
+      octant:
+        version: '0.13.1'
+        use_upstream: archive
+        uri_a: 'https://github.com/vmware-tanzu/octant/releases/download'
+        suffix: tar.gz
+        commands:
+          - octant
+        archive:
+          source_hash: 'b0fdf8984ac1947986ccd990b0d4ba60c1f5a1070909e734a1c57189308ed977'
+          options: '--strip-components=1'
+      linkerd2:
+        version: 20.7.1
+        use_upstream: binary
+        uri_b: 'https://github.com/linkerd/linkerd2/releases/download'
+        suffix: tar.gz
+        name: linkerd2-cli-edge
+        commands:
+          - linkerd
+        binary:
+          source_hash: 9044e2b56b5dd86ef9a8aa5bc1a6a1cde3db601d2138a3380ab6edec12a5365f
+          options: '--strip-components=1'
+      skaffold:
+        version: 1.12.0
+        use_upstream: binary
+        uri_b: 'https://storage.googleapis.com/skaffold/releases'
+        suffix: tar.gz
+        commands:
+          - skaffold
+        binary:
+          source_hash: 'be5e115ba9d1a3703deb968d1adb0c040e970f7eac1b7c1f1313df5a37c5f817'
+          options: '--strip-components=1'
+      istio:
+        version: 1.6.5
+        use_upstream: archive
+        uri_a: 'https://github.com/istio/istio/releases/download'
+        suffix: tar.gz
+        commands:
+          - istioctl
+        archive:
+          options: '--strip-components=1'
+      dive:
+        version: '0.9.2'
+        use_upstream: archive
+        uri_a: 'https://github.com/wagoodman/dive/releases/download'
+        suffix: tar.gz
+        commands:
+          - dive
+        archive:
+          source_hash: 'fb0b6ee68831fbfc59a06d88638becea09e85da3bb2093a1de4a47ebd4e40296'  # x86_64
+          options: '--strip-components=1'
+      kudo:
+        version: 0.12.0
+        use_upstream: binary
+        uri_b: 'https://github.com/kudobuilder/kudo/releases/download'
+        suffix: tar.gz
+        commands:
+          - kubectl-kudo
+        binary:
+          source_hash: '5df22a42021d78a199d00f055faedd47a86ad3001bd06da31549c0a477a403a9'
+          options: '--strip-components=1'
+      minikube:
+        version: 1.12.0
+        config_file: /etc/default/minikube.ini
+        config: {}
+        environ_file: /etc/default/minikube.sh
+        environ: []
+        service: {}
+        vm_driver: none
+        use_upstream: binary
+        uri_b: 'https://github.com/kubernetes/minikube/releases/download'
+        suffix: tar.gz
+        commands:
+          - minikube
+        binary:
+          source_hash: '3501b6c2be48183affa9497e7db6d751d92e1536267268b73ad1a936a2977122'
+          options: '--strip-components=1'
+      stern:
+        version: '1.11.0'
+        use_upstream: binary
+        uri_b: 'https://github.com/wercker/stern/releases/download'
+        suffix: tar.gz
+        commands:
+          - stern
+        binary:
+          source_hash: 'e0b39dc26f3a0c7596b2408e4fb8da533352b76aaffdc18c7ad28c833c9eb7db'  # x86_64
+          options: '--strip-components=1'
       kubectx:
         version: '0.9.1'
-        use_upstream_archive: true
-        uri: https://github.com/ahmetb/kubectx/releases/download
+        use_upstream: archive
+        uri_a: 'https://github.com/ahmetb/kubectx/releases/download'
         suffix: tar.gz
         commands:
           - kubectx
         archive:
-          name: null  # set in map.jinja
-          source: null # set in map.jinja
-          source_hash: ce689516f3ae916492bb8f9ee3344da03f6b5a098c1ce2c4a5107b8e9e1cf445  # x86_64
+          source_hash: 'ce689516f3ae916492bb8f9ee3344da03f6b5a098c1ce2c4a5107b8e9e1cf445'  # x86_64
+          options: '--strip-components=1'
       kubens:
         version: '0.9.1'
-        use_upstream_archive: true
-        uri: https://github.com/ahmetb/kubectx/releases/download
+        use_upstream: archive 
+        uri_a: 'https://github.com/ahmetb/kubectx/releases/download'
         suffix: tar.gz
         commands:
           - kubens
         archive:
-          name: null  # set in map.jinja
-          source: null # set in map.jinja
-          source_hash: dea7839158e4847b8b52709dbfbe9ff2d974df4416b8ea8a86ce4bd622786f52  # x86_64
+          source_hash: 'dea7839158e4847b8b52709dbfbe9ff2d974df4416b8ea8a86ce4bd622786f52'  # x86_64
+          options: '--strip-components=1'
       cue:
         version: '0.2.1'
-        use_upstream_archive: true
-        name: cue
-        uri: https://github.com/cuelang/cue/releases/download
+        use_upstream: archive
+        uri_a: 'https://github.com/cuelang/cue/releases/download'
         suffix: tar.gz
         commands:
           - cue
         archive:
-          name: null  # set in map.jinja
-          source: null # set in map.jinja
-          source_hash: 40078d02559595eec8e5a873f09ca89545502019bcac6f892f5a30bb8d49286c  # x86_64
+          source_hash: '40078d02559595eec8e5a873f09ca89545502019bcac6f892f5a30bb8d49286c'  # x86_64
+          options: '--strip-components=1'
       audit2rbac:
         version: '0.8.0'
-        use_upstream_archive: true
-        name: audit2rbac
-        uri: https://github.com/liggitt/audit2rbac/releases/download
+        use_upstream: archive
+        uri_a: 'https://github.com/liggitt/audit2rbac/releases/download'
         suffix: tar.gz
         commands:
           - audit2rbac
         archive:
-          name: null  # set in map.jinja
-          source: null # set in map.jinja
-          source_hash: 7703cbf3c9c555ea91d4120acf106502fce64c6afdbe1c5aec603a4864560631  # x86_64
-
-  client:
-    version: 1.18.0
-    config_file: /etc/default/kubernetes-node.ini
-    config: {}
-    environ_file: /etc/default/kubernetes-node.sh
-    environ: []
-    service: {}
-    pkg:
-      name: kubectl
-      use_upstream_repo: false
-      use_upstream_binary: false
-      use_upstream_archive: true
-      suffix: tar.gz
-      commands:
-        - kubectl
-      archive:
-        name: null  # set in map.jinja
-        uri: 'https://dl.k8s.io'
-        source: null  # set in map.jinja
-        source_hash: '594ca3eadc7974ec4d9e4168453e36ca434812167ef8359086cd64d048df525b7bd46424e7cc9c41e65c72bda3117326ba1662d1c9d739567f10f5684fd85bee'  # noqa 204
-        trim_output: true
-        enforce_toplevel: false
-        options: '--strip-components=2'
-      binary:
-        name: kubernetes-client
-        uri: https://storage.googleapis.com/kubernetes-release/release
-        source: null   # set in map.jinja
-        source_hash: 6ea8261b503c6c63d616878837dc70b758d4a3aeb9996ade8e83b51aedac9698
-        trim_output: true
-
+          source_hash: '7703cbf3c9c555ea91d4120acf106502fce64c6afdbe1c5aec603a4864560631'  # x86_64
+          options: '--strip-components=0'
   devlibs:
     wanted:
       - java
@@ -138,76 +214,107 @@ kubernetes:
       java:
         name: 'client-java-parent-'
         version: '6.0.1'
-        uri: https://github.com/kubernetes-client
-        source: null   # set in map.jinja
-        source_hash: '51d0229a80b913ede5a973036e7c78c36efc1d425c3ccde10f81acb03e183aa2'
+        use_upstream: archive
+        uri_a: 'https://github.com/kubernetes-client'
+        suffix: tar.gz
+        archive:
+          source_hash: '51d0229a80b913ede5a973036e7c78c36efc1d425c3ccde10f81acb03e183aa2'
+          options: '--strip-components=1'
       python:
         name: v
         version: '11.0.0'
-        uri: https://github.com/kubernetes-client
-        source: null   # set in map.jinja
-        source_hash: '3ec0a0887bef32589ebb46efe7fbd30758c1da3c37f28d4394e9f4620172951a'
+        use_upstream: archive
+        uri_a: 'https://github.com/kubernetes-client'
+        suffix: tar.gz
+        archive:
+          source_hash: '3ec0a0887bef32589ebb46efe7fbd30758c1da3c37f28d4394e9f4620172951a'
+          options: '--strip-components=1'
       csharp:
         name: ''
         version: '1.2.0'
-        uri: https://github.com/kubernetes-client
-        source: null   # set in map.jinja
-        source_hash: '0edcefd17f50d0e9d5b34ea318a6a5a13cf9448f918ffa9dec519da9457f9159'
+        use_upstream: archive
+        uri_a: 'https://github.com/kubernetes-client'
+        suffix: tar.gz
+        archive:
+          source_hash: '0edcefd17f50d0e9d5b34ea318a6a5a13cf9448f918ffa9dec519da9457f9159'
+          options: '--strip-components=1'
       javascript:
         name: ''
         version: '0.10.1'
-        uri: https://github.com/kubernetes-client
-        source: null   # set in map.jinja
-        source_hash: '9b7d2c7a2afd30fc6b42fc060fa64221de8221aa8211ffc8d275b1ac54b9717a'
+        use_upstream: archive
+        uri_a: 'https://github.com/kubernetes-client'
+        suffix: tar.gz
+        archive:
+          source_hash: '9b7d2c7a2afd30fc6b42fc060fa64221de8221aa8211ffc8d275b1ac54b9717a'
+          options: '--strip-components=1'
       kopf:
         name: ''
         version: '0.27'
-        uri: https://github.com/zalando-incubator/kopf/archive
-        source: null   # set in map.jinja
-        source_hash: '25a98ca73b3e7ea8bc38dc31cd5e3f2bd6d443490395166b61eeaeb02d9e1d4d'
+        use_upstream: archive
+        uri_a: 'https://github.com/zalando-incubator/kopf/archive'
+        suffix: tar.gz
+        archive:
+          source_hash: '25a98ca73b3e7ea8bc38dc31cd5e3f2bd6d443490395166b61eeaeb02d9e1d4d'
+          options: '--strip-components=1'
       k8s:
         name: v
         version: '1.2.0'
-        uri: https://github.com/ericchiang/k8s/archive
-        source: null   # set in map.jinja
-        source_hash: 18f4c90d7b206d9abb69aff007a534e6cf2e723cbc7d4bb74cc32ec619c418ca
-
+        use_upstream: archive
+        uri_a: 'https://github.com/ericchiang/k8s/archive'
+        suffix: tar.gz
+        archive:
+          source_hash: '18f4c90d7b206d9abb69aff007a534e6cf2e723cbc7d4bb74cc32ec619c418ca'
+          options: '--strip-components=1'
   operators:
-    # https:// operatorhub.io
+    # https://operatorhub.io
     wanted:
       - grafana-operator
       - prometheus-operator
       - akka-cluster-operator
       - istio-operator
-      - shell-operator   # part-operator
+      - shell-operator
     pkg:
       akka-cluster-operator:
         version: 1.0.0
-        uri: https://github.com/lightbend/akka-cluster-operator/archive
-        source: null   # set in map.jinja
-        source_hash: cf5b8b5a16dc3cba76fce0046ae79b226356ddfde84da54602b63edaeb8ae85f
+        use_upstream: archive
+        uri_a: 'https://github.com/lightbend/akka-cluster-operator/archive'
+        suffix: tar.gz
+        archive:
+          source_hash: 'cf5b8b5a16dc3cba76fce0046ae79b226356ddfde84da54602b63edaeb8ae85f'
+          options: '--strip-components=1'
       grafana-operator:
         version: 3.4.0
-        uri: https://github.com/integr8ly/grafana-operator/archive
-        source: null   # set in map.jinja
-        source_hash: 3921adb8656c74a201e9e189931357d6be767e807d7312e7bd902efb607db089
+        use_upstream: archive
+        uri_a: 'https://github.com/integr8ly/grafana-operator/archive'
+        suffix: tar.gz
+        archive:
+          source_hash: '3921adb8656c74a201e9e189931357d6be767e807d7312e7bd902efb607db089'
+          options: '--strip-components=1'
       prometheus-operator:
         version: '0.40.0'
-        uri: https://github.com/coreos/prometheus-operator/archive
-        source: null   # set in map.jinja
-        source_hash: e9771685650803d2d07c0c8f455508e736e0516606d3182bc109f7986380cbc1
+        use_upstream: archive
+        uri_a: 'https://github.com/coreos/prometheus-operator/archive'
+        suffix: tar.gz
+        archive:
+          source_hash: 'e9771685650803d2d07c0c8f455508e736e0516606d3182bc109f7986380cbc1'
+          options: '--strip-components=1'
       istio-operator:
         name: ''
         version: '0.6.5'
-        uri: https://github.com/banzaicloud/istio-operator/archive
-        source: null   # set in map.jinja
-        source_hash: 8bbcf1c201707d9e01f204f3b2a698827b76757a8cdd593de943af64fe1e72d1
+        use_upstream: archive
+        uri_a: 'https://github.com/banzaicloud/istio-operator/archive'
+        suffix: tar.gz
+        archive:
+          source_hash: '8bbcf1c201707d9e01f204f3b2a698827b76757a8cdd593de943af64fe1e72d1'
+          options: '--strip-components=1'
       shell-operator:
         version: '1.0.0-beta.10'
-        uri: https://github.com/flant/shell-operator/archive
-        source: null   # set in map.jinja
-        source_hash: b920a2a8c21edc2c89d828ef4e90e4980ec46a9e69b92cee02b9ff6e20c7df47
-
+        use_upstream: archive
+        uri_a: 'https://github.com/flant/shell-operator/archive'
+        suffix: tar.gz
+        archive:
+          source_hash: 'b920a2a8c21edc2c89d828ef4e90e4980ec46a9e69b92cee02b9ff6e20c7df47'
+          options: '--strip-components=1'
   server:
     version: 1.18.0
     config_file: /etc/default/kubernetes-server.ini
@@ -217,8 +324,8 @@ kubernetes:
     service: {}
     pkg:
       name: kubernetes-server
-      use_upstream_repo: false
-      use_upstream_archive: true
+      use_upstream: archive
+      uri_a: 'https://dl.k8s.io'
       suffix: tar.gz
       commands:
         - apiextensions-apiserver
@@ -231,93 +338,66 @@ kubernetes:
         - kube-controller-manager
         - kube-proxy
       archive:
-        name: null  # set in map.jinja
-        uri: 'https://dl.k8s.io'
-        source: null  # set in map.jinja
-        source_hash: a92f8d201973d5dfa44a398e95fcf6a7b4feeb1ef879ab3fee1c54370e21f59f725f27a9c09ace8c42c96ac202e297fd458e486c489e05f127a5cade53b8d7c4  # noqa 204
-        trim_output: true
-        enforce_toplevel: false
+        source_hash: 'a92f8d201973d5dfa44a398e95fcf6a7b4feeb1ef879ab3fee1c54370e21f59f725f27a9c09ace8c42c96ac202e297fd458e486c489e05f127a5cade53b8d7c4'  # noqa 204
         options: '--strip-components=2'
+
+  client:
+    version: 1.18.0
+    aliases_file: /etc/default/kubernetes-aliases.sh
+    pkg:
+      name: kubectl
+      use_upstream: archive
+      suffix: tar.gz
+      commands:
+        - kubectl
+      uri_a: 'https://dl.k8s.io'
+      uri_b: 'https://storage.googleapis.com/kubernetes-release/release'  # binary
+      archive:
+        source_hash: '594ca3eadc7974ec4d9e4168453e36ca434812167ef8359086cd64d048df525b7bd46424e7cc9c41e65c72bda3117326ba1662d1c9d739567f10f5684fd85bee'  # noqa 204
+        options: '--strip-components=2'
+      binary:
+        name: kubernetes-client
+        source_hash: '6ea8261b503c6c63d616878837dc70b758d4a3aeb9996ade8e83b51aedac9698'
+        options: '--strip-components=2'
+
   node:
     version: 1.18.0
     config_file: /etc/default/kubernetes-node.ini
     config: {}
-    environ_file: /etc/default/kubernetes-node.sh
-    environ: []
     service: {}
     pkg:
       name: kubernetes-node
-      use_upstream_repo: false
-      use_upstream_archive: true
+      use_upstream: archive
+      uri_a: 'https://dl.k8s.io'
       suffix: tar.gz
-      commands:
-        - kubeadm
-        - kubectl
-        - kubelet
-        - kube-proxy
+      commands: {}
+        # kubeadm
+        # kubectl
+        # kubelet
+        # kube-proxy
       archive:
-        name: null  # set in map.jinja
-        uri: 'https://dl.k8s.io'
-        source: null  # set in map.jinja
-        source_hash: f714f80feecb0756410f27efb4cf4a1b5232be0444fbecec9f25cb85a7ccccdcb5be588cddee935294f460046c0726b90f7acc52b20eeb0c46a7200cf10e351a  # noqa 204
-        trim_output: true
-        enforce_toplevel: false
+        source_hash: 'f714f80feecb0756410f27efb4cf4a1b5232be0444fbecec9f25cb85a7ccccdcb5be588cddee935294f460046c0726b90f7acc52b20eeb0c46a7200cf10e351a'  # noqa 204
         options: '--strip-components=2'
-  minikube:
-    version: 1.9.2
-    config_file: /etc/default/minikube.ini
-    config: {}
-    environ_file: /etc/default/minikube.sh
-    environ: []
-    service: {}
-    check: egrep --color 'vmx|svm' /proc/cpuinfo
-    vm_driver: none
-    pkg:
-      use_upstream_repo: false
-      use_upstream_binary: true
-      binary:
-        name: minikube
-        uri: https://github.com/kubernetes/minikube/releases/download
-        source: null       # see map.jinja
-        source_hash: 3121f933bf8d608befb24628a045ce536658738c14618504ba46c92e656ea6b5
-        trim_output: true
-
-  devspace:
-    version: 4.13.1
-    config_file: /etc/default/devspace.ini
-    config: {}
-    environ_file: /etc/default/devspace.sh
-    environ: []
-    service: {}
-    pkg:
-      use_upstream_repo: false
-      use_upstream_binary: true
-      binary:
-        uri: https://github.com/devspace-cloud/devspace/releases/download
-        name: devspace
-        source: null   # set in map.jinja
-        source_hash: 19faec36f190d0c3a3447f47c05378fabbe9f01e27f8b7475d51796e288bdbd4
-        trim_output: true
 
   k3s:
     version: '1.18.4+k3s1'
     pkg:
-      use_upstream_binary: false
-      use_upstream_script: true
+      use_upstream: script
+      uri_b: 'https://github.com/rancher/k3s/releases/download'
+      uri_s: 'https://get.k3s.io'
+      suffix: tar.gz
+      commands: []
       binary:
-        uri: https://github.com/rancher/k3s/releases/download
-        name: k3s
-        source: null   # set in map.jinja
-        source_hash: 0c19d64dde77c8bb3af1dfbac5aecea59ab4679d97dcfaa62419aaa795380490
+        source_hash: '0c19d64dde77c8bb3af1dfbac5aecea59ab4679d97dcfaa62419aaa795380490'
+        options: '--strip-components=1'
       script:
-        source: https://get.k3s.io
-        source_hash: b2856cee3432cf0148513b644b5369db8fa8b039793959f410aa7dfdb496b2b9
+        source_hash: 'b2856cee3432cf0148513b644b5369db8fa8b039793959f410aa7dfdb496b2b9'
         killall: /usr/local/bin/k3s-killall.sh
         uninstall: /usr/local/bin/k3s-uninstall.sh
         env:
           INSTALL_K3S_BIN_DIR: /usr/local/bin
           # INSTALL_K3S_BIN_DIR_READ_ONLY: false
-          # INSTALL_K3S_CHANNEL_URL: https://update.k3s.io/v1-release/channels
+          # INSTALL_K3S_CHANNEL_URL: 'https://update.k3s.io/v1-release/channels'
           # INSTALL_K3S_CHANNEL: stable
           # INSTALL_K3S_EXEC: ''
           # INSTALL_K3S_NAME: ''
@@ -343,88 +423,28 @@ kubernetes:
           # K3S_TOKEN: ''
           # K3S_TOKEN_FILE: ''
           # KUBECONFIG: /etc/rancher/k3s/k3s.yaml
-  kudo:
-    version: 0.12.0
-    pkg:
-      use_upstream_binary: true
-      use_upstream_package: false
-      binary:
-        uri: https://github.com/kudobuilder/kudo/releases/download
-        name: kubectl-kudo
-        source: null   # set in map.jinja
-        source_hash: 5df22a42021d78a199d00f055faedd47a86ad3001bd06da31549c0a477a403a9
-  linkerd2:
-    version: 20.7.1
-    pkg:
-      use_upstream_binary: true
-      binary:
-        uri: 'https://github.com/linkerd/linkerd2/releases/download'
-        name: linkerd2-cli-edge
-        source: null  # set in map.jinja
-        source_hash: null  # set in map.jinja
-  kind:
-    version: 0.8.1
-    pkg:
-      use_upstream_binary: true
-      binary:
-        uri: 'https://github.com/kubernetes-sigs/kind/releases/download'
-        name: kind
-        source: null  # set in map.jinja
-        source_hash: 781c3db479b805d161b7c2c7a31896d1a504b583ebfcce8fcd49538c684d96bc
-  istio:
-    version: 1.6.5
-    pkg:
-      name: istio
-      use_upstream_archive: true
-      suffix: tar.gz
-      commands:
-        - istioctl
-      uri: 'https://github.com/istio/istio/releases/download'
-      archive:
-        name: null  # set in map.jinja
-        source: null  # set in map.jinja
-        source_hash: null # set in map.jinja
-        trim_output: true
-        enforce_toplevel: false
-        options: '--strip-components=1'
 
-  octant:
-    version: '0.13.1'
-    pkg:
-      name: octant
-      use_upstream_archive: true
-      suffix: tar.gz
-      commands:
-        - octant
-      archive:
-        name: null  # set in map.jinja
-        uri: 'https://github.com/vmware-tanzu/octant/releases/download'
-        source: null  # set in map.jinja
-        source_hash: 'b0fdf8984ac1947986ccd990b0d4ba60c1f5a1070909e734a1c57189308ed977'
-        trim_output: true
-        enforce_toplevel: false
-        options: '--strip-components=1'
-
-  kubebuilder:
-    version: 2.3.1
-    pkg:
-      name: kubebuilder
-      use_upstream_archive: true
-      suffix: tar.gz
-      commands:
-        - etcd
-        - kube-apiserver
-        - kubebuilder
-        - kubectl
-      archive:
-        name: null  # set in map.jinja
-        uri: 'https://github.com/kubernetes-sigs/kubebuilder/releases/download'
-        source: null  # set in map.jinja
-        source_hash: 'ff496970f209706763f2aba2bdcefc2de8d00085b3b972b5790117b59ea4ed10'
-        trim_output: true
-        enforce_toplevel: false
-        options: '--strip-components=1'
-
+  identity:
+    rootuser: root
+    rootgroup: root
+  arch: ''
+  dir:
+    base: /usr/local
+    source: /usr/local/src/k8s/libs
+    operators: /usr/local/src/k8s/operators
+    tmp: /tmp/kubernetes-tmp
+  pkg:
+    deps:
+      - curl
+      - tar
+      - gzip
+    repo:
+      humanname: kubernetes
+      name: kubernetes
+      comments:
+        - installed by salt
+      enabled: 1
+      gpgcheck: 1
   linux:
     altpriority: 0
 

@@ -15,7 +15,10 @@ ignore: |
   kubernetes/osfamilymap.yaml
   kubernetes/defaults.yaml
   kubernetes/osarchmap.yaml
+  kubernetes/files/defaults/aliases.sh
   pillar.example
+  test/salt/pillar/default.sls
+  test/salt/pillar/redhat.sls
 
 yaml-files:
   # Default settings
