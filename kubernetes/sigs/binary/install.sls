@@ -5,6 +5,10 @@
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
 
+{{ formula }}-sigs-binary-deps-install:
+  pkg.installed:
+    - names: {{ d.pkg.deps|json }}
+
 {%- if 'wanted' in d.sigs and d.sigs.wanted %}
     {%- for tool in d.sigs.wanted|unique %}
         {%- if 'pkg' in d.sigs and tool in d.sigs['pkg'] and d.sigs['pkg'][tool] %}
@@ -18,6 +22,8 @@
     - group: {{ d.identity.rootgroup }}
     - mode: 755
     - makedirs: True
+    - require:
+      pkg: {{ formula }}-sigs-binary-deps-install
     - require_in:
       - cmd: {{ formula }}-sigs-binary-{{ tool }}-install
     - recurse:

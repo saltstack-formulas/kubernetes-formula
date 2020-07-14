@@ -10,3 +10,7 @@ include:
   - .devtools
   - .devlibs
   - .sigs
+
+{{ formula }}-pkg-deps-install:
+  pkg.installed:
+    - name: tar
