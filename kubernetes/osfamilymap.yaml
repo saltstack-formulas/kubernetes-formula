@@ -38,7 +38,11 @@ Debian:
 RedHat:
   pkg:
     deps:
+      - tar
+      - gzip
+         {%- if grains.os not in ('Amazon',) %}
       - container-selinux
+         {%- endif %}
     deps_url:
       - https://rpm.rancher.io/k3s-selinux-0.1.1-rc1.el7.noarch.rpm
     repo:

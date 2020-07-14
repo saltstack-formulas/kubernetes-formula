@@ -201,16 +201,16 @@ control 'kubernetes archive' do
   #   it { should be_file }
   #   it { should_not be_directory }
   # end
-  describe file('/usr/local/k8s-istio-1.6.4/bin/istioctl') do
-    it { should_not be_symlink }
-    it { should be_file }
-    it { should_not be_directory }
-  end
-  describe file('/usr/local/bin/istioctl') do
-    it { should be_symlink }
-    it { should be_file }
-    it { should_not be_directory }
-  end
+  # describe file('/usr/local/k8s-istio-1.6.4/bin/istioctl') do
+  #   it { should_not be_symlink }
+  #   it { should be_file }
+  #   it { should_not be_directory }
+  # end
+  # describe file('/usr/local/bin/istioctl') do
+  #   it { should be_symlink }
+  #   it { should be_file }
+  #   it { should_not be_directory }
+  # end
   # describe file('/usr/local/k8s-devtools-kubectx-0.9.1/bin/kubectx') do
   #   it { should_not be_symlink }
   #   it { should be_file }
@@ -258,21 +258,6 @@ control 'kubernetes archive' do
   #   it { should be_file }
   #   it { should_not be_directory }
   # end
-  describe file('/usr/local/src/k8s/libs/grafana-operator') do
-    it { should be_directory }
-  end
-  describe file('/usr/local/src/k8s/libs/prometheus-operator') do
-    it { should be_directory }
-  end
-  describe file('/usr/local/src/k8s/libs/akka-cluster-operator') do
-    it { should be_directory }
-  end
-  describe file('/usr/local/src/k8s/libs/istio-operator') do
-    it { should be_directory }
-  end
-  describe file('/usr/local/src/k8s-devlibs/shell-operator') do
-    it { should be_directory }
-  end
   describe file('/usr/local/k8s-devtools-skaffold-1.12.0//bin/skaffold') do
     it { should be_file }
   end

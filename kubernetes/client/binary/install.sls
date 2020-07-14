@@ -10,6 +10,8 @@
 {{ formula }}-client-binary-install:
   pkg.installed:
     - names: {{ d.pkg.deps|json }}
+    - require_in:
+      - file: {{ formula }}-client-binary-install
   file.directory:
     - name: {{ d.client.pkg.path }}/bin
     - user: {{ d.identity.rootuser }}

@@ -46,12 +46,12 @@ The default `kubernetes.operators` state includes the following (from https://op
 
 The default `kubernetes.devlibs` state includes the following:
 
-* https://github.com/kubernetes-client/java
-* https://github.com/kubernetes-client/python
-* https://github.com/kubernetes-client/csharp
-* https://github.com/kubernetes-client/javascript
-* https://github.com/zalando-incubator/kopf
-* https://github.com/ericchiang/k8s
+* `Java client library for kubernetes` (https://github.com/kubernetes-client/java)
+* `Python client library for kubernetes` (https://github.com/kubernetes-client/python)
+* `Csharp client library for kubernetes` (https://github.com/kubernetes-client/csharp)
+* `Javascript client library for kubernetes` (https://github.com/kubernetes-client/javascript)
+* `Python kubernetes-operator library` (https://github.com/zalando-incubator/kopf)
+* `Simple kubernetes Go client` (https://github.com/ericchiang/k8s)
 
 
 |img_travis| |img_sr|

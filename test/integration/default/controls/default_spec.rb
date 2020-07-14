@@ -223,16 +223,16 @@ control 'kubernetes archive' do
   #   it { should be_file }
   #   it { should_not be_directory }
   # end
-  describe file('/usr/local/k8s-devtools-istio-1.6.4/bin/istioctl') do
-    it { should_not be_symlink }
-    it { should be_file }
-    it { should_not be_directory }
-  end
-  describe file('/usr/local/bin/istioctl') do
-    it { should be_symlink }
-    it { should be_file }
-    it { should_not be_directory }
-  end
+  # describe file('/usr/local/k8s-devtools-istio-1.6.4/bin/istioctl') do
+  #   it { should_not be_symlink }
+  #   it { should be_file }
+  #   it { should_not be_directory }
+  # end
+  # describe file('/usr/local/bin/istioctl') do
+  #   it { should be_symlink }
+  #   it { should be_file }
+  #   it { should_not be_directory }
+  # end
   # describe file('/usr/local/k8s-devtools-kubectx-0.9.1/bin/kubectx') do
   #   it { should_not be_symlink }
   #   it { should be_file }

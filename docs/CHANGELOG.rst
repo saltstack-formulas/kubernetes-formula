@@ -2,6 +2,30 @@
 Changelog
 =========
 
+`2.0.1 <https://github.com/saltstack-formulas/kubernetes-formula/compare/v2.0.0...v2.0.1>`_ (2020-07-14)
+------------------------------------------------------------------------------------------------------------
+
+Bug Fixes
+^^^^^^^^^
+
+
+* **arch:** ensure tar gets installed (\ ` <https://github.com/saltstack-formulas/kubernetes-formula/commit/d290a51>`_\ )
+* **centos:** selinux-policy-minimum provides base (\ ` <https://github.com/saltstack-formulas/kubernetes-formula/commit/48973e0>`_\ )
+* **linux:** corrected alternatives states (\ ` <https://github.com/saltstack-formulas/kubernetes-formula/commit/f96f727>`_\ )
+* **state:** wrong requires - fixed (\ ` <https://github.com/saltstack-formulas/kubernetes-formula/commit/7cbab8f>`_\ )
+
+Continuous Integration
+^^^^^^^^^^^^^^^^^^^^^^
+
+
+* **redhat:** enable linux alternatives (\ ` <https://github.com/saltstack-formulas/kubernetes-formula/commit/18403a8>`_\ )
+
+Documentation
+^^^^^^^^^^^^^
+
+
+* **readme:** expand clientlibs section (\ ` <https://github.com/saltstack-formulas/kubernetes-formula/commit/dcee1f9>`_\ )
+
 `2.0.0 <https://github.com/saltstack-formulas/kubernetes-formula/compare/v1.6.1...v2.0.0>`_ (2020-07-14)
 ------------------------------------------------------------------------------------------------------------
 

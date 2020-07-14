@@ -15,6 +15,8 @@ include:
 {{ formula }}-client-package-install-deps:
   pkg.installed:
     - names: {{ d.pkg.deps|json }}
+    - require_in:
+      - pkg: {{ formula }}-client-package-install-pkg
 
 {{ formula }}-client-package-install-pkg:
   pkg.installed:
