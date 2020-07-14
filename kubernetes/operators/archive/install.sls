@@ -24,7 +24,7 @@
     - clean: True
     - makedirs: True
     - require:
-      - pkg: formula-operators-archive-deps-install
+      - pkg: {{ formula }}-operators-archive-deps-install
     - require_in:
       - archive: {{ formula }}-operators-archive-{{ tool }}-install
     - recurse:

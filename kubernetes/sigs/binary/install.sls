@@ -23,7 +23,7 @@
     - mode: 755
     - makedirs: True
     - require:
-      pkg: {{ formula }}-sigs-binary-deps-install
+      - pkg: {{ formula }}-sigs-binary-deps-install
     - require_in:
       - cmd: {{ formula }}-sigs-binary-{{ tool }}-install
     - recurse:

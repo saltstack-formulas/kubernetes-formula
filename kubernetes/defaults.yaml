@@ -396,6 +396,7 @@ kubernetes:
         uninstall: /usr/local/bin/k3s-uninstall.sh
         env:
           INSTALL_K3S_BIN_DIR: /usr/local/bin
+          INSTALL_K3S_SELINUX_WARN: true
           # INSTALL_K3S_BIN_DIR_READ_ONLY: false
           # INSTALL_K3S_CHANNEL_URL: 'https://update.k3s.io/v1-release/channels'
           # INSTALL_K3S_CHANNEL: stable
