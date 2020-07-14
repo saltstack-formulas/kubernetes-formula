@@ -6,6 +6,10 @@
 {%- set formula = d.formula %}
 {%- from tplroot ~ "/files/macros.jinja" import format_kwargs with context %}
 
+{{ formula }}-operators-archive-deps-install:
+  pkg.installed:
+    - names: {{ d.pkg.deps|json }}
+
 {%- if 'wanted' in d.operators and d.operators.wanted %}
     {%- for tool in d.operators.wanted|unique %}
         {%- if 'pkg' in d.operators and tool in d.operators['pkg'] and d.operators.pkg[tool] %}
@@ -19,6 +23,8 @@
     - mode: 755
     - clean: True
     - makedirs: True
+    - require:
+      - pkg: {{ formula }}-operators-archive-deps-install
     - require_in:
       - archive: {{ formula }}-operators-archive-{{ tool }}-install
     - recurse:

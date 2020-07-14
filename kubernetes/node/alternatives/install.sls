@@ -16,7 +16,7 @@ include:
   alternatives.install:
     - unless:
       - {{ grains.os_family in ('Suse', 'Arch') }}
-      - update-alternatives --get-selections |grep ^link-k8s-node-{{ cmd }}
+      - update-alternatives --get-selections |egrep "^link-k8s-server-{{ cmd }}|link-k8s-client-{{ cmd }}"
     - name: link-k8s-node-{{ cmd }}
     - link: /usr/local/bin/{{ cmd }}
     - path: {{ d.node.pkg.path }}/bin/{{ cmd }}
@@ -26,15 +26,17 @@ include:
       - sls: {{ sls_archive_install }}
   cmd.run:
     - onlyif: {{ grains.os_family in ('Suse',) }}
-    - name: update-alternatives --install /usr/local/bin/{{ cmd }} link-k8s-node {{ d.node.pkg.path }}/bin/{{ cmd }} {{ d.linux.altpriority }} # noqa 204
+    - name: update-alternatives --install /usr/local/bin/{{ cmd }} link-k8s-node-{{ cmd }} {{ d.node.pkg.path }}/bin/{{ cmd }} {{ d.linux.altpriority }} # noqa 204
     - unless:
-      - update-alternatives --get-selections |grep ^link-k8s-node-{{ cmd }}
+      - update-alternatives --get-selections |egrep "^link-k8s-server-{{ cmd }}|link-k8s-client-{{ cmd }}"
     - require:
       - sls: {{ sls_archive_install }}
 
 {{ formula }}-node-alternatives-set-{{ cmd }}:
   alternatives.set:
-    - unless: {{ grains.os_family in ('Suse', 'Arch') }}
+    - unless:
+      - update-alternatives --get-selections |egrep "^link-k8s-server-{{ cmd }}|link-k8s-client-{{ cmd }}"
+      - {{ grains.os_family in ('Suse', 'Arch') }}
     - name: link-k8s-node-{{ cmd }}
     - path: {{ d.node.pkg.path }}/bin/{{ cmd }}
     - require:

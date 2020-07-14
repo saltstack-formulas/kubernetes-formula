@@ -17,8 +17,8 @@ CentOS Linux-8:
 CentOS Linux-7:
   pkg:
     deps:
-      - selinux-policy-base
+      - selinux-policy-minimum
 CentOS-6:
   pkg:
     deps:
-      - selinux-policy-base
+      - selinux-policy-minimum

@@ -13,4 +13,4 @@
 Fedora:
   pkg:
     deps:
-      - selinux-policy
+      - selinux-policy-minimum

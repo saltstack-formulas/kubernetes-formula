@@ -16,6 +16,8 @@ include:
 {{ formula }}-server-package-install-deps:
   pkg.installed:
     - names: {{ d.pkg.deps|json }}
+    - require_in:
+      - pkg: {{ formula }}-server-package-install-pkgs
 
 {{ formula }}-server-package-install-pkgs:
   pkg.installed:

@@ -115,7 +115,7 @@ kubernetes:
           KUBECONFIG: /etc/rancher/k3s/k3s.yaml
 
   linux:
-    altpriority: 0
+    altpriority: 2000
 
   # Just here for testing
   added_in_defaults: defaults_value
