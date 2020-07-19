@@ -211,12 +211,6 @@ This state installs selected kubernetes developer libraries
 
 This state uninstalls selected kubernetes developer libraries (i.e. kubernetes client libraries, kopf, etc).
 
-``kubernetes.skaffold.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-This state uninstalls skaffold only.
-
-
 
 Main Sub-states
 ---------------
