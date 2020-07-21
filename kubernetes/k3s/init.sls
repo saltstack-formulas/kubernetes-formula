@@ -6,6 +6,6 @@
 {%- set formula = d.formula %}
 
 include:
-  {{ '- .script' if d.k3s.pkg.use_upstream == 'script' }}
-  {{ '- .binary' if d.k3s.pkg.use_upstream == 'binary' }}
+  {{ '- .script' if d.k3s.pkg.use_upstream == 'script' else '' }}
+  {{ '- .binary' if d.k3s.pkg.use_upstream == 'binary' else '' }}
   - .config
