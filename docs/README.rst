@@ -137,12 +137,12 @@ This state uninstalls kubernetes server GNU/Linux only.
 ``kubernetes.node``
 ^^^^^^^^^^^^^^^^^^^
 
-This state installs kubernetes node GNU/Linux only (see https://kubernetes.io/docs/concepts/architecture/nodes)
+This state installs kubernetes node on Windows/MacOS/Linux only (see https://kubernetes.io/docs/concepts/architecture/nodes)
 
 ``kubernetes.node.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state uninstalls kubernetes node GNU/Linux only.
+This state uninstalls kubernetes node on Windows/MacOS/Linux only.
 
 ``kubernetes.sigs``
 ^^^^^^^^^^^^^^^^^^^
