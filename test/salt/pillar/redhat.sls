@@ -9,6 +9,7 @@ kubernetes:
     - client
     - node
     - k3s
+    - operator
     - operators
     - devlibs
     - devtools
@@ -25,6 +26,18 @@ kubernetes:
         version: 2.3.1
         archive:
           source_hash: ff496970f209706763f2aba2bdcefc2de8d00085b3b972b5790117b59ea4ed10
+  operator:
+    wanted:
+      - sdk
+    sdk:
+      wanted:
+        - ansible-operator
+        - helm-operator
+        - operator-sdk
+      pkg:
+        ansible-operator:
+          version: 1.0.1
+
   operators:
     wanted:
       - grafana-operator

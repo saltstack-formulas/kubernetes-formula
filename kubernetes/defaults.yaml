@@ -8,6 +8,7 @@ kubernetes:
     - client
     - node
     - k3s
+    - operator
     - operators
     - devlibs
     - devtools
@@ -27,7 +28,6 @@ kubernetes:
           # kind
         binary:
           source_hash: '781c3db479b805d161b7c2c7a31896d1a504b583ebfcce8fcd49538c684d96bc'
-          options: '--strip-components=1'
       krew:
         version: '0.3.4'
         use_upstream: archive
@@ -75,7 +75,6 @@ kubernetes:
           - devspace
         binary:
           source_hash: '19faec36f190d0c3a3447f47c05378fabbe9f01e27f8b7475d51796e288bdbd4'
-          options: '--strip-components=1'
       octant:
         version: '0.13.1'
         use_upstream: archive
@@ -96,7 +95,6 @@ kubernetes:
           - linkerd
         binary:
           source_hash: 9044e2b56b5dd86ef9a8aa5bc1a6a1cde3db601d2138a3380ab6edec12a5365f
-          options: '--strip-components=1'
       skaffold:
         version: 1.12.0
         use_upstream: binary
@@ -106,7 +104,6 @@ kubernetes:
           - skaffold
         binary:
           source_hash: 'be5e115ba9d1a3703deb968d1adb0c040e970f7eac1b7c1f1313df5a37c5f817'
-          options: '--strip-components=1'
       istio:
         version: 1.6.5
         use_upstream: archive
@@ -135,7 +132,6 @@ kubernetes:
           - kubectl-kudo
         binary:
           source_hash: '5df22a42021d78a199d00f055faedd47a86ad3001bd06da31549c0a477a403a9'
-          options: '--strip-components=1'
       minikube:
         version: 1.12.0
         config_file: /etc/default/minikube.ini
@@ -151,7 +147,6 @@ kubernetes:
           - minikube
         binary:
           source_hash: '3501b6c2be48183affa9497e7db6d751d92e1536267268b73ad1a936a2977122'
-          options: '--strip-components=1'
       stern:
         version: '1.11.0'
         use_upstream: binary
@@ -161,7 +156,6 @@ kubernetes:
           - stern
         binary:
           source_hash: 'e0b39dc26f3a0c7596b2408e4fb8da533352b76aaffdc18c7ad28c833c9eb7db'  # x86_64
-          options: '--strip-components=1'
       kubectx:
         version: '0.9.1'
         use_upstream: archive
@@ -265,6 +259,33 @@ kubernetes:
         archive:
           source_hash: '18f4c90d7b206d9abb69aff007a534e6cf2e723cbc7d4bb74cc32ec619c418ca'
           options: '--strip-components=1'
+
+  operator:
+    sdk:
+      # https://sdk.operatorframework.io
+      rsakey: '0CF50BEE7E4DF6445E08C0EA9AFDE59E90D2B445'
+      rsakeyserver: 'keyserver.ubuntu.com'
+      wanted:
+        - ansible-operator
+        - helm-operator
+        - operator-sdk
+      pkg:
+        ansible-operator:
+          version: 1.0.1
+          use_upstream: binary
+          uri_b: 'https://github.com/operator-framework/operator-sdk/releases/download'
+          binary: {}
+        helm-operator:
+          version: 1.0.1
+          use_upstream: binary
+          uri_b: 'https://github.com/operator-framework/operator-sdk/releases/download'
+          binary: {}
+        operator-sdk:
+          version: 1.0.1
+          use_upstream: binary
+          uri_b: 'https://github.com/operator-framework/operator-sdk/releases/download'
+          binary: {}
+
   operators:
     # https://operatorhub.io
     wanted:
@@ -358,7 +379,6 @@ kubernetes:
       binary:
         name: kubernetes-client
         source_hash: '6ea8261b503c6c63d616878837dc70b758d4a3aeb9996ade8e83b51aedac9698'
-        options: '--strip-components=2'
 
   node:
     version: 1.18.0
@@ -389,7 +409,6 @@ kubernetes:
       commands: []
       binary:
         source_hash: '0c19d64dde77c8bb3af1dfbac5aecea59ab4679d97dcfaa62419aaa795380490'
-        options: '--strip-components=1'
       script:
         source_hash: 'b2856cee3432cf0148513b644b5369db8fa8b039793959f410aa7dfdb496b2b9'
         killall: /usr/local/bin/k3s-killall.sh

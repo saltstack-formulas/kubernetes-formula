@@ -9,6 +9,7 @@ kubernetes:
     - client
     - node
     - k3s
+    - operator
     - operators
     - devlibs
     - devtools
@@ -41,6 +42,17 @@ kubernetes:
       - k8s
       - python
       - javascript
+  operator:
+    wanted:
+      - sdk
+    sdk:
+      wanted:
+        - ansible-operator
+        - helm-operator
+        - operator-sdk
+      pkg:
+        ansible-operator:
+          version: 1.0.1
   devtools:
     wanted:
       - audit2rbac

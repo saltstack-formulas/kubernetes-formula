@@ -325,6 +325,18 @@ control 'kubernetes archive' do
   describe file('/usr/local/src/k8s/libs/k8s-devlibs-javascript-0.10.1') do
     it { should be_directory }
   end
+  describe file('/usr/local/bin/ansible-operator') do
+    it { should exist }
+    its('mode') { should cmp '0755' }
+  end
+  describe file('/usr/local/bin/helm-operator') do
+    it { should exist }
+    its('mode') { should cmp '0755' }
+  end
+  describe file('/usr/local/bin/operator-sdk') do
+    it { should exist }
+    its('mode') { should cmp '0755' }
+  end
   describe file('/usr/local/src/k8s/libs/k8s-operators-istio-operator-0.6.5') do
     it { should be_directory }
   end
