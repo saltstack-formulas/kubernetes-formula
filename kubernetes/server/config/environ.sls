@@ -20,12 +20,14 @@ include:
                  )
               }}
     - mode: '0640'
+    - makedirs: True
+              {%- if grains.os != 'Windows' %}
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
-    - makedirs: True
+              {%- endif %}
     - template: jinja
     - context:
-        environ: {{ d.server.environ|json }}
+      environ: {{ d.server.environ|json }}
     - require:
       - sls: {{ sls_archive_install if d.server.pkg.use_upstream == 'archive' else sls_package_install }}
 

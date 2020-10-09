@@ -18,25 +18,29 @@
 {{ formula }}-sigs-binary-{{ tool }}-install:
   file.directory:
     - name: {{ p['path'] }}/bin
-    - user: {{ d.identity.rootuser }}
-    - group: {{ d.identity.rootgroup }}
     - mode: 755
     - makedirs: True
     - require:
       - pkg: {{ formula }}-sigs-binary-deps-install
     - require_in:
       - cmd: {{ formula }}-sigs-binary-{{ tool }}-install
+                {%- if grains.os != 'Windows' %}
+    - user: {{ d.identity.rootuser }}
+    - group: {{ d.identity.rootgroup }}
     - recurse:
         - user
         - group
         - mode
+                {%- endif %}
   cmd.run:
     - names:
       - curl -Lo {{ p['path'] }}/bin/{{ tool }} {{ p['binary']['source'] }}
       - chmod '0755' {{ p['path'] }}/bin/{{ tool }} 2>/dev/null
     - retry: {{ d.retry_option|json }}
+                {%- if grains.os != 'Windows' %}
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
+                {%- endif %}
                 {%- if 'source_hash' in p['binary'] and p['binary']['source_hash'] %}
   module.run:
     - name: file.check_hash
@@ -46,7 +50,7 @@
       - cmd: {{ formula }}-sigs-binary-{{ tool }}-install
                 {%- endif %}
 
-                {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
+                {%- if (d.linux.altpriority|int == 0 and grain.os != 'Windows') or grains.os_family in ('Arch', 'MacOS') %}
                     {%- for cmd in p['commands']|unique %}
 
 {{ formula }}-sigs-binary-{{ tool }}-install-symlink-{{ cmd }}:

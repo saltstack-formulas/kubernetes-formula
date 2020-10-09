@@ -21,25 +21,28 @@
       - file: {{ formula }}-k3s-script-install-prerequisites
           {%- endif %}
   file.directory:
-    - names:
-      - {{ d.dir.tmp }}
-    - user: root
-    - group: {{ d.identity.rootgroup }}
+    - name: {{ d.dir.tmp }}
     - mode: '0755'
     - makedirs: True
     - require:
       - pkg: {{ formula }}-k3s-script-install-prerequisites
+              {%- if grains.os != 'Windows' %}
+    - user: {{ d.identity.rootuser }}
+    - group: {{ d.identity.rootgroup }}
+              {%- endif %}
 
 {{ formula }}-k3s-script-download:
   file.managed:
     - name: {{ d.dir.tmp }}/k3s-bootstrap.sh
     - source: {{ d.k3s.pkg.script.source }}
     - source_hash: {{ d.k3s.pkg.script.source_hash }}
-    - user: {{ d.identity.rootuser }}
-    - group: {{ d.identity.rootgroup }}
     - mode: 755
     - require:
       - file: {{ formula }}-k3s-script-install-prerequisites
+              {%- if grains.os != 'Windows' %}
+    - user: {{ d.identity.rootuser }}
+    - group: {{ d.identity.rootgroup }}
+              {%- endif %}
 
 {{ formula }}-k3s-script-download-clean:
   file.absent:

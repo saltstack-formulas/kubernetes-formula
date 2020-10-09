@@ -20,9 +20,11 @@ include:
                  )
               }}
     - mode: 644
+    - makedirs: True
+              {%- if grains.os != 'Windows' %}
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
-    - makedirs: True
+              {%- endif %}
     - template: jinja
     - context:
         config: {{ d.node.config|json }}
