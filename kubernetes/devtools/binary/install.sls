@@ -44,7 +44,7 @@
       - cmd: {{ formula }}-devtools-binary-{{ tool }}-install
                 {%- endif %}
 
-                {%- if (d.linux.altpriority|int == 0 and grain.os != 'Windows') or grains.os_family in ('Arch', 'MacOS') %}
+                {%- if (d.linux.altpriority|int == 0 and grains.os != 'Windows') or grains.os_family in ('Arch', 'MacOS') %}
                     {%- for cmd in p[tool]['commands']|unique %}
 {{ formula }}-devtools-binary-{{ tool }}-install-symlink-{{ cmd }}:
   file.symlink:
