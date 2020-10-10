@@ -28,6 +28,7 @@
 
 {%- for c in d.supported %}
 
+    {%- set url = False %}
     {%- set list = ('client', 'server', 'node', 'k3s') %}
     {%- if c in list and c in d and d[c] and 'pkg' in d[c] and 'version' in d[c] %}
         {%- set p = d[c]['pkg'] %}
@@ -39,7 +40,9 @@
             {%- if not ('source_hash' in p['archive'] or p['archive']['source_hash']) %}
                 {%- do p['archive'].update({'source_hash': url ~ '.sha256'}) %}
             {%- endif %}
-            {%- do p['archive'].update({ 'name': p.path, 'source': url }) %}
+            {%- if url %}
+                {%- do p['archive'].update({ 'name': p.path, 'source': url }) %}
+            {%- endif %}
 
         {%- elif p['use_upstream'] == 'binary' %}
             {%- if c in ('client',) %}
@@ -48,12 +51,27 @@
                 {%- set arch = '' if c in ('k3s',) and d.arch == 'amd64' else '-' ~ d.arch %}
                 {%- set url = '%s/v%s/%s%s'|format(p['uri_b'], d[c]['version'], c, arch) %}
             {%- endif %}
-
-            {%- if url is defined %}
+            {%- if url %}
                 {%- do p['binary'].update({ 'name': p.path, 'source': url }) %}
                 {%- set url = url if 'name' not in p else url + '/' + p['name'] %}
                 {%- if not ('source_hash' in p['binary'] or p['binary']['source_hash']) %}
                     {%- do p['binary'].update({'source_hash': url ~ '.sha256'}) %}
+                {%- endif %}
+            {%- endif %}
+
+        {%- elif p['use_upstream'] == 'script' %}
+
+            {%- if c in ('k3s',) %}
+                {%- set arch = '' if c in ('k3s',) and d.arch == 'amd64' else d.arch %}
+                {%- set uri = '%s/v%s/%s-%s'|format(p['uri_s'], d[c]['version'], c, grains.kernel|lower) %}
+                {%- set url = '%s-%s'|format(uri, arch) %}
+            {%- endif %}
+
+            {%- if url %}
+                {%- do p['script'].update({ 'name': p.path, 'source': url }) %}
+                {%- set url = url if 'name' not in p else url + '/' + p['name'] %}
+                {%- if 'source_hash' not in p['script'] %}
+                    {%- do p['script'].update({'source_hash': url ~ '.sha256'}) %}
                 {%- endif %}
             {%- endif %}
         {%- endif %}
@@ -72,6 +90,7 @@
             {%- set list = ('sdk',) %}
             {%- if i in list and i in d[c] and d[c][i] and 'wanted' in d[c][i] and d[c][i]['wanted'] %}
                 {%- for j in d[c][i]['wanted'] %}
+                    {%- set url = False %}
                     {%- if 'pkg' in d[c][i] and j in d[c][i]['pkg'] and d[c][i]['pkg'][j] %}
                         {%- set p = d[c][i]['pkg'][j] %}
                         {%- do p.update({ 'path': '%s/bin'|format(path) }) %}
@@ -84,7 +103,7 @@
                                 {%- set uri = '%s/v%s/%s-v%s'|format(p['uri_b'], p['version'], j, p['version']) %}
                                 {%- set url = '%s-%s-%s'|format(uri, arch, kernel) %}
                             {%- endif %}
-                            {%- if url is defined %}
+                            {%- if url %}
                                 {%- do p['binary'].update({ 'name': p.path, 'source': url }) %}
                                 {%- do p['binary'].update({ 'source_hash': url ~ '.asc'}) %}
                             {%- endif %}
@@ -92,7 +111,6 @@
 
                         ## Persistance
                         {%- do d[c][i].update({ j: p }) %}
-
                     {%- endif %}
                 {%- endfor %}
             {%- endif %}
@@ -106,9 +124,11 @@
 
     {%- if c in list and c in d and d[c] and 'pkg' in d[c] and d[c]['pkg'] %}
         {%- for i in d[c]['wanted'] %}
+            {%- set url = False %}
             {%- if 'pkg' in d[c] and i in d[c]['pkg'] and 'version' in d[c]['pkg'][i] %}
                 {%- set p = d[c]['pkg'][i] %}
                 {%- do p.update({'path': '%s/k8s-%s-%s-%s'|format(path, c, i, p['version'])}) %}
+
                 {%- if p['use_upstream'] == 'archive' %}
                     {%- if i in ('krew',) %}
                         {%- set url = '%s/v%s/%s.%s'|format(p['uri_a'], p['version'], i, p['suffix']) %}
@@ -160,7 +180,7 @@
                         {%- set url = '%s/%s%s.%s'|format(p['uri_a'], p['name'], p['version'], p['suffix']) %}
                     {%- endif %}
 
-                    {%- if url is defined %}
+                    {%- if url %}
                         {%- do p['archive'].update({ 'name': p.path, 'source': url }) %}
                         {%- if 'source_hash' not in p['archive'] %}
                             {%- do p['archive'].update({'source_hash': url ~ '.sha256'}) %}
@@ -188,7 +208,7 @@
                         {%- set url = '%s-%s-%s'|format(uri, p['version'], grains.kernel|lower) %}
                     {%- endif %}
 
-                    {%- if url is defined %}
+                    {%- if url %}
                         {%- do p['binary'].update({ 'name': p.path, 'source': url }) %}
                         {%- set url = url if 'name' not in p else url + '/' + p['name'] %}
                         {%- if 'source_hash' not in p['binary'] %}
@@ -202,7 +222,6 @@
             {%- endif %}
         {%- endfor %}
     {%- endif %}
-
 {%- endfor %}
 
 {%- set data = d %}

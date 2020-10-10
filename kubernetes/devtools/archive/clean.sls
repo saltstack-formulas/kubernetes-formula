@@ -7,7 +7,7 @@
 
 {%- if 'wanted' in d.devtools and d.devtools.wanted %}
     {%- for tool in d.devtools.wanted|unique %}
-        {%- if 'pkg' in d.devtools and tool in d.devtools['pkg'] and d.devtools.pkg.tool %}
+        {%- if 'pkg' in d.devtools and tool in d.devtools['pkg'] and d.devtools.pkg[tool] %}
 
 {{ formula }}-devtools-archive-{{ tool }}-clean:
   file.absent:
