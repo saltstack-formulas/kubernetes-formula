@@ -20,9 +20,11 @@ include:
                  )
               }}
     - mode: '0640'
+    - makedirs: True
+                 {%- if grains.os != 'Windows' %}
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
-    - makedirs: True
+                 {%- endif %}
     - template: jinja
     - require:
       - sls: {{ sls_archive_install if d.client.pkg.use_upstream == 'archive' else sls_binary_install if d.client.pkg.use_upstream == 'binary' else sls_package_install }}   # noqa 204

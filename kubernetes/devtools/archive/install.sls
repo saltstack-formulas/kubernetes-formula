@@ -14,30 +14,34 @@
 
 {{ formula }}-devtools-archive-{{ tool }}-install:
   file.directory:
-    - name: {{ d.devtools['pkg'][tool]['path'] }}/
-    - user: {{ d.identity.rootuser }}
-    - group: {{ d.identity.rootgroup }}
+    - name: {{ d.devtools['pkg'][tool]['path'] }}
     - mode: 755
     - clean: True
     - makedirs: True
     - require_in:
       - archive: {{ formula }}-devtools-archive-{{ tool }}-install
+                 {%- if grains.os != 'Windows' %}
+    - user: {{ d.identity.rootuser }}
+    - group: {{ d.identity.rootgroup }}
     - recurse:
         - user
         - group
         - mode
+                 {%- endif %}
   archive.extracted:
     {{- format_kwargs(d.devtools['pkg'][tool]['archive']) }}
     - retry: {{ d.retry_option }}
-    - user: {{ d.identity.rootuser }}
-    - group: {{ d.identity.rootgroup }}
     - enforce_toplevel: false
     - trim_output: true
+                 {%- if grains.os != 'Windows' %}
+    - user: {{ d.identity.rootuser }}
+    - group: {{ d.identity.rootgroup }}
     - recurse:
         - user
         - group
-                {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
-                    {%- for cmd in d.devtools['pkg'][tool]['commands']|unique %}
+                 {%- endif %}
+                 {%- if (d.linux.altpriority|int == 0 and grains.os != 'Windows') or grains.os_family in ('Arch', 'MacOS') %}
+                     {%- for cmd in d.devtools['pkg'][tool]['commands']|unique %}
 
 {{ formula }}-devtools-archive-{{ tool }}-install-symlink-{{ cmd }}:
   file.symlink:
@@ -48,10 +52,10 @@
     - require:
       - archive: {{ formula }}-devtools-archive-{{ tool }}-install
 
-                    {% endfor %}
-                {% endif %}
+                     {% endfor %}
+                 {% endif %}
 
-            {% endif %}
+           {% endif %}
         {% endif %}
     {%- endfor %}
 {%- endif %}

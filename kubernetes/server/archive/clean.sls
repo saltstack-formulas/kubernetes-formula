@@ -14,7 +14,7 @@ include:
     - names:
       - {{ d.dir.tmp }}/kubernetes-server*
       - {{ d.server.pkg.path }}/bin
-        {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
+        {%- if (d.linux.altpriority|int == 0 and grains.os != 'Windows') or grains.os_family in ('Arch', 'MacOS') %}
             {%- for cmd in d.server.pkg.commands|unique %}
       - /usr/local/bin/{{ cmd }}
             {%- endfor %}

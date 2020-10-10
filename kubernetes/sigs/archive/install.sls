@@ -18,9 +18,7 @@
 
 {{ formula }}-sigs-archive-{{ tool }}-install:
   file.directory:
-    - name: {{ p['path'] }}/
-    - user: {{ d.identity.rootuser }}
-    - group: {{ d.identity.rootgroup }}
+    - name: {{ p['path'] }}
     - mode: 755
     - clean: True
     - makedirs: True
@@ -28,21 +26,27 @@
       - pkg: {{ formula }}-sigs-archive-deps-install
     - require_in:
       - archive: {{ formula }}-sigs-archive-{{ tool }}-install
+                {%- if grains.os != 'Windows' %}
+    - user: {{ d.identity.rootuser }}
+    - group: {{ d.identity.rootgroup }}
     - recurse:
         - user
         - group
         - mode
+                {%- endif %}
   archive.extracted:
     {{- format_kwargs(p['archive']) }}
     - retry: {{ d.retry_option }}
-    - user: {{ d.identity.rootuser }}
-    - group: {{ d.identity.rootgroup }}
     - enforce_toplevel: false
     - trim_output: true
+                {%- if grains.os != 'Windows' %}
+    - user: {{ d.identity.rootuser }}
+    - group: {{ d.identity.rootgroup }}
     - recurse:
         - user
         - group
-                {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
+                {%- endif %}
+                {%- if (d.linux.altpriority|int == 0 and grain.os != 'Windows') or grains.os_family in ('Arch', 'MacOS') %}
                     {%- for cmd in p['commands']|unique %}
 
 {{ formula }}-sigs-archive-{{ tool }}-install-symlink-{{ cmd }}:

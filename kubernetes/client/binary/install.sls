@@ -5,7 +5,7 @@
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
 
-    {%- if d.client.pkg.use_upstream == 'binary' %}
+    {%- if d.client.pkg.use_upstream == 'binary' and grains.os != 'Windows' %}
 
 {{ formula }}-client-binary-install:
   pkg.installed:
@@ -14,12 +14,12 @@
       - file: {{ formula }}-client-binary-install
   file.directory:
     - name: {{ d.client.pkg.path }}/bin
-    - user: {{ d.identity.rootuser }}
-    - group: {{ d.identity.rootgroup }}
     - mode: 755
     - makedirs: True
     - require_in:
       - cmd: {{ formula }}-client-binary-install
+    - user: {{ d.identity.rootuser }}
+    - group: {{ d.identity.rootgroup }}
     - recurse:
         - user
         - group
@@ -31,14 +31,14 @@
     - retry: {{ d.retry_option|json }}
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
-          {%- if 'source_hash' in d.client.pkg.binary and d.client.pkg.binary.source_hash %}
+                 {%- if 'source_hash' in d.client.pkg.binary and d.client.pkg.binary.source_hash %}
   module.run:
     - name: file.check_hash
     - path: {{ d.client.pkg.path }}/bin/kubectl
     - file_hash: {{ d.client.pkg.binary.source_hash }}
     - require:
       - cmd: {{ formula }}-client-binary-install
-          {%- endif %}
+                 {%- endif %}
 
 {{ formula }}-client-binary-install-symlink:
   file.symlink:

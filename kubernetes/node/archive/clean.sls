@@ -14,7 +14,7 @@ include:
     - names:
       - {{ d.dir.tmp }}/kubernetes-node*
       - {{ d.node.pkg.path }}/bin
-        {%- if (d.linux.altpriority|int == 0 and grains.os_family != 'Windows') or grains.os_family in ('Arch', 'MacOS') %}
+        {%- if (d.linux.altpriority|int == 0 and grain.os != 'Windows') or grains.os_family in ('Arch', 'MacOS') %}
             {%- for cmd in d.node.pkg.commands|unique %}
       - /usr/local/bin/{{ cmd }}
             {%- endfor %}

@@ -17,9 +17,7 @@
 
 {{ formula }}-operators-archive-{{ tool }}-install:
   file.directory:
-    - name: {{ d.operators.pkg[tool]['path'] }}/
-    - user: {{ d.identity.rootuser }}
-    - group: {{ d.identity.rootgroup }}
+    - name: {{ d.operators.pkg[tool]['path'] }}
     - mode: 755
     - clean: True
     - makedirs: True
@@ -27,20 +25,26 @@
       - pkg: {{ formula }}-operators-archive-deps-install
     - require_in:
       - archive: {{ formula }}-operators-archive-{{ tool }}-install
+               {%- if grains.os != 'Windows' %}
+    - user: {{ d.identity.rootuser }}
+    - group: {{ d.identity.rootgroup }}
     - recurse:
         - user
         - group
         - mode
+               {%- endif %}
   archive.extracted:
     {{- format_kwargs(d.operators.pkg[tool]['archive']) }}
     - retry: {{ d.retry_option }}
-    - user: {{ d.identity.rootuser }}
-    - group: {{ d.identity.rootgroup }}
     - enforce_toplevel: false
     - trim_output: true
+               {%- if grains.os != 'Windows' %}
+    - user: {{ d.identity.rootuser }}
+    - group: {{ d.identity.rootgroup }}
     - recurse:
         - user
         - group
+               {%- endif %}
 
             {% endif %}
         {% endif %}

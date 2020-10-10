@@ -22,12 +22,14 @@ include:
                  )
               }}
     - mode: 644
+    - makedirs: True
+                {%- if grains.os != 'Windows' %}
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
-    - makedirs: True
+                {%- endif %}
     - template: jinja
     - context:
-        config: {{ d.k3s.config|json }}
+      config: {{ d.k3s.config|json }}
     - require:
       - sls: {{ sls_archive_install if d.k3s.pkg.use_upstream == 'archive' else sls_binary_install if d.k3s.pkg.use_upstream == 'binary' else sls_package_install }}   # noqa 204
 
