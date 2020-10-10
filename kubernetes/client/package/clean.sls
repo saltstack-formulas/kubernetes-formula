@@ -31,5 +31,11 @@ include:
       - test -x /usr/local/bin/brew
       - grew list | grep ^kubectl$
 
+        {%- elif grains.os_family == 'Windows' %}
+
+{{ formula }}-client-package-clean-choco:
+  chocolatey.uninstalled:
+    - name: {{ d.client.pkg.name }}
+
         {%- endif %}
     {%- endif %}

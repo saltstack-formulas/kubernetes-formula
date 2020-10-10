@@ -3,11 +3,12 @@
 kubernetes-formula
 ==================
 
-Highly extensible formula to manage kubernetes on MacOS and GNU/Linux. Currently supports:
+Highly extensible formula to manage kubernetes on MacOS, Windows, and GNU/Linux. Currently supports:
 
 * `server`  (https://kubernetes.io)
 * `node`    (https://kubernetes.io)
 * `client`  (https://kubernetes.io, aliases)
+* `operator` (sdk, etc)
 * `operators` (https://operatorhub.io)
 * `devtools` (extensive collection of tools, kubectx, kubens, cue, attr2rbac, dive, stern, etc)
 * `devlibs`  (kubernetes clients, source software)
@@ -35,7 +36,12 @@ The default `kubernetes.devtools` state includes the following:
 * `skaffold`  (https://skaffold.dev)
 
 
-The default `kubernetes.operators` state includes the following (from https://operatorhub.io):
+The default `kubernetes.operator` state includes:
+
+* `sdk` (https://sdk.operatorframework.io/)
+
+
+The default `kubernetes.operators` state includes (from https://operatorhub.io):
 
 * `akka-cluster` (https://github.com/lightbend/akka-cluster-operator)
 * `grafana` (https://github.com/integr8ly/grafana-operator)
@@ -65,7 +71,7 @@ The default `kubernetes.devlibs` state includes the following:
    :scale: 100%
    :target: https://github.com/semantic-release/semantic-release
 
-A SaltStack formula for kubernetes on MacOS and GNU/Linux.
+A SaltStack formula for kubernetes on MacOS and GNU/Linux. Windows is work in progress.
 
 .. contents:: **Table of Contents**
    :depth: 1
@@ -137,24 +143,36 @@ This state uninstalls kubernetes server GNU/Linux only.
 ``kubernetes.node``
 ^^^^^^^^^^^^^^^^^^^
 
-This state installs kubernetes node GNU/Linux only (see https://kubernetes.io/docs/concepts/architecture/nodes)
+This state installs kubernetes node on Windows/MacOS/Linux only (see https://kubernetes.io/docs/concepts/architecture/nodes)
 
 ``kubernetes.node.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state uninstalls kubernetes node GNU/Linux only.
+This state uninstalls kubernetes node on Windows/MacOS/Linux only.
 
 ``kubernetes.sigs``
 ^^^^^^^^^^^^^^^^^^^
 
-This state installs operator archives only
-
-* https://operatorhub.io
+This state installs kubernetes sig archives only
 
 ``kubernetes.sigs.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state uninstalls operator archives only
+This state uninstalls kubernetes sig archives only
+
+``kubernetes.operator``
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state installs operator archives only (Linux/MacOS)
+
+* sdk (https://sdk.operatorframework.io)
+
+``kubernetes.operator.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls operator archives only (Linux/MacOS)
+
+* sdk (https://sdk.operatorframework.io)
 
 ``kubernetes.operators``
 ^^^^^^^^^^^^^^^^^^^^^^^^

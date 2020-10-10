@@ -42,5 +42,12 @@ include:
     - runas: {{ d.identity.rootuser }}
     - unless: test -x /usr/local/bin/kubectl  # if binary is missing
 
+        {%- elif grains.kernel|lower in ('Windows',) %}
+
+{{ formula }}-client-package-install-choco:
+  chocolatey.installed:
+    - name: {{ d.client.pkg.name }}
+    - force: True
+
         {%- endif %}
     {%- endif %}

@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # vim: ft=sls
 
-{%- if grains.kernel|lower in ('linux', 'darwin') %}
-    {%- set tplroot = tpldir.split('/')[0] %}
-    {%- from tplroot ~ "/map.jinja" import data as d with context %}
-    {%- set formula = d.formula %}
-    {%- from tplroot ~ "/files/macros.jinja" import format_kwargs with context %}
+{%- set tplroot = tpldir.split('/')[0] %}
+{%- from tplroot ~ "/map.jinja" import data as d with context %}
+{%- set formula = d.formula %}
+{%- from tplroot ~ "/files/macros.jinja" import format_kwargs with context %}
+
     {%- if d.node.pkg.use_upstream == 'archive' and 'archive' in d.node.pkg %}
 
 {{ formula }}-node-archive-install:
@@ -59,11 +59,3 @@
             {%- endfor %}
         {%- endif %}
     {%- endif %}
-{%- else %}
-
-{{ formula }}-node-archive-install-other:
-  test.show_notification:
-    - text: |
-        The node archive is unavailable for {{ salt['grains.get']('finger', grains.os_family) }}
-
-{%- endif %}

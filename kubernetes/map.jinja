@@ -62,6 +62,44 @@
         {%- do d[c].update({ 'pkg': p }) %}
     {%- endif %}
 
+    ## OPERATOR
+    {%- set path = d.dir.base %}
+    {%- set list = ('operator',) %}
+    {%- if c in list and c in d and d[c] and 'wanted' in d[c] and d[c]['wanted'] %}
+        {%- for i in d[c]['wanted'] %}
+
+            ## SDK
+            {%- set list = ('sdk',) %}
+            {%- if i in list and i in d[c] and d[c][i] and 'wanted' in d[c][i] and d[c][i]['wanted'] %}
+                {%- for j in d[c][i]['wanted'] %}
+                    {%- if 'pkg' in d[c][i] and j in d[c][i]['pkg'] and d[c][i]['pkg'][j] %}
+                        {%- set p = d[c][i]['pkg'][j] %}
+                        {%- do p.update({ 'path': '%s/bin'|format(path) }) %}
+
+                        {%- if p['use_upstream'] == 'binary' %}
+                            {%- if j in ('ansible-operator', 'helm-operator', 'operator-sdk') %}
+                                {%- set kernel = 'apple-darwin' if grains.kernel|lower == 'darwin' else grains.kernel %}
+                                {%- set kernel = 'linux-gnu' if grains.kernel|lower == 'linux' else grains.kernel %}
+                                {%- set arch = 'x86_64' if d.arch|lower == 'amd64' else d.arch %}
+                                {%- set uri = '%s/v%s/%s-v%s'|format(p['uri_b'], p['version'], j, p['version']) %}
+                                {%- set url = '%s-%s-%s'|format(uri, arch, kernel) %}
+                            {%- endif %}
+                            {%- if url is defined %}
+                                {%- do p['binary'].update({ 'name': p.path, 'source': url }) %}
+                                {%- do p['binary'].update({ 'source_hash': url ~ '.asc'}) %}
+                            {%- endif %}
+                        {%- endif %}
+
+                        ## Persistance
+                        {%- do d[c][i].update({ j: p }) %}
+
+                    {%- endif %}
+                {%- endfor %}
+            {%- endif %}
+
+        {%- endfor %}
+    {%- endif %}
+
     ## SIGS / DEVTOOLS / DEVLIBS / OPERATORS ##
     {%- set path = d.dir.source if c in ('devlibs', 'operators') else d.dir.base %}
     {%- set list = ('devlibs', 'operators', 'sigs', 'devtools') %}
