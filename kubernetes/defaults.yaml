@@ -402,7 +402,7 @@ kubernetes:
   k3s:
     version: '1.18.4+k3s1'
     pkg:
-      use_upstream: script
+      use_upstream: binary
       uri_b: 'https://github.com/rancher/k3s/releases/download'
       uri_s: 'https://get.k3s.io'
       suffix: tar.gz
@@ -410,7 +410,7 @@ kubernetes:
       binary:
         source_hash: '0c19d64dde77c8bb3af1dfbac5aecea59ab4679d97dcfaa62419aaa795380490'
       script:
-        source_hash: 'b2856cee3432cf0148513b644b5369db8fa8b039793959f410aa7dfdb496b2b9'
+        source_hash: 'b2856cee3432cf0148513b644b5369db8fa8b039793959f410aa7dfdb496b2b9'  # hash changes frequently
         killall: /usr/local/bin/k3s-killall.sh
         uninstall: /usr/local/bin/k3s-uninstall.sh
         env:
