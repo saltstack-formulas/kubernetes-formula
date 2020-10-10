@@ -108,10 +108,11 @@ Windows:
       binary:
         source_hash: '6ec32a8a62b69363a524c4f8db765ff4bd16ea7e5b0eb04aa5a667f8653eda18c357a97513d9e12f0ba1612516acb150deffb6e3608633c62b97a15b6efa7cc0'
   node:
+    version: 1.19.0
     pkg:
       use_upstream: archive
       archive:
-        source_hash: 'd726ed904f9f7fe7e8831df621dc9094b87e767410a129aa675ee08417b662ddec314e165f29ecb777110fbfec0dc2893962b6c71950897ba72baaa7eb6371ed'  # noqa 204
+        source_hash: '587651158c9999e64e06186ef2e65fe14d46ffdae28c5d8ee6261193bfe4967717f997ebe13857fa1893bbf492e1cc1f816bce86a94c6df9b7a0264848391397'  # noqa 204
   server: {}
   sigs:
     pkg:
