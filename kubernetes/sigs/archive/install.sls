@@ -46,7 +46,7 @@
         - user
         - group
                 {%- endif %}
-                {%- if (d.linux.altpriority|int == 0 and grain.os != 'Windows') or grains.os_family in ('Arch', 'MacOS') %}
+                {%- if (d.linux.altpriority|int == 0 and grains.os != 'Windows') or grains.os_family in ('Arch', 'MacOS') %}
                     {%- for cmd in p['commands']|unique %}
 
 {{ formula }}-sigs-archive-{{ tool }}-install-symlink-{{ cmd }}:
