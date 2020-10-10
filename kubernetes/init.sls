@@ -6,6 +6,7 @@ include:
   - .server
   - .node
   - .k3s
+  - .operator
   - .operators
   - .devtools
   - .devlibs

@@ -8,6 +8,7 @@ Highly extensible formula to manage kubernetes on MacOS, Windows, and GNU/Linux.
 * `server`  (https://kubernetes.io)
 * `node`    (https://kubernetes.io)
 * `client`  (https://kubernetes.io, aliases)
+* `operator` (sdk, etc)
 * `operators` (https://operatorhub.io)
 * `devtools` (extensive collection of tools, kubectx, kubens, cue, attr2rbac, dive, stern, etc)
 * `devlibs`  (kubernetes clients, source software)
@@ -35,7 +36,12 @@ The default `kubernetes.devtools` state includes the following:
 * `skaffold`  (https://skaffold.dev)
 
 
-The default `kubernetes.operators` state includes the following (from https://operatorhub.io):
+The default `kubernetes.operator` state includes:
+
+* `sdk` (https://sdk.operatorframework.io/)
+
+
+The default `kubernetes.operators` state includes (from https://operatorhub.io):
 
 * `akka-cluster` (https://github.com/lightbend/akka-cluster-operator)
 * `grafana` (https://github.com/integr8ly/grafana-operator)
@@ -147,14 +153,26 @@ This state uninstalls kubernetes node on Windows/MacOS/Linux only.
 ``kubernetes.sigs``
 ^^^^^^^^^^^^^^^^^^^
 
-This state installs operator archives only
-
-* https://operatorhub.io
+This state installs kubernetes sig archives only
 
 ``kubernetes.sigs.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^
 
-This state uninstalls operator archives only
+This state uninstalls kubernetes sig archives only
+
+``kubernetes.operator``
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state installs operator archives only (Linux/MacOS)
+
+* sdk (https://sdk.operatorframework.io)
+
+``kubernetes.operator.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls operator archives only (Linux/MacOS)
+
+* sdk (https://sdk.operatorframework.io)
 
 ``kubernetes.operators``
 ^^^^^^^^^^^^^^^^^^^^^^^^

@@ -7,6 +7,7 @@ include:
   - .server.clean
   - .client.clean
   - .operators.clean
+  - .operator.clean
   - .devtools.clean
   - .devlibs.clean
   - .sigs.clean
