@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 # vim: ft=sls
 
+{%- set tplroot = tpldir.split('/')[0] %}
+{%- from tplroot ~ "/map.jinja" import data as d with context %}
+{%- set formula = d.formula %}
+
 {%- if grains.kernel|lower in ('linux', 'darwin') %}
-    {%- set tplroot = tpldir.split('/')[0] %}
-    {%- from tplroot ~ "/map.jinja" import data as d with context %}
-    {%- set formula = d.formula %}
     {%- from tplroot ~ "/files/macros.jinja" import format_kwargs with context %}
     {%- if d.server.pkg['use_upstream'] == 'archive' and 'archive' in d.server.pkg %}
 
@@ -17,12 +18,12 @@
              {%- endif %}
   file.directory:
     - name: {{ d.server.pkg.path }}
-    - mode: 755
     - makedirs: True
     - clean: True
     - require_in:
       - archive: {{ formula }}-server-archive-install
              {%- if grains.os != 'Windows' %}
+    - mode: 755
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
     - recurse:
@@ -51,7 +52,7 @@
 {{ formula }}-server-archive-install-symlink-{{ cmd }}:
   file.symlink:
     - name: /usr/local/bin/{{ cmd }}
-    - target: {{ d.server.pkg.path }}/bin/{{ cmd }}
+    - target: {{ d.server.pkg.path }}{{ cmd }}
     - force: True
     - require:
       - archive: {{ formula }}-server-archive-install

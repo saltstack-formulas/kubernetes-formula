@@ -72,8 +72,6 @@ kubernetes:
     pkg:
       minikube:
         version: 1.12.0
-        binary:
-          source_hash: '3501b6c2be48183affa9497e7db6d751d92e1536267268b73ad1a936a2977122'
       devspace:
         version: 4.13.1
       kudo:

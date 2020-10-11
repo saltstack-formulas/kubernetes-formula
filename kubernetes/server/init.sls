@@ -1,11 +1,11 @@
 # -*- coding: utf-8 -*-
 # vim: ft=sls
 
-{%- if grains.kernel|lower in ('linux', 'darwin') %}
-    {%- set tplroot = tpldir.split('/')[0] %}
-    {%- from tplroot ~ "/map.jinja" import data as d with context %}
-    {%- set formula = d.formula %}
+{%- set tplroot = tpldir.split('/')[0] %}
+{%- from tplroot ~ "/map.jinja" import data as d with context %}
+{%- set formula = d.formula %}
 
+{%- if grains.kernel|lower in ('linux', 'darwin') %}
     {%- set sls_archive_install = tplroot ~ '.server.archive.install' %}
     {%- set sls_package_install = tplroot ~ '.server.package.install' %}
 

@@ -13,8 +13,7 @@
 {{ formula }}-sigs-binary-{{ tool }}-clean:
   file.absent:
     - names:
-      - {{ d.sigs['pkg'][tool]['path'] }}/bin/{{ tool }}
-      - {{ d.sigs['pkg'][tool]['path'] }}/{{ tool }}
+      - {{ d.sigs['pkg'][tool]['path'] }}{{ tool }}
                 {%- for cmd in d.sigs['pkg'][tool]['commands']|unique %}
       - /usr/local/bin/{{ cmd }}
                 {%- endfor %}

@@ -8,6 +8,7 @@
 {% if d.linux.altpriority|int > 0 and grains.kernel == 'Linux' and grains.os_family not in ('Arch',) %}
     {%- set sls_archive_install = tplroot ~ '.devtools.archive.install' %}
     {%- set sls_binary_install = tplroot ~ '.devtools.binary.install' %}
+
 include:
   - {{ sls_archive_install }}
   - {{ sls_binary_install }}

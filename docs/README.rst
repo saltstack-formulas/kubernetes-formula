@@ -3,7 +3,7 @@
 kubernetes-formula
 ==================
 
-Highly extensible formula to manage kubernetes on MacOS, Windows, and GNU/Linux. Currently supports:
+Extensible formula to manage kubernetes on MacOS, Windows, and GNU/Linux. Currently supports:
 
 * `server`  (https://kubernetes.io)
 * `node`    (https://kubernetes.io)

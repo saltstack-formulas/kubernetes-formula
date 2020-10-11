@@ -10,5 +10,5 @@
     - names:
       - /usr/local/bin/k3s
            {%- if d.k3s.pkg.use_upstream == 'binary' %}
-      - {{ d.k3s.pkg.path }}/
+      - {{ d.k3s.pkg.path }}
            {%- endif %}

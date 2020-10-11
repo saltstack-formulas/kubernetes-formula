@@ -1,28 +1,29 @@
 # -*- coding: utf-8 -*-
 # vim: ft=sls
 
+{%- set tplroot = tpldir.split('/')[0] %}
+{%- from tplroot ~ "/map.jinja" import data as d with context %}
+{%- set formula = d.formula %}
+
 {%- if grains.kernel|lower in ('linux', 'darwin', 'windows') %}
-    {%- set tplroot = tpldir.split('/')[0] %}
-    {%- from tplroot ~ "/map.jinja" import data as d with context %}
-    {%- set formula = d.formula %}
     {%- from tplroot ~ "/files/macros.jinja" import format_kwargs with context %}
     {%- if d.client.pkg.use_upstream == 'archive' and 'pkg' in d.client and 'archive' in d.client['pkg'] %}
 
 {{ formula }}-client-archive-install:
-             {%- if grains.os != 'Windows' %}
+         {%- if grains.os != 'Windows' %}
   pkg.installed:
     - names: {{ d.pkg.deps|json }}
     - require_in:
       - file: {{ formula }}-client-archive-install
-             {%- endif %}
+         {%- endif %}
   file.directory:
     - name: {{ d.client.pkg.path }}
-    - mode: 755
     - makedirs: True
     - clean: True
     - require_in:
       - archive: {{ formula }}-client-archive-install
              {%- if grains.os != 'Windows' %}
+    - mode: 755
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
     - recurse:

@@ -5,17 +5,17 @@
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
 
-{%- if d.linux.altpriority|int > 0 and grains.kernel == 'Linux' and grains.os_family not in ('Arch',) %}
-    {%- set sls_archive_install = tplroot ~ '.sigs.archive.install' %}
-    {%- set sls_binary_install = tplroot ~ '.sigs.binary.install' %}
+    {%- if d.linux.altpriority|int > 0 and grains.kernel == 'Linux' and grains.os_family not in ('Arch',) %}
+        {%- set sls_archive_install = tplroot ~ '.sigs.archive.install' %}
+        {%- set sls_binary_install = tplroot ~ '.sigs.binary.install' %}
 include:
   - {{ sls_archive_install }}
   - {{ sls_binary_install }}
 
-    {%- if 'wanted' in d.sigs and d.sigs.wanted %}
-        {%- for tool in d.sigs.wanted|unique %}
-            {%- if tool not in ('kubebuilder', 'krew') and tool in d.sigs.pkg and d.sigs.pkg[tool] %}
-                {%- for cmd in d.sigs.pkg[tool]['commands']|unique %}
+        {%- if 'wanted' in d.sigs and d.sigs.wanted %}
+            {%- for tool in d.sigs.wanted|unique %}
+                {%- if tool not in ('kubebuilder', 'krew') and tool in d.sigs.pkg and d.sigs.pkg[tool] %}
+                    {%- for cmd in d.sigs.pkg[tool]['commands']|unique %}
 
 {{ formula }}-sigs-{{ tool }}-alternatives-install-bin-{{ cmd }}:
   alternatives.install:
@@ -49,9 +49,9 @@ include:
        - sls: {{ sls_archive_install }}
        - sls: {{ sls_binary_install }}
 
-                {%- endfor %}
-            {%- endif %}
+                    {%- endfor %}
+                {%- endif %}
 
-        {%- endfor %}
+            {%- endfor %}
+        {%- endif %}
     {%- endif %}
-{%- endif %}

@@ -7,6 +7,7 @@
 
 {%- if d.linux.altpriority|int > 0 and grains.kernel == 'Linux' and grains.os_family not in ('Arch',) %}
     {%- set sls_archive_install = tplroot ~ '.server.archive.install' %}
+
 include:
   - {{ sls_archive_install }}
 

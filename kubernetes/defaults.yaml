@@ -2,6 +2,7 @@
 # vim: ft=yaml
 ---
 kubernetes:
+  div: '/'
   formula: kubernetes
   supported:
     - server
@@ -23,7 +24,6 @@ kubernetes:
         version: 0.8.1
         use_upstream: binary
         uri_b: 'https://github.com/kubernetes-sigs/kind/releases/download'
-        suffix: ''
         commands: {}
           # kind
         binary:
@@ -70,7 +70,7 @@ kubernetes:
         version: 4.13.1
         use_upstream: binary
         uri_b: 'https://github.com/devspace-cloud/devspace/releases/download'
-        suffix: tar.gz
+        suffix: null
         commands:
           - devspace
         binary:
@@ -86,26 +86,25 @@ kubernetes:
           source_hash: 'b0fdf8984ac1947986ccd990b0d4ba60c1f5a1070909e734a1c57189308ed977'
           options: '--strip-components=1'
       linkerd2:
-        version: 20.7.1
+        version: 20.10.2
         use_upstream: binary
         uri_b: 'https://github.com/linkerd/linkerd2/releases/download'
         suffix: tar.gz
-        name: linkerd2-cli-edge
+        # name: linkerd2-cli-edge
+        binary: {}
         commands:
           - linkerd
-        binary:
-          source_hash: 9044e2b56b5dd86ef9a8aa5bc1a6a1cde3db601d2138a3380ab6edec12a5365f
       skaffold:
         version: 1.12.0
         use_upstream: binary
         uri_b: 'https://storage.googleapis.com/skaffold/releases'
-        suffix: tar.gz
+        suffix: null
         commands:
           - skaffold
         binary:
           source_hash: 'be5e115ba9d1a3703deb968d1adb0c040e970f7eac1b7c1f1313df5a37c5f817'
       istio:
-        version: 1.6.5
+        version: 1.7.3
         use_upstream: archive
         uri_a: 'https://github.com/istio/istio/releases/download'
         suffix: tar.gz
@@ -134,19 +133,18 @@ kubernetes:
           source_hash: '5df22a42021d78a199d00f055faedd47a86ad3001bd06da31549c0a477a403a9'
       minikube:
         version: 1.12.0
+        use_upstream: binary
         config_file: /etc/default/minikube.ini
         config: {}
         environ_file: /etc/default/minikube.sh
         environ: []
         service: {}
         vm_driver: none
-        use_upstream: binary
         uri_b: 'https://github.com/kubernetes/minikube/releases/download'
-        suffix: tar.gz
+        suffix: null
+        binary: {}
         commands:
           - minikube
-        binary:
-          source_hash: '3501b6c2be48183affa9497e7db6d751d92e1536267268b73ad1a936a2977122'
       stern:
         version: '1.11.0'
         use_upstream: binary
@@ -177,14 +175,14 @@ kubernetes:
           source_hash: 'dea7839158e4847b8b52709dbfbe9ff2d974df4416b8ea8a86ce4bd622786f52'  # x86_64
           options: '--strip-components=1'
       cue:
-        version: '0.2.1'
+        version: '0.3.0-alpha4'
         use_upstream: archive
         uri_a: 'https://github.com/cuelang/cue/releases/download'
         suffix: tar.gz
         commands:
           - cue
         archive:
-          source_hash: '40078d02559595eec8e5a873f09ca89545502019bcac6f892f5a30bb8d49286c'  # x86_64
+          source_hash: 'ba54e55d91ffc430fdb83116b2bf4b0e284083396e5ca63af3fad742c2920da5'  # x86_64
           options: '--strip-components=1'
       audit2rbac:
         version: '0.8.0'
@@ -449,10 +447,10 @@ kubernetes:
     rootgroup: root
   arch: ''
   dir:
-    base: /usr/local
-    source: /usr/local/src/k8s/libs
-    operators: /usr/local/src/k8s/operators
-    tmp: /tmp/kubernetes-tmp
+    base: /usr/local/
+    source: /usr/local/src/k8s/libs/
+    operators: /usr/local/src/k8s/operators/
+    tmp: /tmp/kubernetes-tmp/
   pkg:
     deps:
       - curl

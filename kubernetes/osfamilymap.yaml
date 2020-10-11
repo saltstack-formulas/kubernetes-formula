@@ -96,72 +96,105 @@ OpenBSD:
         use_upstream: archive
 
 Windows:
+  div: '\'
   dir:
-    binary: C:\\kubernetes
-    source: C:\\temp\\kubernetes
+    base: C:\kubernetes\
+    source: C:\kubernetes\src\libs\
+    operators: C:\kubernetes\src\
+    tmp: C:\temp\kubernetes\
   client:
     version: 1.19.0
     check: systeminfo
+    aliases_file: C:\kubernetes\etc\aliases.sh
     pkg:
       name: kubernetes-cli         # choco
+      suffix: ''
       use_upstream: package
       binary:
         source_hash: '6ec32a8a62b69363a524c4f8db765ff4bd16ea7e5b0eb04aa5a667f8653eda18c357a97513d9e12f0ba1612516acb150deffb6e3608633c62b97a15b6efa7cc0'
   node:
     version: 1.19.0
+    config_file: C:\kubernetes\etc\node.ini
     pkg:
       use_upstream: archive
       archive:
         source_hash: '587651158c9999e64e06186ef2e65fe14d46ffdae28c5d8ee6261193bfe4967717f997ebe13857fa1893bbf492e1cc1f816bce86a94c6df9b7a0264848391397'  # noqa 204
-  server: {}
+  server:
+    config_file: C:\kubernetes\etc\server.ini
+    environ_file: C:\kubernetes\etc\server.sh
   sigs:
     pkg:
       kind:
         binary:
           source_hash: '10d0a4adc7485a0525831b2cd67062dd75d551ec0133f09e3a7d2b2674f7efc5'
+      krew:
+        use_upstream: binary
+        suffix: exe
+        binary: {}
+      kubebuilder:
+        use_upstream: false  # no windows binary
 
   devtools:
     pkg:
       minikube:
-        name: minikube-windows-amd64.exe
+        suffix: exe
+        config_file: C:\kubernetes\etc\minikube.ini
+        environ_file: C:\kubernetes\etc\minkube.sh
         binary:
           source_hash: 'a5f8666d762146cc7d85916bcb2d6b7246162e4706f10e5c12a795b9d07ea6c4'
       devspace:
-        name: devspace-windows-amd64.exe
+        name: devspace
+        suffix: exe
         binary:
           source_hash: 'a696bd3ae755222fd63884fa654ba91e24d46826bb78358fcba592fc2b4013c0'
       octant:
+        suffix: zip
         archive:
           source_hash: 'cecf094c3d8f6c55236cf02c7e4c3916ca0e5c430ef5dff647665a2a16a20c8c'
+          options: ''
+      k3s:
+        use_upstream: false   # no windows binary
       kubectx:
         suffix: zip
         archive:
           source_hash: '50da8ffd2ac9ca7f41c8aa6bf47a7fbd91d17603827b24267b8618fc30e7923f'  # x86_64
+          options: ''
       kubens:
         suffix: zip
         archive:
           source_hash: 'bd60e0bd71ef0c0d628dcf09600902e2d67998a29cc5998a404b200fe2d98de8'  # x86_64
-      cue:
+          options: ''
+      kudo:
+        use_upstream: false  # windows not available
+      istio:
+        suffix: zip
+        arch: ''  # noarch
         archive:
-          source_hash: 'b705cd47d3d568b231ed94c8d3e947f9e1d9b54eab0483d9a00b1c6645be32e9'  # x86_64
+          options: ''
+      cue:
+        suffix: zip
+        archive:
+          source_hash: '820b581e7285b78644d4bcfd1a0bd2c9f2153ddc4880c501a7423ab7992dc778'  # x86_64
+          options: ''
       audit2rbac:
         archive:
           source_hash: '57e1b6f108141da818eb29ad5755d386f56be067737302fabfa092e335c6ce57'
       stern:
+        suffix: exe
         binary:
-          suffix: exe
           source_hash: '75708b9acf6ef0eeffbe1f189402adc0405f1402e6b764f1f5152ca288e3109e'  # amd64
       dive:
+        suffix: zip
         archive:
-          suffix: zip
           source_hash: '4e8e48263077f94fccfb1f1c385a95640ef3c7a48fd8ca41cc7e5889ba82da28'  # amd64
+          options: ''
       linkerd2:
-        binary:
-          source_hash: '076b71c9afa0e7bb867e7006934438f35f5cff0edcbf0ec3293f7cdf0b6a6b13'
+        name: linkerd2-cli-edge
+        suffix: exe
 
 MacOS:
   dir:
-    default: /etc/defaults
+    default: /etc/defaults/
   identity:
     rootuser: {{ macos_rootuser | d('') }}
     rootgroup: {{ macos_rootgroup | d('') }}
@@ -204,6 +237,7 @@ MacOS:
         binary:
           source_hash: 'df8ca9034ef78000638e9cb08e65c7f054938b4827368755b613a63a8ea8efc7'
       octant:
+        suffix: zip
         archive:
           source_hash: 'f3ac074585bd3afbf529da7e37e5e8844150504fdb420f0cc930f31e766ce24a'
       linkerd2:
@@ -219,7 +253,7 @@ MacOS:
           source_hash: '4ae390ba702d57355d5fb9f2bba04c9b00ae39f740c59044c2d39cd6bfa0ab18'  # x86_64
       cue:
         archive:
-          source_hash: '2b2038feaa2732f25bfb8c563627f990fa890bc654acee34c915bafa5279bc04'  # x86_64
+          source_hash: '659912f149bb1534c2e72baae31e3d4de108b292af3907f402d25fa101f80d98'  # x86_64
       stern:
         archive:
           source_hash: '7aea3b6691d47b3fb844dfc402905790665747c1e6c02c5cabdd41994533d7e9'  # x86_64
