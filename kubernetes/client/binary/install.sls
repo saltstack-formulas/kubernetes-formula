@@ -5,50 +5,42 @@
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
 
-    {%- if d.client.pkg.use_upstream == 'binary' and grains.os != 'Windows' %}
+    {%- if d.client.pkg.use_upstream == 'binary' %}
 
 {{ formula }}-client-binary-install:
+        {%- if grains.os != 'Windows' %}
   pkg.installed:
     - names: {{ d.pkg.deps|json }}
     - require_in:
       - file: {{ formula }}-client-binary-install
-  file.directory:
-    - name: {{ d.client.pkg.path }}/bin
-    - mode: 755
+        {%- endif %}
+  file.managed:
+    - name: {{ d.client.pkg.path }}
+    - source: {{ d.client.pkg.binary.source }}
+            {%- if 'source_hash' in d.client.pkg.binary and d.client.pkg.binary.source_hash %}
+    - source_hash: {{ p[tool]['binary']['source_hash'] }}
+            {%- else %}
+    - skip_verify: True
+            {%- endif %
     - makedirs: True
-    - require_in:
-      - cmd: {{ formula }}-client-binary-install
-    - user: {{ d.identity.rootuser }}
-    - group: {{ d.identity.rootgroup }}
-    - recurse:
-        - user
-        - group
-        - mode
-  cmd.run:
-    - names:
-      - curl -Lo {{ d.client.pkg.path }}/bin/kubectl {{ d.client.pkg.binary.source }}
-      - chmod '0755' {{ d.client.pkg.path }}/bin/kubectl 2>/dev/null
     - retry: {{ d.retry_option|json }}
+        {%- if grains.os != 'Windows' %}
+    - mode: '0755'
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
-                 {%- if 'source_hash' in d.client.pkg.binary and d.client.pkg.binary.source_hash %}
-  module.run:
-    - name: file.check_hash
-    - path: {{ d.client.pkg.path }}/bin/kubectl
-    - file_hash: {{ d.client.pkg.binary.source_hash }}
-    - require:
-      - cmd: {{ formula }}-client-binary-install
-                 {%- endif %}
+
+        {%- endif %}
+        {%- if grains.os != 'Windows' %}
 
 {{ formula }}-client-binary-install-symlink:
   file.symlink:
     - name: /usr/local/bin/kubectl
-    - target: {{ d.client.pkg.path }}/bin/kubectl
+    - target: {{ d.client.pkg.path }}kubectl
     - force: True
     - require:
       - cmd: {{ formula }}-client-binary-install
     - unless:
       - {{ d.linux.altpriority|int > 0 }}
-      - {{ grains.os_family|lower in ('windows',) }}
 
+        {%- endif %}
     {%- endif %}

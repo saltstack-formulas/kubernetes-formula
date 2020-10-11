@@ -21,13 +21,6 @@ include:
     - require:
       - pkgrepo: {{ formula }}-package-repo-absent
             {%- endif %}
-
         {%- endif %}
-    {%- else %}
-
-{{ formula }}-node-package-clean-other:
-  test.show_notification:
-    - text: |
-        The node package is unavailable for {{ salt['grains.get']('finger', grains.os_family) }}
 
     {%- endif %}

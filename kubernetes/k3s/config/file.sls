@@ -21,9 +21,9 @@ include:
                               lookup='k8s-k3s-config-file-install-file-managed'
                  )
               }}
-    - mode: 644
     - makedirs: True
                 {%- if grains.os != 'Windows' %}
+    - mode: 644
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
                 {%- endif %}
