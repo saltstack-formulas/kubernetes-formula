@@ -221,15 +221,12 @@
                         {%- set kernel = '' if i in ('k3s',) else '-' ~ grains.kernel|lower %}
                         {%- set arch = '' if i in ('k3s',) and d.arch == 'amd64' else '-' ~ d.arch %}
                         {%- set suffix = '.' ~ p.suffix if p.suffix else '' %}
-                        {%- set uri = '%s/v%s/%s%s%s%s'|format(p['uri_b'], p['version'], i, grains.kernel|lower, arch, suffix) %}
+                        {%- set url = '%s/v%s/%s-%s%s%s'|format(p['uri_b'], p['version'], i, grains.kernel|lower, arch, suffix) %}
 
                     {%- elif i in ('linkerd2',) %}
-                        {%- if 'name' in p and p.name %}
-                            {%- set url = '%s/edge-%s/%s'|format(p['uri_b'], p['version'], p.name) %}
-                        {%- else %}
-                            {%- set uri = '%s/edge-%s/%s-cli-edge'|format(p['uri_b'], p['version'], i) %}
-                            {%- set url = '%s-%s-%s'|format(uri, p['version'], grains.kernel|lower) %}
-                        {%- endif %}
+		        {%- set arch = '' if grains.kernel|lower != 'linux' else '-' ~ d.arch %}
+                        {%- set uri = '%s/edge-%s/linkerd2-cli-edge'|format(p['uri_b'], p['version']) %}
+                        {%- set url = '%s-%s-%s%s'|format(uri, p['version'], grains.kernel|lower, arch) %}
                     {%- endif %}
 
                     {%- if url and 'binary' in p %}

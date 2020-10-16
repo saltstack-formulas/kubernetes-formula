@@ -90,10 +90,9 @@ kubernetes:
         use_upstream: binary
         uri_b: 'https://github.com/linkerd/linkerd2/releases/download'
         suffix: tar.gz
-        # name: linkerd2-cli-edge
         binary: {}
         commands:
-          - linkerd
+          - linkerd2
       skaffold:
         version: 1.12.0
         use_upstream: binary
