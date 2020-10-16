@@ -16,7 +16,7 @@
 {{ formula }}-devtools-archive-{{ tool }}-install:
   file.directory:
     - name: {{ d.devtools['pkg'][tool]['path'] }}
-    # clean: True
+    - clean: {{ d.clean }}
     - makedirs: True
     - require_in:
       - archive: {{ formula }}-devtools-archive-{{ tool }}-install
@@ -47,9 +47,10 @@
 {{ formula }}-devtools-archive-{{ tool }}-install-symlink-{{ cmd }}:
   file.symlink:
     - name: /usr/local/bin/{{ cmd }}
-    - target: {{ d.devtools['pkg'][tool]['path'] }}/{{ tool }}
+    - target: {{ d.devtools['pkg'][tool]['path'] }}/bin/{{ tool }}
     - force: True
-    - onlyif: test -f {{ d.devtools['pkg'][tool]['path'] }}/{{ tool }}
+    - onlyif:
+      - test -f {{ d.devtools['pkg'][tool]['path'] }}/bin/{{ tool }}
     - require:
       - archive: {{ formula }}-devtools-archive-{{ tool }}-install
 

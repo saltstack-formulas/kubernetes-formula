@@ -18,7 +18,7 @@
   file.directory:
     - name: {{ d.node.pkg.path }}
     - makedirs: True
-    - clean: True
+    - clean: {{ d.clean }}
     - require_in:
       - archive: {{ formula }}-node-archive-install
               {%- if grains.os != 'Windows' %}
@@ -51,7 +51,7 @@
 {{ formula }}-node-archive-install-symlink-{{ cmd }}:
   file.symlink:
     - name: /usr/local/bin/{{ cmd }}
-    - target: {{ d.node.pkg.path }}{{ cmd }}
+    - target: {{ d.node.pkg.path }}/bin/{{ cmd }}
     - force: True
     - require:
       - archive: {{ formula }}-node-archive-install

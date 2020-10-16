@@ -23,7 +23,7 @@
 {{ formula }}-sigs-archive-{{ tool }}-install:
   file.directory:
     - name: {{ p['path'] }}
-    - clean: True
+    - clean: {{ d.clean }}
     - makedirs: True
     - require_in:
       - archive: {{ formula }}-sigs-archive-{{ tool }}-install
@@ -56,9 +56,10 @@
 {{ formula }}-sigs-archive-{{ tool }}-install-symlink-{{ cmd }}:
   file.symlink:
     - name: /usr/local/bin/{{ cmd }}
-    - target: {{ p['path'] }}{{ tool }}
+    - target: {{ p['path'] }}/bin/{{ tool }}
     - force: True
-    - onlyif: test -f {{ p['path'] }}/{{ tool }}
+    - onlyif:
+      - test -f {{ p['path'] }}/bin/{{ tool }}
     - require:
       - archive: {{ formula }}-sigs-archive-{{ tool }}-install
 

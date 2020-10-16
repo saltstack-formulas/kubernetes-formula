@@ -19,7 +19,7 @@
   file.directory:
     - name: {{ d.client.pkg.path }}
     - makedirs: True
-    - clean: True
+    - clean: {{ d.clean }}
     - require_in:
       - archive: {{ formula }}-client-archive-install
              {%- if grains.os != 'Windows' %}

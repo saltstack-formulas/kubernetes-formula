@@ -4,4 +4,5 @@
 include:
   - .config.clean
   - .script.clean
+  - .alternatives.clean
   - .binary.clean

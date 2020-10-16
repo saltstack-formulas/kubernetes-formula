@@ -9,6 +9,10 @@
   file.absent:
     - names:
       - /usr/local/bin/k3s
-           {%- if d.k3s.pkg.use_upstream == 'binary' %}
-      - {{ d.k3s.pkg.path }}
-           {%- endif %}
+      - "{{ d.k3s.pkg.path }}"
+  module.run:
+    - name: file.find
+    - path: "{{ d.dir.base }}"
+    - kwargs:
+        iname: "k8s-k3s-v*"
+        delete: "d"

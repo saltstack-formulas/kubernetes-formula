@@ -26,17 +26,19 @@
     - group: {{ d.identity.rootgroup }}
               {%- endif %}
 
-        {%- if grains.os != 'Windows' %}
+        {%- if (d.linux.altpriority|int == 0 and grains.os != 'Windows') or grains.os_family in ('Arch', 'MacOS') %}
+            {%- for cmd in d.k3s.pkg['commands']|unique %}
 
 {{ formula }}-k3s-binary-install-symlink:
   file.symlink:
-    - unless: {{ grains.os == 'Windows' }}
+    - unless: {{ grains.os == 'Windows' }} || false
     - name: /usr/local/bin/k3s
-    - target: {{ d.k3s.pkg.path }}k3s
+    - target: {{ d.k3s.pkg.path }}/k3s
     - force: True
     - require:
       - file: {{ formula }}-k3s-binary-install
-    - unless: {{ d.linux.altpriority|int > 0 }}
-        {%- endif %}
+    - unless: {{ d.linux.altpriority|int > 0 }} || false
 
+            {%- endfor %}
+        {%- endif %}
     {%- endif %}

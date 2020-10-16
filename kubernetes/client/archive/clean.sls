@@ -4,8 +4,8 @@
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
-{%- set sls_alternatives_clean = tplroot ~ '.client.alternatives.clean' %}
 
+{%- set sls_alternatives_clean = tplroot ~ '.client.alternatives.clean' %}
 include:
   - {{ sls_alternatives_clean }}
 

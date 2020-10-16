@@ -19,7 +19,7 @@
   file.directory:
     - name: {{ d.server.pkg.path }}
     - makedirs: True
-    - clean: True
+    - clean: {{ d.clean }}
     - require_in:
       - archive: {{ formula }}-server-archive-install
              {%- if grains.os != 'Windows' %}
@@ -52,7 +52,7 @@
 {{ formula }}-server-archive-install-symlink-{{ cmd }}:
   file.symlink:
     - name: /usr/local/bin/{{ cmd }}
-    - target: {{ d.server.pkg.path }}{{ cmd }}
+    - target: {{ d.server.pkg.path }}/bin/{{ cmd }}
     - force: True
     - require:
       - archive: {{ formula }}-server-archive-install

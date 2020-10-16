@@ -42,11 +42,12 @@
 {{ formula }}-sigs-binary-{{ tool }}-install-symlink-{{ cmd }}:
   file.symlink:
     - name: /usr/local/bin/{{ cmd }}
-    - target: {{ p['path'] }}{{ tool }}
+    - target: {{ p['path'] }}/bin/{{ tool }}
     - force: True
-    - onlyif: test -f {{ p['path'] }}/bin/{{ tool }}
+    - onlyif:
+      - test -f {{ p['path'] }}/bin/{{ tool }}
     - require:
-      - binary: {{ formula }}-sigs-binary-{{ tool }}-install
+      - file: {{ formula }}-sigs-binary-{{ tool }}-install
 
                        {%- endfor %}
                    {%- endif %}

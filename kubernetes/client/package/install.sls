@@ -34,7 +34,8 @@ include:
   cmd.run:
     - name: /usr/local/bin/brew install {{ d.client.pkg.name }}
     - runas: {{ d.identity.rootuser }}
-    - onlyif: test -x /usr/local/bin/brew
+    - onlyif:
+      - test -x /usr/local/bin/brew
 
 {{ formula }}-client-package-reinstall-brew:
   cmd.run:

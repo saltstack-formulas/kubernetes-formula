@@ -17,11 +17,11 @@
   file.managed:
     - name: {{ d.client.pkg.path }}
     - source: {{ d.client.pkg.binary.source }}
-            {%- if 'source_hash' in d.client.pkg.binary and d.client.pkg.binary.source_hash %}
+        {%- if 'source_hash' in d.client.pkg.binary and d.client.pkg.binary.source_hash %}
     - source_hash: {{ p[tool]['binary']['source_hash'] }}
-            {%- else %}
+        {%- else %}
     - skip_verify: True
-            {%- endif %
+        {%- endif %}
     - makedirs: True
     - retry: {{ d.retry_option|json }}
         {%- if grains.os != 'Windows' %}
@@ -35,12 +35,11 @@
 {{ formula }}-client-binary-install-symlink:
   file.symlink:
     - name: /usr/local/bin/kubectl
-    - target: {{ d.client.pkg.path }}kubectl
+    - target: {{ d.client.pkg.path }}/bin/kubectl
     - force: True
     - require:
       - cmd: {{ formula }}-client-binary-install
-    - unless:
-      - {{ d.linux.altpriority|int > 0 }}
+    - unless: {{ d.linux.altpriority|int > 0 }} || false
 
         {%- endif %}
     {%- endif %}

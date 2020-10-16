@@ -71,7 +71,7 @@ The default `kubernetes.devlibs` state includes the following:
    :scale: 100%
    :target: https://github.com/semantic-release/semantic-release
 
-A SaltStack formula for kubernetes on MacOS and GNU/Linux. Windows is work in progress.
+A SaltStack formula for kubernetes on MacOS, GNU/Linux and Windows.
 
 .. contents:: **Table of Contents**
    :depth: 1

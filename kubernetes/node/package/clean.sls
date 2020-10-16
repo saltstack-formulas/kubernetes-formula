@@ -21,6 +21,6 @@ include:
     - require:
       - pkgrepo: {{ formula }}-package-repo-absent
             {%- endif %}
-        {%- endif %}
 
+        {%- endif %}
     {%- endif %}

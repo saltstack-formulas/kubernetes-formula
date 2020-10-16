@@ -6,7 +6,6 @@
 {%- set formula = d.formula %}
 
 {%- set sls_alternatives_clean = tplroot ~ '.node.alternatives.clean' %}
-
 include:
   - {{ sls_alternatives_clean }}
 

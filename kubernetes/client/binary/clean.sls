@@ -9,4 +9,4 @@
   file.absent:
     - names:
       - /usr/local/bin/kubectl
-      - {{ d.client.pkg.path }}kubectl
+      - {{ d.client.pkg.path }}

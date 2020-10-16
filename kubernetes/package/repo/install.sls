@@ -10,4 +10,5 @@
 {{ formula }}-package-repo-managed:
   pkgrepo.managed:
     {{- format_kwargs(d.pkg.repo) }}
-    - onlyif: {{ d.pkg.repo }}
+    - onlyif:
+      - {{ d.pkg.repo }}

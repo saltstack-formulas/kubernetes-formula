@@ -14,40 +14,38 @@ include:
 
         {%- if 'wanted' in d.sigs and d.sigs.wanted %}
             {%- for tool in d.sigs.wanted|unique %}
-                {%- if tool not in ('kubebuilder', 'krew') and tool in d.sigs.pkg and d.sigs.pkg[tool] %}
+                {%- if tool in d.sigs.pkg and d.sigs.pkg[tool] %}
                     {%- for cmd in d.sigs.pkg[tool]['commands']|unique %}
 
+
 {{ formula }}-sigs-{{ tool }}-alternatives-install-bin-{{ cmd }}:
+                    {%- if grains.os_family not in ('Suse', 'Arch') %}
   alternatives.install:
-    - unless:
-      - {{ grains.os_family in ('Suse', 'Arch') }}
-      - update-alternatives --get-selections |grep ^link-k8s-sigs-{{ tool }}-{{ cmd }}
     - name: link-k8s-sigs-{{ tool }}-{{ cmd }}
     - link: /usr/local/bin/{{ cmd }}
     - order: 10
-    - path: {{ d.sigs.pkg[tool]['path'] }}/bin/{{ cmd }}
-    - onlyif: test -f {{ d.sigs.pkg[tool]['path'] }}bin/{{ cmd }}
+    - path: {{ d.sigs['pkg'][tool]['path'] }}/{{ cmd }}
     - priority: {{ d.linux.altpriority }}
-    - require:
-      - {{ sls_archive_install if d.sigs.pkg[tool]['use_upstream'] == 'archive' else sls_binary_install }}
+                    {%- else %}
   cmd.run:
-    - onlyif: {{ grains.os_family in ('Suse',) }}
-    - name: update-alternatives --install /usr/local/bin/{{ cmd }} link-k8s-sigs-{{ tool }}-{{ cmd }} {{ d.sigs.pkg[tool]['path'] }}/bin/{{ cmd }} {{ d.linux.altpriority }} # noqa 204
-    - unless:
-      - update-alternatives --get-selections |grep ^link-k8s-sigs-{{ tool }}-{{ cmd }}
+    - name: update-alternatives --install /usr/local/bin/{{ cmd }} link-k8s-sigs-{{ tool }}-{{ cmd }} {{ d.sigs['pkg'][tool]['path'] }}/{{ cmd }} {{ d.linux.altpriority }} # noqa 204
+                    {%- endif %}
+
+    - onlyif:
+      - test -f {{ d.sigs['pkg'][tool]['path'] }}/{{ cmd }}
+    - unless: update-alternatives --list |grep ^link-k8s-sigs-{{ tool }}-{{ cmd }} || false
     - require:
-       - sls: {{ sls_archive_install }}
-       - sls: {{ sls_binary_install }}
+      - sls: {{ sls_archive_install if d.sigs.pkg[tool]['use_upstream'] == 'archive' else sls_binary_install }}
+    - require_in:
+      - alternatives: {{ formula }}-sigs-{{ tool }}-alternatives-set-bin-{{ cmd }}
 
 {{ formula }}-sigs-{{ tool }}-alternatives-set-bin-{{ cmd }}:
   alternatives.set:
-    - unless: {{ grains.os_family in ('Suse', 'Arch') }}
+    - unless: {{ grains.os_family in ('Suse', 'Arch') }} || false
     - name: link-k8s-sigs-{{ tool }}-{{ cmd }}
-    - path: {{ d.sigs.pkg[tool]['path'] }}/bin/{{ cmd }}
-    - onlyif: test -f {{ d.sigs.pkg[tool]['path'] }}/{{ cmd }}
-    - require:
-       - sls: {{ sls_archive_install }}
-       - sls: {{ sls_binary_install }}
+    - path: {{ d.sigs['pkg'][tool]['path'] }}/{{ cmd }}
+    - onlyif:
+      - test -f {{ d.sigs['pkg'][tool]['path'] }}/{{ cmd }}
 
                     {%- endfor %}
                 {%- endif %}
