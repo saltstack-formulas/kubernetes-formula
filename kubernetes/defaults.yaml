@@ -3,6 +3,7 @@
 ---
 kubernetes:
   div: '/'
+  clean: false
   formula: kubernetes
   supported:
     - server
@@ -21,15 +22,15 @@ kubernetes:
       - kubebuilder
     pkg:
       kind:
-        version: 0.8.1
+        version: '0.9.0'
         use_upstream: binary
         uri_b: 'https://github.com/kubernetes-sigs/kind/releases/download'
         commands: {}
           # kind
         binary:
-          source_hash: '781c3db479b805d161b7c2c7a31896d1a504b583ebfcce8fcd49538c684d96bc'
+          source_hash: '35a640e0ca479192d86a51b6fd31c657403d2cf7338368d62223938771500dc8'
       krew:
-        version: '0.3.4'
+        version: '0.4.0'
         use_upstream: archive
         uri_a: 'https://github.com/kubernetes-sigs/krew/releases/download'
         suffix: tar.gz
@@ -67,41 +68,36 @@ kubernetes:
       - stern     # binary
     pkg:
       devspace:
-        version: 4.13.1
+        version: 5.1.2
         use_upstream: binary
         uri_b: 'https://github.com/devspace-cloud/devspace/releases/download'
         suffix: null
         commands:
           - devspace
-        binary:
-          source_hash: '19faec36f190d0c3a3447f47c05378fabbe9f01e27f8b7475d51796e288bdbd4'
       octant:
-        version: '0.13.1'
+        version: '0.16.1'
         use_upstream: archive
         uri_a: 'https://github.com/vmware-tanzu/octant/releases/download'
         suffix: tar.gz
         commands:
           - octant
         archive:
-          source_hash: 'b0fdf8984ac1947986ccd990b0d4ba60c1f5a1070909e734a1c57189308ed977'
+          source_hash: '79110ca85fd9af21685fad4cf477203043801a51d56cfcab0bcb9df59608cfd7'  # 64Bit
           options: '--strip-components=1'
       linkerd2:
-        version: 20.10.2
+        version: 20.10.3
         use_upstream: binary
         uri_b: 'https://github.com/linkerd/linkerd2/releases/download'
         suffix: tar.gz
-        binary: {}
         commands:
           - linkerd2
       skaffold:
-        version: 1.12.0
+        version: 1.15.0
         use_upstream: binary
         uri_b: 'https://storage.googleapis.com/skaffold/releases'
         suffix: null
         commands:
           - skaffold
-        binary:
-          source_hash: 'be5e115ba9d1a3703deb968d1adb0c040e970f7eac1b7c1f1313df5a37c5f817'
       istio:
         version: 1.7.3
         use_upstream: archive
@@ -122,7 +118,7 @@ kubernetes:
           source_hash: 'fb0b6ee68831fbfc59a06d88638becea09e85da3bb2093a1de4a47ebd4e40296'  # x86_64
           options: '--strip-components=1'
       kudo:
-        version: 0.12.0
+        version: 0.17.0
         use_upstream: binary
         uri_b: 'https://github.com/kudobuilder/kudo/releases/download'
         suffix: tar.gz
@@ -131,7 +127,7 @@ kubernetes:
         binary:
           source_hash: '5df22a42021d78a199d00f055faedd47a86ad3001bd06da31549c0a477a403a9'
       minikube:
-        version: 1.12.0
+        version: 1.14.0
         use_upstream: binary
         config_file: /etc/default/minikube.ini
         config: {}
@@ -141,7 +137,6 @@ kubernetes:
         vm_driver: none
         uri_b: 'https://github.com/kubernetes/minikube/releases/download'
         suffix: null
-        binary: {}
         commands:
           - minikube
       stern:

@@ -21,7 +21,7 @@
 {{ formula }}-operators-archive-{{ tool }}-install:
   file.directory:
     - name: {{ d.operators.pkg[tool]['path'] }}
-    - clean: True
+    - clean: {{ d.clean }}
     - makedirs: True
     - require_in:
       - archive: {{ formula }}-operators-archive-{{ tool }}-install

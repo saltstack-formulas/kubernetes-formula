@@ -26,16 +26,16 @@ include:
     - name: link-k8s-devtools-{{ tool }}-{{ cmd }}
     - link: /usr/local/bin/{{ cmd }}
     - order: 10
-    - path: {{ d.devtools['pkg'][tool]['path'] }}/bin/{{ cmd }}
-    - onlyif: test -f {{ d.devtools['pkg'][tool]['path'] }}/bin/{{ cmd }}
+    - path: {{ d.devtools['pkg'][tool]['path'] }}/{{ cmd }}
+    - onlyif: test -f {{ d.devtools['pkg'][tool]['path'] }}/{{ cmd }}
     - priority: {{ d.linux.altpriority }}
     - require:
       - sls: {{ sls_archive_install if d.devtools.pkg[tool]['use_upstream'] == 'archive' else sls_binary_install }}
   cmd.run:
     - onlyif:
       - {{ grains.os_family in ('Suse',) }}
-      - test -f {{ d.devtools['pkg'][tool]['path'] }}/bin/{{ cmd }}
-    - name: update-alternatives --install /usr/local/bin/{{ cmd }} link-k8s-devtools-{{ tool }}-{{ cmd }} {{ d.devtools['pkg'][tool]['path'] }}/bin/{{ cmd }} {{ d.linux.altpriority }} # noqa 204
+      - test -f {{ d.devtools['pkg'][tool]['path'] }}/{{ cmd }}
+    - name: update-alternatives --install /usr/local/{{ cmd }} link-k8s-devtools-{{ tool }}-{{ cmd }} {{ d.devtools['pkg'][tool]['path'] }}/bin/{{ cmd }} {{ d.linux.altpriority }} # noqa 204
     - unless:
       - update-alternatives --get-selections |grep ^link-k8s-devtools-{{ tool }}-{{ cmd }}
     - require:
@@ -45,8 +45,8 @@ include:
   alternatives.set:
     - unless: {{ grains.os_family in ('Suse', 'Arch') }}
     - name: link-k8s-devtools-{{ tool }}-{{ cmd }}
-    - path: {{ d.devtools['pkg'][tool]['path'] }}/bin/{{ cmd }}
-    - onlyif: test -f {{ d.devtools['pkg'][tool]['path'] }}/bin/{{ cmd }}
+    - path: {{ d.devtools['pkg'][tool]['path'] }}/{{ cmd }}
+    - onlyif: test -f {{ d.devtools['pkg'][tool]['path'] }}/{{ cmd }}
     - require:
       - alternatives: {{ formula }}-devtools-{{ tool }}-alternatives-install-bin-{{ cmd }}
 

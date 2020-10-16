@@ -16,7 +16,7 @@
 {{ formula }}-devtools-archive-{{ tool }}-install:
   file.directory:
     - name: {{ d.devtools['pkg'][tool]['path'] }}
-    # clean: True
+    - clean: {{ d.clean }}
     - makedirs: True
     - require_in:
       - archive: {{ formula }}-devtools-archive-{{ tool }}-install

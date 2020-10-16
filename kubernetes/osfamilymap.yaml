@@ -126,7 +126,7 @@ Windows:
     pkg:
       kind:
         binary:
-          source_hash: '10d0a4adc7485a0525831b2cd67062dd75d551ec0133f09e3a7d2b2674f7efc5'
+          source_hash: '6f34dbf6f6a9ebdd1d2a2b41a1d7b92d490a53569e45a791f7175c2b4143447f'
       krew:
         use_upstream: binary
         suffix: exe
@@ -150,7 +150,7 @@ Windows:
       octant:
         suffix: zip
         archive:
-          source_hash: 'cecf094c3d8f6c55236cf02c7e4c3916ca0e5c430ef5dff647665a2a16a20c8c'
+          source_hash: 'd5f92218213299726f361a496dc9daf2a1c6b46f129ab929f87a70a9bd14ec20'
           options: ''
       k3s:
         use_upstream: false   # no windows binary
@@ -217,7 +217,7 @@ MacOS:
       kind:
         name: kind      # homebrew
         binary:
-          source_hash: 'cdd8dfe7dff764429badcd636179b0e3eb937640cfe56749dd9b8f9c048cb7db'
+          source_hash: '849034ffaea8a0e50f9153078890318d5863bafe01495418ea0ad037b518de90'
 
   devtools:
     pkg:

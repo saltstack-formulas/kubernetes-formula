@@ -16,7 +16,7 @@
 {{ formula }}-devlibs-archive-{{ tool }}-install:
   file.directory:
     - name: {{ p['path'] }}
-    - clean: True
+    - clean: {{ d.clean }}
     - makedirs: True
     - require_in:
       - archive: {{ formula }}-devlibs-archive-{{ tool }}-install

@@ -19,7 +19,7 @@
   file.directory:
     - name: {{ d.server.pkg.path }}
     - makedirs: True
-    - clean: True
+    - clean: {{ d.clean }}
     - require_in:
       - archive: {{ formula }}-server-archive-install
              {%- if grains.os != 'Windows' %}

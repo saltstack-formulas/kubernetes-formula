@@ -18,7 +18,7 @@
   file.directory:
     - name: {{ d.node.pkg.path }}
     - makedirs: True
-    - clean: True
+    - clean: {{ d.clean }}
     - require_in:
       - archive: {{ formula }}-node-archive-install
               {%- if grains.os != 'Windows' %}
