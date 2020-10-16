@@ -21,15 +21,6 @@ Debian:
       name: deb https://apt.kubernetes.io/ kubernetes-xenial main
       file: /etc/apt/sources.list.d/kubernetes.list
       key_url: https://packages.cloud.google.com/apt/doc/apt-key.gpg
-  node:
-    pkg:
-      use_upstream: archive
-  server:
-    pkg:
-      use_upstream: archive
-  client:
-    pkg:
-      use_upstream: archive
   devtools:
     pkg:
       minikube:
@@ -49,15 +40,6 @@ RedHat:
       baseurl: 'https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64'
       gpgkey: 'https://packages.cloud.google.com/yum/doc/yum-key.gpg gpgkey2=https://packages.cloud.google.com/yum/doc/rpm-package-key.gpg'
       repo_gpgcheck: 1
-  node:
-    pkg:
-      use_upstream: archive
-  server:
-    pkg:
-      use_upstream: archive
-  client:
-    pkg:
-      use_upstream: archive
 
 Suse: {}
 Gentoo: {}
@@ -112,6 +94,7 @@ Windows:
       use_upstream: package
       binary:
         source_hash: '6ec32a8a62b69363a524c4f8db765ff4bd16ea7e5b0eb04aa5a667f8653eda18c357a97513d9e12f0ba1612516acb150deffb6e3608633c62b97a15b6efa7cc0'
+  server: {}
   node:
     version: 1.19.0
     config_file: C:\kubernetes\etc\node.ini
@@ -119,9 +102,6 @@ Windows:
       use_upstream: archive
       archive:
         source_hash: '587651158c9999e64e06186ef2e65fe14d46ffdae28c5d8ee6261193bfe4967717f997ebe13857fa1893bbf492e1cc1f816bce86a94c6df9b7a0264848391397'  # noqa 204
-  server:
-    config_file: C:\kubernetes\etc\server.ini
-    environ_file: C:\kubernetes\etc\server.sh
   sigs:
     pkg:
       kind:
@@ -130,7 +110,6 @@ Windows:
       krew:
         use_upstream: binary
         suffix: exe
-        binary: {}
       kubebuilder:
         use_upstream: false  # no windows binary
 
@@ -141,16 +120,16 @@ Windows:
         config_file: C:\kubernetes\etc\minikube.ini
         environ_file: C:\kubernetes\etc\minkube.sh
         binary:
-          source_hash: 'a5f8666d762146cc7d85916bcb2d6b7246162e4706f10e5c12a795b9d07ea6c4'
+          source_hash: '0317e6c338da23ccf0aba698668c6d919f22e1482340a09d1269220063937aeb'
       devspace:
         name: devspace
         suffix: exe
         binary:
-          source_hash: 'a696bd3ae755222fd63884fa654ba91e24d46826bb78358fcba592fc2b4013c0'
+          source_hash: '831d100b5ebf599a3c45ac552fa1a148d3c99efe174222678ba52a0536c0f7ab'
       octant:
         suffix: zip
         archive:
-          source_hash: 'd5f92218213299726f361a496dc9daf2a1c6b46f129ab929f87a70a9bd14ec20'
+          source_hash: '07f276d1f1396a634881598fd8cd6532ed25325048081defccdb54512b6037f4'
           options: ''
       k3s:
         use_upstream: false   # no windows binary
@@ -199,15 +178,14 @@ MacOS:
     rootuser: {{ macos_rootuser | d('') }}
     rootgroup: {{ macos_rootgroup | d('') }}
   server: {}
+  node: {}
   client:
     aliases_file: /etc/defaults/kubernetes-aliases.sh
     pkg:
       name: kubernetes-cli         # homebrew
       use_upstream: archive
-      binary:
-        source_hash: '7b9bdc2dc8604e590052a58456ac648d3afd1b436e609118538a6ffe07579cc6'
       archive:
-        source_hash: '803a0fed122ef6b85f7a120b5485723eaade765b7bc8306d0c0da03bd3df15d800699d15ea2270bb7797fa9ce6a81da90e730dc793ea4ed8c0149b63d26eca30'  # noqa 204
+        source_hash: '7093a34298297e46bcd1ccb77a9c83ca93b8ccb63ce2099d3d8cd8911ccc384470ac202644843406f031c505a8960d247350a740d683d8910ca70a0b58791a1b'  # noqa 204
 
   sigs:
     pkg:
@@ -218,6 +196,10 @@ MacOS:
         name: kind      # homebrew
         binary:
           source_hash: '849034ffaea8a0e50f9153078890318d5863bafe01495418ea0ad037b518de90'
+      krew:
+        commands:
+          - krew-darwin_amd64
+
 
   devtools:
     pkg:
@@ -230,7 +212,7 @@ MacOS:
       devspace:
         use_upstream: binary
         binary:
-          source_hash: '92a8a50de12b06d5255aa2242dca77e879b7a63b1bcf214cd49e998831be9c1c'
+          source_hash: '831d100b5ebf599a3c45ac552fa1a148d3c99efe174222678ba52a0536c0f7ab'
       kudo:
         name: kudo-cli    # homebrew
         tapname: kudobuilder/tap
@@ -244,7 +226,7 @@ MacOS:
         binary:
           source_hash: '1adc9c53fe968383020b6c4047d42452754e05bc90d1a65f2261d729c6fab4df'
       k3s:
-        use_upstream: binary
+        use_upstream: false   # no macos binary
       kubectx:
         archive:
           source_hash: 'a46c5cf1f6ba8f6aa4dc75fc5a7086d294a28a19cf2fbbf18ac54108a7f713e1'  # x86_64

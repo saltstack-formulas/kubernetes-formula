@@ -6,81 +6,81 @@ control 'kubernetes archive' do
   impact 1.0
   title 'should be installed'
 
-  describe file('/usr/local/k8s-server-1.18.0/bin') do
+  describe file('/usr/local/k8s-server-1.19.0/bin') do
     it { should exist }
     it { should be_directory }
     its('type') { should eq :directory }
   end
-  describe file('/usr/local/k8s-server-1.18.0/bin/kubeadm') do
+  describe file('/usr/local/k8s-server-1.19.0/bin/kubeadm') do
     it { should exist }
     its('mode') { should cmp '0755' }
   end
-  describe file('/usr/local/k8s-server-1.18.0/bin/apiextensions-apiserver') do
+  describe file('/usr/local/k8s-server-1.19.0/bin/apiextensions-apiserver') do
     it { should exist }
     its('mode') { should cmp '0755' }
   end
-  describe file('/usr/local/k8s-server-1.18.0/bin/mounter') do
+  describe file('/usr/local/k8s-server-1.19.0/bin/mounter') do
     it { should exist }
     its('mode') { should cmp '0755' }
   end
-  describe file('/usr/local/k8s-server-1.18.0/bin/kube-controller-manager') do
+  describe file('/usr/local/k8s-server-1.19.0/bin/kube-controller-manager') do
     it { should exist }
     its('mode') { should cmp '0755' }
   end
-  describe file('/usr/local/k8s-server-1.18.0/bin/kubelet') do
+  describe file('/usr/local/k8s-server-1.19.0/bin/kubelet') do
     it { should exist }
     its('mode') { should cmp '0755' }
   end
-  describe file('/usr/local/k8s-server-1.18.0/bin/kube-apiserver') do
+  describe file('/usr/local/k8s-server-1.19.0/bin/kube-apiserver') do
     it { should exist }
     its('mode') { should cmp '0755' }
   end
-  describe file('/usr/local/k8s-server-1.18.0/bin/kube-proxy') do
+  describe file('/usr/local/k8s-server-1.19.0/bin/kube-proxy') do
     it { should exist }
     its('mode') { should cmp '0755' }
   end
-  describe file('/usr/local/k8s-server-1.18.0/bin/kube-scheduler') do
+  describe file('/usr/local/k8s-server-1.19.0/bin/kube-scheduler') do
     it { should exist }
     its('mode') { should cmp '0755' }
   end
-  describe file('/usr/local/k8s-server-1.18.0/bin/kubectl') do
+  describe file('/usr/local/k8s-server-1.19.0/bin/kubectl') do
     it { should exist }
     its('mode') { should cmp '0755' }
   end
-  describe file('/usr/local/k8s-server-1.18.0/bin/kubectl') do
+  describe file('/usr/local/k8s-server-1.19.0/bin/kubectl') do
     it { should exist }
     its('mode') { should cmp '0755' }
   end
-  describe file('/usr/local/k8s-server-1.18.0/bin/kubectl') do
+  describe file('/usr/local/k8s-server-1.19.0/bin/kubectl') do
     it { should exist }
     its('mode') { should cmp '0755' }
   end
-  describe file('/usr/local/k8s-node-1.18.0/bin') do
+  describe file('/usr/local/k8s-node-1.19.0/bin') do
     it { should exist }
     it { should be_directory }
     its('type') { should eq :directory }
   end
-  describe file('/usr/local/k8s-node-1.18.0/bin/kubeadm') do
+  describe file('/usr/local/k8s-node-1.19.0/bin/kubeadm') do
     it { should exist }
     it { should be_file }
     it { should_not be_directory }
   end
-  describe file('/usr/local/k8s-node-1.18.0/bin/kubectl') do
+  describe file('/usr/local/k8s-node-1.19.0/bin/kubectl') do
     it { should exist }
     it { should be_file }
     it { should_not be_directory }
   end
-  describe file('/usr/local/k8s-node-1.18.0/bin/kube-proxy') do
+  describe file('/usr/local/k8s-node-1.19.0/bin/kube-proxy') do
     it { should exist }
     it { should be_file }
     it { should_not be_directory }
   end
-  describe file('/usr/local/k8s-node-1.18.0/bin/kubelet') do
+  describe file('/usr/local/k8s-node-1.19.0/bin/kubelet') do
     it { should exist }
     it { should be_file }
     it { should_not be_directory }
   end
-  describe file('/usr/local/k8s-node-1.18.0/bin') do
+  describe file('/usr/local/k8s-node-1.19.0/bin') do
     it { should exist }
     it { should be_directory }
     its('type') { should eq :directory }
@@ -96,28 +96,27 @@ control 'kubernetes archive' do
   end
   describe file('/usr/local/bin/kind') do
     it { should be_symlink }
-    it { should be_file }
     it { should_not be_directory }
   end
-  describe file('/usr/local/k8s-devtools-stern-1.11.0/bin/stern') do
+  # describe file('/usr/local/k8s-devtools-stern-1.11.0/bin/stern') do
+  #   it { should exist }
+  #   its('mode') { should cmp '0755' }
+  # end
+  # describe file('/usr/local/bin/stern') do
+  #   it { should be_symlink }
+  #   it { should be_file }
+  #   it { should_not be_directory }
+  # end
+  describe file('/usr/local/k8s-node-1.19.0/bin/kubectl') do
     it { should exist }
     its('mode') { should cmp '0755' }
   end
-  describe file('/usr/local/bin/stern') do
-    it { should be_symlink }
-    it { should be_file }
-    it { should_not be_directory }
-  end
-  describe file('/usr/local/k8s-node-1.18.0/bin/kubectl') do
-    it { should exist }
-    its('mode') { should cmp '0755' }
-  end
-  describe file('/usr/local/k8s-client-1.18.0/bin') do
+  describe file('/usr/local/k8s-client-1.19.0/bin') do
     it { should exist }
     it { should be_directory }
     its('type') { should eq :directory }
   end
-  describe file('/usr/local/k8s-client-1.18.0/bin/kubectl') do
+  describe file('/usr/local/k8s-client-1.19.0/bin/kubectl') do
     it { should exist }
     its('mode') { should cmp '0755' }
   end
@@ -154,34 +153,34 @@ control 'kubernetes archive' do
     it { should be_file }
     it { should_not be_directory }
   end
-  describe file('/usr/local/k8s-k3s-1.18.4+k3s1/bin/k3s') do
+  describe file('/usr/local/k8s-k3s-v1.18.10+k3s1/bin/k3s') do
     it { should exist }
     it { should be_directory }
     its('type') { should eq :directory }
   end
-  describe file('/tmp/kubernetes-tmp/k3s-bootstrap.sh') do
-    it { should exist }
-    its('mode') { should cmp '0755' }
-  end
+  # describe file('/tmp/kubernetes-tmp/k3s-bootstrap.sh') do
+  #   it { should exist }
+  #   its('mode') { should cmp '0755' }
+  # end
   describe file('/usr/local/bin/k3s') do
     it { should be_file }
     it { should_not be_directory }
   end
-  describe file('/usr/local/bin/crictl') do
-    it { should be_file }
-    it { should_not be_directory }
-  end
-  describe file('/usr/local/bin/ctr') do
-    it { should be_symlink }
-    it { should be_file }
-    it { should_not be_directory }
-  end
-  describe file('/usr/local/bin/k3s-killall.sh') do
-    it { should be_file }
-  end
-  describe file('/usr/local/bin/k3s-uninstall.sh') do
-    it { should be_file }
-  end
+  # describe file('/usr/local/bin/crictl') do
+  #   it { should be_file }
+  #   it { should_not be_directory }
+  # end
+  # describe file('/usr/local/bin/ctr') do
+  #   it { should be_symlink }
+  #   it { should be_file }
+  #   it { should_not be_directory }
+  # end
+  # describe file('/usr/local/bin/k3s-killall.sh') do
+  #   it { should be_file }
+  # end
+  # describe file('/usr/local/bin/k3s-uninstall.sh') do
+  #   it { should be_file }
+  # end
   describe file('/usr/local/bin/kube-apiserver') do
     it { should be_symlink }
     it { should be_file }
@@ -249,7 +248,7 @@ control 'kubernetes archive' do
     it { should be_symlink }
     it { should_not be_directory }
   end
-  describe file('/usr/local/k8s-devtools-cue-0.2.1/bin/cue') do
+  describe file('/usr/local/k8s-devtools-cue-0.3.0-alpha4/bin/cue') do
     it { should_not be_symlink }
     it { should be_file }
     it { should_not be_directory }
@@ -296,6 +295,9 @@ control 'kubernetes archive' do
     it { should be_symlink }
     it { should be_file }
     it { should_not be_directory }
+  end
+  describe file('/usr/local/k8s-devtools-dive-0.9.2/bin/dive') do
+    it { should be_file }
   end
   describe file('/usr/local/k8s-devtools-dive-0.9.2') do
     it { should be_directory }

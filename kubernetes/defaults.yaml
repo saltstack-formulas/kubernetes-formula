@@ -25,8 +25,8 @@ kubernetes:
         version: '0.9.0'
         use_upstream: binary
         uri_b: 'https://github.com/kubernetes-sigs/kind/releases/download'
-        commands: {}
-          # kind
+        commands:
+          - kind
         binary:
           source_hash: '35a640e0ca479192d86a51b6fd31c657403d2cf7338368d62223938771500dc8'
       krew:
@@ -35,7 +35,7 @@ kubernetes:
         uri_a: 'https://github.com/kubernetes-sigs/krew/releases/download'
         suffix: tar.gz
         commands:
-          - krew
+          - krew-linux_amd64
         archive:
           options: '--strip-components=1'
       kubebuilder:
@@ -65,7 +65,7 @@ kubernetes:
       - minikube
       - octant
       - skaffold
-      - stern     # binary
+      - stern
     pkg:
       devspace:
         version: 5.1.2
@@ -118,16 +118,17 @@ kubernetes:
           source_hash: 'fb0b6ee68831fbfc59a06d88638becea09e85da3bb2093a1de4a47ebd4e40296'  # x86_64
           options: '--strip-components=1'
       kudo:
-        version: 0.17.0
+        version: '0.17.0'
         use_upstream: binary
         uri_b: 'https://github.com/kudobuilder/kudo/releases/download'
+        name: kubectl-kudo
         suffix: tar.gz
         commands:
           - kubectl-kudo
         binary:
-          source_hash: '5df22a42021d78a199d00f055faedd47a86ad3001bd06da31549c0a477a403a9'
+          source_hash: '5f5a76cc296dd3fbde10e618875e7af2af1af1da65077b2f6182f53b5db5b553'
       minikube:
-        version: 1.14.0
+        version: '1.14.0'
         use_upstream: binary
         config_file: /etc/default/minikube.ini
         config: {}
@@ -137,6 +138,7 @@ kubernetes:
         vm_driver: none
         uri_b: 'https://github.com/kubernetes/minikube/releases/download'
         suffix: null
+        binary: {}  # needed?
         commands:
           - minikube
       stern:
@@ -267,16 +269,22 @@ kubernetes:
           use_upstream: binary
           uri_b: 'https://github.com/operator-framework/operator-sdk/releases/download'
           binary: {}
+          commands:
+            - ansible-operator
         helm-operator:
           version: 1.0.1
           use_upstream: binary
           uri_b: 'https://github.com/operator-framework/operator-sdk/releases/download'
           binary: {}
+          commands:
+            - helm-operator
         operator-sdk:
           version: 1.0.1
           use_upstream: binary
           uri_b: 'https://github.com/operator-framework/operator-sdk/releases/download'
           binary: {}
+          commands:
+            - operator-sdk
 
   operators:
     # https://operatorhub.io
@@ -329,7 +337,7 @@ kubernetes:
           source_hash: 'b920a2a8c21edc2c89d828ef4e90e4980ec46a9e69b92cee02b9ff6e20c7df47'
           options: '--strip-components=1'
   server:
-    version: 1.18.0
+    version: '1.19.0'
     config_file: /etc/default/kubernetes-server.ini
     config: {}
     environ_file: /etc/default/kubernetes-server.sh
@@ -351,11 +359,11 @@ kubernetes:
         - kube-controller-manager
         - kube-proxy
       archive:
-        source_hash: 'a92f8d201973d5dfa44a398e95fcf6a7b4feeb1ef879ab3fee1c54370e21f59f725f27a9c09ace8c42c96ac202e297fd458e486c489e05f127a5cade53b8d7c4'  # noqa 204
+        source_hash: '7c268bd58e67d3c5016f3fcc9f4b6d2da7558af5a2c708ff3baf767b39e847e3d35d4fd2fa0f640bedbfb09a445036cafbe2f04357a88dada405cfc2ded76972'  # noqa 204
         options: '--strip-components=2'
 
   client:
-    version: 1.18.0
+    version: '1.19.0'
     aliases_file: /etc/default/kubernetes-aliases.sh
     pkg:
       name: kubectl
@@ -366,14 +374,14 @@ kubernetes:
       uri_a: 'https://dl.k8s.io'
       uri_b: 'https://storage.googleapis.com/kubernetes-release/release'  # binary
       archive:
-        source_hash: '594ca3eadc7974ec4d9e4168453e36ca434812167ef8359086cd64d048df525b7bd46424e7cc9c41e65c72bda3117326ba1662d1c9d739567f10f5684fd85bee'  # noqa 204
+        source_hash: '1590d4357136a71a70172e32820c4a68430d1b94cf0ac941ea17695fbe0c5440d13e26e24a2e9ebdd360c231d4cd16ffffbbe5b577c898c78f7ebdc1d8d00fa3' # noqa 204
         options: '--strip-components=2'
       binary:
         name: kubernetes-client
-        source_hash: '6ea8261b503c6c63d616878837dc70b758d4a3aeb9996ade8e83b51aedac9698'
+        source_hash: ''
 
   node:
-    version: 1.18.0
+    version: '1.19.0'
     config_file: /etc/default/kubernetes-node.ini
     config: {}
     service: {}
@@ -388,11 +396,11 @@ kubernetes:
         # kubelet
         # kube-proxy
       archive:
-        source_hash: 'f714f80feecb0756410f27efb4cf4a1b5232be0444fbecec9f25cb85a7ccccdcb5be588cddee935294f460046c0726b90f7acc52b20eeb0c46a7200cf10e351a'  # noqa 204
+        source_hash: 'd5e21432a4ab019f00cd1a52bbbdb00feb3db2ce96b41a58b1ee27d8847c485f5d0efe13036fd1155469d6d15f5873a5a892ecc0198f1bae1bf5b586a0129e75'  # noqa 204
         options: '--strip-components=2'
 
   k3s:
-    version: '1.18.4+k3s1'
+    version: '1.18.10+k3s1'
     pkg:
       use_upstream: binary
       uri_b: 'https://github.com/rancher/k3s/releases/download'
@@ -400,7 +408,7 @@ kubernetes:
       suffix: tar.gz
       commands: []
       binary:
-        source_hash: '0c19d64dde77c8bb3af1dfbac5aecea59ab4679d97dcfaa62419aaa795380490'
+        source_hash: '5ce3e0cea46501c652653ee59a40441ebd84d86eb7bf0a9845c9831f0d73bf20'
       script:
         source_hash: 'b2856cee3432cf0148513b644b5369db8fa8b039793959f410aa7dfdb496b2b9'  # hash changes frequently
         killall: /usr/local/bin/k3s-killall.sh

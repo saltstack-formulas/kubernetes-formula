@@ -9,7 +9,7 @@
         {%- for tool in d.devtools.wanted|unique %}
             {%- if d.devtools.pkg[tool]['use_upstream'] == 'binary' %}
                 {%- set p = d.devtools['pkg'] %}
-                {%- if tool in p and 'binary' in p[tool] and 'source' in p[tool]['binary'] %}
+                {%- if 'binary' in p[tool] and 'source' in p[tool]['binary'] %}
 
 {{ formula }}-devtools-binary-{{ tool }}-install:
   file.managed:

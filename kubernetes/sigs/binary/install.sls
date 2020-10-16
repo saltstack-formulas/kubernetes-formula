@@ -46,7 +46,7 @@
     - force: True
     - onlyif: test -f {{ p['path'] }}/bin/{{ tool }}
     - require:
-      - binary: {{ formula }}-sigs-binary-{{ tool }}-install
+      - file: {{ formula }}-sigs-binary-{{ tool }}-install
 
                        {%- endfor %}
                    {%- endif %}

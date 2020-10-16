@@ -32,15 +32,14 @@
 {%- for c in d.supported %}
     {%- set path = d.dir.base %}
     {%- set url = False %}
-
-    {# C:\Kubernetes\bin #}
-    {%- if grains.os in ('Windows',) %}
-        {%- do p.update({ 'path': '%s%sbin%s'|format(d.dir.base, d.div, d.div) }) %}
-    {%- endif %}
-
     {%- set list = ('client', 'server', 'node', 'k3s') %}
     {%- if c in list and c in d and d[c] and 'pkg' in d[c] and 'version' in d[c] %}
         {%- set p = d[c]['pkg'] %}
+
+        {%- if grains.os in ('Windows',) %}
+            {%- do p.update({ 'path': '%s%sbin%s'|format(d.dir.base, d.div, d.div) }) %}
+        {%- endif %}
+
         {%- if p['use_upstream'] == 'archive' %}
             {%- do p.update({ 'path': '%sk8s-%s-%s%s'|format(d.dir.base, c, d[c]['version'], d.div) }) %}
 
@@ -112,6 +111,9 @@
                     {%- if 'pkg' in d[c][i] and j in d[c][i]['pkg'] and d[c][i]['pkg'][j] %}
 
                         {%- set p = d[c][i]['pkg'][j] %}
+                        {%- if grains.os in ('Windows',) %}
+                            {%- do p.update({ 'path': '%s%sbin%s'|format(d.dir.base, d.div, d.div) }) %}
+                        {%- endif %}
                         {%- if p['use_upstream'] == 'binary' %}
                             {%- if grains.os not in ('Windows',) %}
                                 {%- do p.update({ 'path': '%sk8s-%s-%s-%s-%s%sbin%s'|format(path, c, i, j, p['version'], d.div, d.div) }) %}
@@ -147,11 +149,12 @@
         {%- for i in d[c]['wanted'] %}
             {%- set url = False %}
             {%- if 'pkg' in d[c] and i in d[c]['pkg'] and 'version' in d[c]['pkg'][i] %}
-
                 {%- set p = d[c]['pkg'][i] %}
-                {%- if p['use_upstream'] == 'archive' %}
-                    {%- do p.update({ 'path': '%sk8s-%s-%s-%s%s'|format(path, c, i, p['version'], d.div) }) %}
+                {%- if grains.os in ('Windows',) %}
+                    {%- do p.update({ 'path': '%s%sbin%s'|format(d.dir.base, d.div, d.div) }) %}
+                {%- endif %}
 
+                {%- if p['use_upstream'] == 'archive' %}
                     {%- if i in ('krew',) %}
                         {%- set url = '%s/v%s/%s.%s'|format(p['uri_a'], p['version'], i, p['suffix']) %}
 
@@ -204,6 +207,12 @@
                         {%- set url = '%s/%s%s.%s'|format(p['uri_a'], p['name'], p['version'], p['suffix']) %}
                     {%- endif %}
 
+                    {# PATH #}
+                    {%- do p.update({ 'path': '%sk8s-%s-%s-%s%s'|format(path, c, i, p['version'], d.div) }) %}
+                    {%- if i in ('audit2rbac', 'cue', 'dive', 'kubens', 'kubectx', 'octant', 'krew') %}
+                        {%- do p.update({ 'path': '%s%sbin%s'|format(p.path, d.div, d.div) }) %}
+                    {%- endif %}
+
                     {%- if url %}
                         {%- do p['archive'].update({ 'name': p.path, 'source': url }) %}
                         {%- if 'source_hash' not in p['archive'] %}
@@ -220,9 +229,6 @@
                         {%- set arch = 'x86_64' if d.arch == 'amd64' else d.arch %}
                         {%- set uri = '%s/v%s/kubectl-%s_%s'|format(p['uri_b'], p['version'], i, p['version']) %}
                         {%- set url = '%s_%s_%s'|format(uri, grains.kernel|lower, arch) %}
-
-                    {%- elif i in ('krew',) %}
-                        {%- set url = '%s/v%s/%s.%s'|format(p['uri_b'], p['version'], i, p['suffix']) %}
 
                     {%- elif i in ('kind',) %}
                         {%- set uri = '%s/v%s/%s-%s'|format(p['uri_b'], p['version'], i, grains.kernel|lower) %}
