@@ -209,9 +209,11 @@
                     {%- endif %}
 
                     {# PATH #}
-                    {%- do p.update({ 'path': '%sk8s-%s-%s-%s%s'|format(path, c, i, p['version'], d.div) }) %}
-                    {%- if i in ('audit2rbac', 'cue', 'dive', 'istio', 'kubens', 'kubectx', 'octant', 'krew') %}
-                        {%- do p.update({ 'path': '%s%sbin%s'|format(p.path, d.div, d.div) }) %}
+		    {%- if grains.os != 'Windows' %}
+                        {%- do p.update({ 'path': '%sk8s-%s-%s-%s%s'|format(path, c, i, p['version'], d.div) }) %}
+                        {%- if i in ('audit2rbac', 'cue', 'dive', 'istio', 'kubens', 'kubectx', 'octant', 'krew') %}
+                            {%- do p.update({ 'path': '%s%sbin%s'|format(p.path, d.div, d.div) }) %}
+                        {%- endif %}
                     {%- endif %}
 
                     {%- if url %}
