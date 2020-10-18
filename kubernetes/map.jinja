@@ -41,7 +41,9 @@
         {%- endif %}
 
         {%- if p['use_upstream'] == 'archive' %}
-            {%- do p.update({ 'path': '%sk8s-%s-%s%s'|format(d.dir.base, c, d[c]['version'], d.div) }) %}
+            {%- if grains.os != 'Windows' %}
+                {%- do p.update({ 'path': '%sk8s-%s-%s%s'|format(d.dir.base, c, d[c]['version'], d.div) }) %}
+            {%- endif %}
 
             {%- set uri = '%s/v%s/kubernetes-%s-%s'|format(p['uri_a'], d[c]['version'], c, grains.kernel|lower) %}
             {%- set url = '%s-%s.%s'|format(uri, d.arch, p['suffix']) %}
@@ -57,7 +59,6 @@
             {%- if grains.os not in ('Windows',) %}
                 {%- do p.update({ 'path': '%sk8s-%s-%s%sbin%s'|format(path, c, d[c]['version'], d.div, d.div) }) %}
             {%- endif %}
-
             {%- if c in ('client',) %}
                 {%- set url = '%s/%s/bin/%s/%s'|format(p['uri_b'], d[c]['version'], grains.kernel|lower, d.arch) %}
             {%- elif c in ('k3s',) %}
@@ -209,7 +210,7 @@
                     {%- endif %}
 
                     {# PATH #}
-		    {%- if grains.os != 'Windows' %}
+                    {%- if grains.os != 'Windows' %}
                         {%- do p.update({ 'path': '%sk8s-%s-%s-%s%s'|format(path, c, i, p['version'], d.div) }) %}
                         {%- if i in ('audit2rbac', 'cue', 'dive', 'istio', 'kubens', 'kubectx', 'octant', 'krew') %}
                             {%- do p.update({ 'path': '%s%sbin%s'|format(p.path, d.div, d.div) }) %}

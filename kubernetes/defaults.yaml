@@ -4,6 +4,7 @@
 kubernetes:
   div: '/'
   clean: false
+  overwrite: true   # for archive.extracted on windows
   formula: kubernetes
   supported:
     - server
@@ -364,8 +365,8 @@ kubernetes:
       use_upstream: archive
       uri_a: 'https://dl.k8s.io'
       archive:
-        source_hash: '7c268bd58e67d3c5016f3fcc9f4b6d2da7558af5a2c708ff3baf767b39e847e3d35d4fd2fa0f640bedbfb09a445036cafbe2f04357a88dada405cfc2ded76972'  # noqa 204
         options: '--strip-components=2'
+        source_hash: '7c268bd58e67d3c5016f3fcc9f4b6d2da7558af5a2c708ff3baf767b39e847e3d35d4fd2fa0f640bedbfb09a445036cafbe2f04357a88dada405cfc2ded76972'  # noqa 204
       suffix: tar.gz
 
   client:
@@ -379,8 +380,8 @@ kubernetes:
       uri_a: 'https://dl.k8s.io'
       uri_b: 'https://storage.googleapis.com/kubernetes-release/release'  # binary
       archive:
-        source_hash: '1590d4357136a71a70172e32820c4a68430d1b94cf0ac941ea17695fbe0c5440d13e26e24a2e9ebdd360c231d4cd16ffffbbe5b577c898c78f7ebdc1d8d00fa3' # noqa 204
         options: '--strip-components=2'
+        source_hash: '1590d4357136a71a70172e32820c4a68430d1b94cf0ac941ea17695fbe0c5440d13e26e24a2e9ebdd360c231d4cd16ffffbbe5b577c898c78f7ebdc1d8d00fa3' # noqa 204
       binary:
         name: kubernetes-client
         source_hash: ''

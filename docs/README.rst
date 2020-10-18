@@ -5,52 +5,58 @@ kubernetes-formula
 
 Extensible formula to manage kubernetes on MacOS, Windows, and GNU/Linux. Currently supports:
 
-* `server`  (https://kubernetes.io)
-* `node`    (https://kubernetes.io)
-* `client`  (https://kubernetes.io, aliases)
+* `server`  (https://kubernetes.io) [Linux OS]
+* `node`    (https://kubernetes.io) [all OS]
+* `client`  (https://kubernetes.io, aliases) [all OS]
 * `operator` (sdk, etc)
-* `operators` (https://operatorhub.io)
-* `devtools` (extensive collection of tools, kubectx, kubens, cue, attr2rbac, dive, stern, etc)
-* `devlibs`  (kubernetes clients, source software)
-* `sigs`  (https://github.com/kubernetes-sigs, special interest groups)
+* `operators` (https://operatorhub.io)  [all OS]
+* `devtools` (extensive collection of tools, kubectx, kubens, cue, attr2rbac, dive, stern, etc)  [all OS]
+* `devlibs`  (kubernetes clients, source software)  [all OS]
+* `sigs`  (https://github.com/kubernetes-sigs, special interest groups)  [all OS]
 
 
 The default `kubernetes.sigs` state includes the following:
 
-* `kind` (https://github.com/kubernetes-sigs/kind)
-* `krew` (https://github.com/kubernetes-sigs/krew
-* `kubebuilder` (https://github.com/kubernetes-sigs/kubebuilder
+* `kind` (https://github.com/kubernetes-sigs/kind)  [all OS]
+* `krew` (https://github.com/kubernetes-sigs/krew)  [linux, darwin]?
+* `kubebuilder` (https://github.com/kubernetes-sigs/kubebuilder  [linux, darwin]?
 
 
 The default `kubernetes.devtools` state includes the following:
 
-* `devspace`  (https://devspace.sh)
-* `istio`  (https://istio.io) 
-* `kind`  (https://github.com/kubernetes-sigs/kind)
-* `k3s`   (https://k3s.io)
-* `kudo`   (https://kudo.dev)
-* `kubebuilder`  (https://github.com/kubernetes-sigs/kubebuilder)
-* `linkerd2`  (https://linkerd.io)
-* `minikube`  (https://github.com/kubernetes/minikube)
-* `octant`    (https://github.com/vmware-tanzu/octant)
-* `skaffold`  (https://skaffold.dev)
+* `audit2rbac` (https://github.com/liggitt/audit2rbac) [all OS]
+* `devspace`  (https://devspace.sh)   [all OS]
+* `dive` (https://github.com/wagoodman/dive)  [all OS]
+* `cue` (https://github.com/cuelang/cue) [all OS]
+* `istio`  (https://istio.io) [all OS]
+* `k3s`   (https://k3s.io)  [all OS)
+* `kudo`   (https://kudo.dev)  [darwin, linux]?
+* `kubectx` (https://github.com/ahmetb/kubectx)  [all OS]
+* `kubens` (https://github.com/ahmetb/kubens)  [all OS]
+* `linkerd2`  (https://linkerd.io)  [all OS]
+* `minikube`  (https://github.com/kubernetes/minikube)  [all OS]
+* `octant`    (https://github.com/vmware-tanzu/octant)  [all OS]
+* `skaffold`  (https://skaffold.dev)  [all OS]
+* `stern`  (https://github.com/wercker/stern)  [all OS]
 
 
 The default `kubernetes.operator` state includes:
 
-* `sdk` (https://sdk.operatorframework.io/)
+* `operator-sdk` (https://sdk.operatorframework.io/)  [darwin, linux]
+* `helm-operator` (https://sdk.operatorframework.io/)  [darwin, linux]
+* `ansible-operator` (https://sdk.operatorframework.io/)  [darwin, linux]
 
 
-The default `kubernetes.operators` state includes (from https://operatorhub.io):
+The default `kubernetes.operators` state [all OS] includes (from https://operatorhub.io):
 
-* `akka-cluster` (https://github.com/lightbend/akka-cluster-operator)
-* `grafana` (https://github.com/integr8ly/grafana-operator)
-* `prometheus` (https://github.com/coreos/prometheus-operator)
-* `istio` (https://github.com/banzaicloud/istio-operator)
-* `shell-operator` (https://github.com/flant/shell-operator)
+* `akka-cluster` (https://github.com/lightbend/akka-cluster-operator)  [all OS]
+* `grafana` (https://github.com/integr8ly/grafana-operator)  [all OS]
+* `prometheus` (https://github.com/coreos/prometheus-operator)  [all OS]
+* `istio` (https://github.com/banzaicloud/istio-operator)  [all OS]
+* `shell-operator` (https://github.com/flant/shell-operator)  [all OS]
 
 
-The default `kubernetes.devlibs` state includes the following:
+The default `kubernetes.devlibs` state includes [all OS]:
 
 * `Java client library for kubernetes` (https://github.com/kubernetes-client/java)
 * `Python client library for kubernetes` (https://github.com/kubernetes-client/python)
@@ -181,7 +187,6 @@ This state installs operator archives only
 
 * https://operatorhub.io
 * https://github.com/flant/shell-operator
-* https://github.com/ahmetb/kubectx
 
 ``kubernetes.operators.clean``
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -202,8 +207,6 @@ This state installs selected kubernetes developer tools only
 * https://devspace.sh
 * https://k3s.io
 * https://kudo.dev
-* https://github.com/kubernetes-sigs/kind
-* https://github.com/kubernetes-sigs/kubebuilder
 * https://istio.io
 * https://github.com/vmware-tanzu/octant
 * https://linkerd.io, and https://github.com/linkerd/linkerd2
