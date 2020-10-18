@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 # vim: ft=yaml
 ---
-name: redhat
+name: arch
 title: kubernetes formula
 maintainer: SaltStack Formulas
 license: Apache-2.0
 summary: Verify that the kubernetes formula is setup and configured correctly
 supports:
-  - platform-name: centos
-  - platform-name: fedora
+  - platform-name: arch
