@@ -6,6 +6,7 @@
 {%- set formula = d.formula %}
 
     {%- if d.client.pkg.use_upstream in ('package', 'repo') %}
+
         {%- if grains.kernel|lower in ('linux',) %}
             {%- if d.client.pkg.use_upstream == 'repo' %}
 include:
@@ -43,12 +44,14 @@ include:
     - runas: {{ d.identity.rootuser }}
     - unless: test -x /usr/local/bin/kubectl  # if binary is missing
 
-        {%- elif grains.kernel|lower in ('Windows',) %}
+        {%- elif grains.kernel|lower in ('windows',) %}
 
 {{ formula }}-client-package-install-choco:
   chocolatey.installed:
     - name: {{ d.client.pkg.name }}
     - force: True
 
+        {%- else %}
+        # no match
         {%- endif %}
     {%- endif %}
