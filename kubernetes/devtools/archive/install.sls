@@ -48,6 +48,11 @@
     - recurse:
         - user
         - group
+                     {%- elif tool in ('devspace', 'k3s', 'kind', 'linkerd2', 'minikube', 'skaffold', 'stern') %}
+  cmd.run:
+    - name: mv {{d.dir.base~d.div~'bin'~d.div}}{{ tool }} {{d.dir.base~d.div~'bin'~d.div}}{{ tool }}.exe
+    - onlyif: test -f {{d.dir.base~d.div~'bin'~d.div}}{{ tool }}
+
                      {%- endif %}
                      {%- if (d.linux.altpriority|int == 0 and grains.os != 'Windows') or grains.os_family in ('Arch', 'MacOS') %}
                          {%- for cmd in d.devtools['pkg'][tool]['commands']|unique %}
@@ -67,4 +72,20 @@
                {% endif %}
             {% endif %}
         {%- endfor %}
+        {%- if grains.os == 'Windows' %}{# tidyup c:\kubernetes\bin #}
+
+{{ formula }}-devtools-archive-install-windows-tidyup:
+  cmd.run:
+    - names:
+      - mv {{d.dir.base~d.div~'bin'~d.div}}istio-{{ d.devtools.pkg.istio.version }}{{d.div~'bin'~d.div}}istioctl {{d.dir.base~d.div~'bin'~d.div}}
+      - mv {{d.dir.base~d.div~'bin'~d.div}}octant_{{ d.devtools.pkg.octant.version }}_Windows-64Bit{{ d.div }}octant {{d.dir.base~d.div~'bin'~d.div}}
+  file.absent:
+    - names:
+       - {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}/doc
+       - {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}/README.md
+       - {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}/LICENSE
+       - {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}istio-{{ d.devtools.pkg.istio.version }}
+       - {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}octant_{{ d.devtools.pkg.octant.version }}_Windows-64Bit
+
+        {%- endif %}
     {%- endif %}

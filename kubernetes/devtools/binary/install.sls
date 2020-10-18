@@ -27,8 +27,12 @@
     - mode: '0755'
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
-                    {%- endif %}
+                    {%- elif tool in ('devspace', 'k3s', 'kind', 'linkerd2', 'minikube', 'skaffold', 'stern') %}
+  cmd.run:
+    - name: mv {{d.dir.base~d.div~'bin'~d.div}}{{ tool }} {{d.dir.base~d.div~'bin'~d.div}}{{ tool }}.exe
+    - onlyif: test -f {{d.dir.base~d.div~'bin'~d.div}}{{ tool }}
 
+                    {%- endif %}
                     {%- if (d.linux.altpriority|int == 0 and grains.os != 'Windows') or grains.os_family in ('Arch', 'MacOS') %}
                         {%- for cmd in p[tool]['commands']|unique %}
 {{ formula }}-devtools-binary-{{ tool }}-install-symlink-{{ cmd }}:

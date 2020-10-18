@@ -35,6 +35,7 @@
     - retry: {{ d.retry_option|json }}
     - enforce_toplevel: false
     - trim_output: true
+    - force: true
               {%- if grains.os != 'Windows' %}
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}

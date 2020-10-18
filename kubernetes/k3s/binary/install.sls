@@ -20,12 +20,16 @@
     - source_hash: {{ d.k3s.pkg.binary.source_hash }}
     - makedirs: True
     - retry: {{ d.retry_option|json }}
-              {%- if grains.os != 'Windows' %}
+        {%- if grains.os != 'Windows' %}
     - mode: 755
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
-              {%- endif %}
+        {%- else %}
+  cmd.run:
+    - name: mv {{ d.k3s.pkg.path }}k3s {{ d.k3s.pkg.path }}k3s.exe
+    - onlyif: test -f {{ d.k3s.pkg.path }}k3s
 
+        {%- endif %}
         {%- if (d.linux.altpriority|int == 0 and grains.os != 'Windows') or grains.os_family in ('Arch', 'MacOS') %}
             {%- for cmd in d.k3s.pkg['commands']|unique %}
 
