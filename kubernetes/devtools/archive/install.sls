@@ -4,6 +4,7 @@
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
+
 {%- from tplroot ~ "/files/macros.jinja" import format_kwargs with context %}
 
 {%- if 'wanted' in d.devtools and d.devtools.wanted %}
@@ -15,12 +16,12 @@
 {{ formula }}-devtools-archive-{{ tool }}-install:
   file.directory:
     - name: {{ d.devtools['pkg'][tool]['path'] }}
-    - mode: 755
-    - clean: True
+    - clean: {{ d.clean }}
     - makedirs: True
     - require_in:
       - archive: {{ formula }}-devtools-archive-{{ tool }}-install
                  {%- if grains.os != 'Windows' %}
+    - mode: 755
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
     - recurse:
@@ -46,9 +47,10 @@
 {{ formula }}-devtools-archive-{{ tool }}-install-symlink-{{ cmd }}:
   file.symlink:
     - name: /usr/local/bin/{{ cmd }}
-    - target: {{ d.devtools['pkg'][tool]['path'] }}/{{ tool }}
+    - target: {{ d.devtools['pkg'][tool]['path'] }}/bin/{{ tool }}
     - force: True
-    - onlyif: test -f {{ d.devtools['pkg'][tool]['path'] }}/{{ tool }}
+    - onlyif:
+      - test -f {{ d.devtools['pkg'][tool]['path'] }}/bin/{{ tool }}
     - require:
       - archive: {{ formula }}-devtools-archive-{{ tool }}-install
 

@@ -7,6 +7,7 @@
 
     {%- if d.client.pkg.use_upstream in ('package', 'repo') %}
         {%- if grains.kernel|lower in ('linux',) %}
+
             {%- if d.client.pkg.use_upstream == 'repo' %}
 include:
   - .package.repo.clean

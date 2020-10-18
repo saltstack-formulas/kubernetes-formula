@@ -6,8 +6,8 @@
 {%- set formula = d.formula %}
 
 {%- if d.k3s.pkg.use_upstream == 'script' %}
-    {%- if grains.os_family not in ('RedHat',) %}
 
+    {%- if grains.os_family not in ('RedHat', 'Windows') %}
 {{ formula }}-k3s-script-install-prerequisites:
   pkg.installed:
     - names: {{ d.pkg.deps|json }}
@@ -22,11 +22,11 @@
           {%- endif %}
   file.directory:
     - name: {{ d.dir.tmp }}
-    - mode: '0755'
     - makedirs: True
     - require:
       - pkg: {{ formula }}-k3s-script-install-prerequisites
               {%- if grains.os != 'Windows' %}
+    - mode: '0755'
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
               {%- endif %}
@@ -36,10 +36,10 @@
     - name: {{ d.dir.tmp }}/k3s-bootstrap.sh
     - source: {{ d.k3s.pkg.script.source }}
     - source_hash: {{ d.k3s.pkg.script.source_hash }}
-    - mode: 755
     - require:
       - file: {{ formula }}-k3s-script-install-prerequisites
               {%- if grains.os != 'Windows' %}
+    - mode: 755
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
               {%- endif %}

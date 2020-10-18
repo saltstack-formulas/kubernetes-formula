@@ -6,14 +6,14 @@
 {%- set formula = d.formula %}
 
     {%- if d.linux.altpriority|int > 0 and grains.kernel == 'Linux' and grains.os_family not in ('Arch',) %}
-        {%- for cmd in d.server.pkg.commands|unique %}
+        {%- for cmd in d.k3s['pkg']['commands']|unique %}
 
-{{ formula }}-server-alternatives-clean-{{ cmd }}:
+{{ formula }}-k3s-alternatives-clean-{{ cmd }}:
   alternatives.remove:
-    - name: link-k8s-server-{{ cmd }}
-    - path: {{ d.server.pkg.path }}/bin/{{ cmd }}
+    - name: link-k8s-k3s-{{ cmd }}
+    - path: {{ d.k3s['pkg']['path'] }}/{{ cmd }}
     - onlyif:
-      - update-alternatives --list |grep ^link-k8s-server-{{ cmd }}
+      - update-alternatives --list |grep ^link-k8s-k3s-{{ cmd }}
 
         {%- endfor %}
     {%- endif %}

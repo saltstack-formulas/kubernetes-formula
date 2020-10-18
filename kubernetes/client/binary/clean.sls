@@ -9,6 +9,4 @@
   file.absent:
     - names:
       - /usr/local/bin/kubectl
-           {%- if d.client.pkg.use_upstream == 'binary' %}
-      - {{ d.client.pkg.path }}/bin/kubectl
-           {%- endif %}
+      - {{ d.client.pkg.path }}

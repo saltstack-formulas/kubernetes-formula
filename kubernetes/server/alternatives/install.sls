@@ -5,42 +5,49 @@
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
 
-{%- if d.linux.altpriority|int > 0 and grains.kernel == 'Linux' and grains.os_family not in ('Arch',) %}
-    {%- set sls_archive_install = tplroot ~ '.server.archive.install' %}
+    {%- if d.linux.altpriority|int > 0 and grains.kernel == 'Linux' and grains.os_family not in ('Arch',) %}
+        {%- set sls_archive_install = tplroot ~ '.server.archive.install' %}
+        {%- set sls_package_install = tplroot ~ '.server.package.install' %}
+
 include:
   - {{ sls_archive_install }}
+  - {{ sls_package_install }}
 
-    {%- for cmd in d.server.pkg.commands|unique %}
-
-{{ formula }}-server-alternatives-install-{{ cmd }}:
+        {%- for cmd in d.server.pkg.commands|unique %}
+{{ formula }}-server-alternatives-install-bin-{{ cmd }}:
+            {%- if grains.os_family not in ('Suse', 'Arch') %}
   alternatives.install:
-    - unless:
-      - {{ grains.os_family in ('Suse', 'Arch') }}
-      - update-alternatives --get-selections |grep "^link-k8s-client-{{ cmd }}"   # avoid client clash
     - name: link-k8s-server-{{ cmd }}
     - link: /usr/local/bin/{{ cmd }}
-    - path: {{ d.server.pkg.path }}/bin/{{ cmd }}
-    - priority: {{ d.linux.altpriority }}
     - order: 10
-    - require:
-      - sls: {{ sls_archive_install }}
+    - path: {{ d.server['pkg']['path'] }}/bin/{{ cmd }}
+    - priority: {{ d.linux.altpriority }}
+            {%- else %}
   cmd.run:
-    - onlyif: {{ grains.os_family in ('Suse',) }}
-    - name: update-alternatives --install /usr/local/bin/{{ cmd }} link-k8s-server-{{ cmd }} {{ d.server.pkg.path }}/bin/{{ cmd }} {{ d.linux.altpriority }} # noqa 204
-    - unless:
-      - update-alternatives --get-selections |grep "^link-k8s-client-{{ cmd }}"   # avoid client clash
-    - require:
-      - sls: {{ sls_archive_install }}
+    - name: update-alternatives --install /usr/local/bin/{{ cmd }} link-k8s-server-{{ cmd }} {{ d.server['pkg']['path'] }}/bin/{{ cmd }} {{ d.linux.altpriority }} # noqa 204
+            {%- endif %}
 
-{{ formula }}-server-alternatives-set-{{ cmd }}:
+    - onlyif:
+      - test -f {{ d.server['pkg']['path'] }}/bin/{{ cmd }}
+    - unless:
+      - update-alternatives --list |grep ^link-k8s-server-{{ cmd }} || false
+      - update-alternatives --list |grep "^link-k8s-client-{{ cmd }}" || false  # avoid client clash
+      - update-alternatives --list |grep "^link-k8s-node-{{ cmd }}" || false    # avoid node clash
+    - require:
+      - sls: {{ sls_archive_install if d.client.pkg.use_upstream == 'archive' else sls_binary_install }}
+    - require_in:
+      - alternatives: {{ formula }}-server-alternatives-set-bin-{{ cmd }}
+
+{{ formula }}-server-alternatives-set-bin-{{ cmd }}:
   alternatives.set:
     - unless:
-      - {{ grains.os_family in ('Suse', 'Arch') }}
-      - update-alternatives --get-selections |grep '^link-k8s-client-{{ cmd }}'   # avoid client clash
+      - {{ grains.os_family in ('Suse', 'Arch') }} || false
+      - update-alternatives --list |grep "^link-k8s-client-{{ cmd }}" || false  # avoid client clash
+      - update-alternatives --list |grep "^link-k8s-node-{{ cmd }}" || false    # avoid node clash
     - name: link-k8s-server-{{ cmd }}
     - path: {{ d.server.pkg.path }}/bin/{{ cmd }}
-    - require:
-      - alternatives: {{ formula }}-server-alternatives-install-{{ cmd }}
+    - onlyif:
+      - test -f {{ d.server['pkg']['path'] }}/bin/{{ cmd }}
 
-    {%- endfor %}
-{%- endif %}
+        {%- endfor %}
+    {%- endif %}

@@ -9,6 +9,7 @@
     {%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
     {%- set sls_archive_install = tplroot ~ '.server.archive.install' %}
     {%- set sls_package_install = tplroot ~ '.server.package.install' %}
+
 include:
   - {{ sls_archive_install if d.server.pkg.use_upstream == 'archive' else sls_package_install }}
 
@@ -19,9 +20,9 @@ include:
                               lookup='k8s-server-config-file-managed-environ_file'
                  )
               }}
-    - mode: '0640'
     - makedirs: True
               {%- if grains.os != 'Windows' %}
+    - mode: '0640'
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
               {%- endif %}
@@ -31,4 +32,4 @@ include:
     - require:
       - sls: {{ sls_archive_install if d.server.pkg.use_upstream == 'archive' else sls_package_install }}
 
-    {%- endif %}
+{%- endif %}

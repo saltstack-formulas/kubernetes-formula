@@ -22,12 +22,5 @@ include:
       - pkgrepo: {{ formula }}-package-repo-absent
             {%- endif %}
 
-        {%- else %}
-
-{{ formula }}-server-package-clean-other:
-  test.show_notification:
-    - text: |
-        The server package is unavailable for {{ salt['grains.get']('finger', grains.os_family) }}
-
         {%- endif %}
     {%- endif %}

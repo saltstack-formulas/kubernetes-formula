@@ -7,48 +7,38 @@
 
     {%- if d.k3s.pkg.use_upstream == 'binary' %}
 
-{{ formula }}-k3s-binary-prerequisites:
+{{ formula }}-k3s-binary-install:
+        {%- if grains.os != 'Windows' %}
   pkg.installed:
     - names: {{ d.pkg.deps|json }}
-  file.directory:
-    - name: {{ d.k3s.pkg.path }}/bin
-    - mode: 755
-    - makedirs: True
-              {%- if grains.os != 'Windows' %}
-    - user: {{ d.identity.rootuser }}
-    - group: {{ d.identity.rootgroup }}
-    - recurse:
-        - user
-        - group
-        - mode
-              {%- endif %}
-    - require:
-      - pkg: {{ formula }}-k3s-binary-prerequisites
-
-{{ formula }}-k3s-binary-install:
+    - require_in:
+      - file: {{ formula }}-k3s-binary-install
+        {%- endif %}
   file.managed:
-    - name: {{ d.k3s.pkg.path }}/bin/k3s
+    - name: {{ d.k3s.pkg.path }}k3s
     - source: {{ d.k3s.pkg.binary.source }}
     - source_hash: {{ d.k3s.pkg.binary.source_hash }}
-    - mode: 755
+    - makedirs: True
     - retry: {{ d.retry_option|json }}
-    - require:
-      - file: {{ formula }}-k3s-binary-prerequisites
               {%- if grains.os != 'Windows' %}
+    - mode: 755
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
               {%- endif %}
+
+        {%- if (d.linux.altpriority|int == 0 and grains.os != 'Windows') or grains.os_family in ('Arch', 'MacOS') %}
+            {%- for cmd in d.k3s.pkg['commands']|unique %}
 
 {{ formula }}-k3s-binary-install-symlink:
   file.symlink:
-    - unless: {{ grains.os == 'Windows' }}
+    - unless: {{ grains.os == 'Windows' }} || false
     - name: /usr/local/bin/k3s
-    - target: {{ d.k3s.pkg.path }}/bin/k3s
+    - target: {{ d.k3s.pkg.path }}/k3s
     - force: True
     - require:
       - file: {{ formula }}-k3s-binary-install
-    - unless:
-      - {{ d.linux.altpriority|int > 0 }}
-      - {{ grains.os_family|lower in ('windows',) }}
+    - unless: {{ d.linux.altpriority|int > 0 }} || false
 
+            {%- endfor %}
+        {%- endif %}
     {%- endif %}

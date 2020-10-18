@@ -86,7 +86,7 @@ ppc64le:
           source_hash: '25c684402841cbb1d87daf05d2c5d76a16e9f8d3c2ad949a439dd947b5e52150'
       kind:
         binary:
-          source_hash: 'be3b7d766bf75ba0368921c73691c6028651207ef132c6435bda9ca40b5f6d00'
+          source_hash: 'd17ab3cbdd2e5125424948aa86b0e99b2a399c62be95d793d94bd63ff19cf049'
 
   devtools:
     pkg:

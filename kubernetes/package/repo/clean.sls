@@ -8,4 +8,5 @@
 {{ formula }}-package-repo-absent:
   pkgrepo.absent:
     - name: {{ d.pkg.repo.name }}
-    - onlyif: {{ d.pkg.repo }}
+    - onlyif:
+      - {{ d.pkg.repo }}

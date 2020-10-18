@@ -27,12 +27,12 @@ include:
       - pkgrepo: {{ formula }}-package-repo-managed
             {%- endif %}
 
-        {%- endif %}
-    {%- else %}
+        {%- else %}
 
 {{ formula }}-node-package-install-other:
   test.show_notification:
     - text: |
         The node package is unavailable for {{ salt['grains.get']('finger', grains.os_family) }}
 
+        {%- endif %}
     {%- endif %}
