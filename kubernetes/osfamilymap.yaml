@@ -83,12 +83,12 @@ OpenBSD:
         use_upstream: archive
 
 Windows:
-  div: '\'
+  div: '\\'
   dir:
-    base: C:\kubernetes\
-    source: C:\kubernetes\src\libs\
-    operators: C:\kubernetes\src\
-    tmp: C:\temp\kubernetes\
+    base: C:\\kubernetes
+    source: C:\\kubernetes\src\libs
+    operators: C:\\kubernetes\src
+    tmp: C:\\temp\kubernetes
   client:
     version: 1.19.0
     check: systeminfo
@@ -107,7 +107,7 @@ Windows:
     pkg:
       use_upstream: archive
       archive:
-        options: '--strip-components=2'   # windows
+        options: '--strip-components=3'   # windows
         source_hash: '587651158c9999e64e06186ef2e65fe14d46ffdae28c5d8ee6261193bfe4967717f997ebe13857fa1893bbf492e1cc1f816bce86a94c6df9b7a0264848391397'  # noqa 204
 
   sigs:
@@ -183,7 +183,7 @@ Windows:
 
 MacOS:
   dir:
-    default: /etc/defaults/
+    default: /etc/defaults
   identity:
     rootuser: {{ macos_rootuser | d('') }}
     rootgroup: {{ macos_rootgroup | d('') }}

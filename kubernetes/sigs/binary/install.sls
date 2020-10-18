@@ -37,8 +37,8 @@
     - group: {{ d.identity.rootgroup }}
                    {%- elif tool in ('kind',) %}
   cmd.run:
-    - name: mv {{d.dir.base~d.div~'bin'~d.div}}{{ tool }} {{d.dir.base~d.div~'bin'~d.div}}{{ tool }}.exe
-    - onlyif: test -f {{d.dir.base~d.div~'bin'~d.div}}{{ tool }}
+    - name: mv {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}{{ tool }} {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}{{ tool }}.exe
+    - onlyif: test -f {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}{{ tool }}
 
                    {%- endif %}
                    {%- if (d.linux.altpriority|int == 0 and grains.os != 'Windows') or grains.os_family in ('Arch', 'MacOS') %}

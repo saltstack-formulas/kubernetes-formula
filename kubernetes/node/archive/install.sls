@@ -18,7 +18,7 @@
   file.directory:
     - name: {{ d.node.pkg.path }}
     - makedirs: True
-    - clean: {{ d.clean }}
+    - clean: False   # don't
     - require_in:
       - archive: {{ formula }}-node-archive-install
               {%- if grains.os != 'Windows' %}
@@ -36,6 +36,7 @@
     - enforce_toplevel: false
     - trim_output: true
     - force: true
+    - overwrite: {{ d.overwrite }}
               {%- if grains.os != 'Windows' %}
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
@@ -58,5 +59,19 @@
       - archive: {{ formula }}-node-archive-install
 
             {%- endfor %}
+        {%- endif %}
+        {%- if grains.os == 'Windows' %}{# tidyup c:\kubernetes\bin #}
+
+{{ formula }}-node-archive-install-windows-tidyup:
+  cmd.run:
+    - name: mv {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}bin{{ d.div }}*.exe { d.dir.base ~ d.div ~ 'bin' ~ d.div }}
+    - onlyif: test -d {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}bin
+  file.absent:
+    - names:
+       - {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}bin
+       - {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}owners
+       - {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}vendors
+       - {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}LICENSE
+
         {%- endif %}
     {%- endif %}

@@ -51,7 +51,5 @@ include:
     - name: {{ d.client.pkg.name }}
     - force: True
 
-        {%- else %}
-        # no match
         {%- endif %}
     {%- endif %}

@@ -4,6 +4,7 @@
 kubernetes:
   div: '/'
   clean: false
+  overwrite: true   # for archive.extracted on windows
   formula: kubernetes
   supported:
     - server
