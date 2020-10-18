@@ -1,5 +1,23 @@
 # Changelog
 
+# [1.1.0](https://github.com/saltstack-formulas/kubernetes-formula/compare/v1.0.0...v1.1.0) (2020-10-18)
+
+
+### Bug Fixes
+
+* **windows:** various corrections ([](https://github.com/saltstack-formulas/kubernetes-formula/commit/89ac0bf))
+* **windows:** various corrections ([](https://github.com/saltstack-formulas/kubernetes-formula/commit/60e6258))
+
+
+### Continuous Integration
+
+* **arch/suse:** get travis ci passing ([](https://github.com/saltstack-formulas/kubernetes-formula/commit/415a8b7))
+
+
+### Features
+
+* **windows:** windows support and various fixes ([](https://github.com/saltstack-formulas/kubernetes-formula/commit/b282180))
+
 # 1.0.0 (2020-10-11)
 
 
