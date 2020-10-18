@@ -1,5 +1,23 @@
 # Changelog
 
+# [1.2.0](https://github.com/saltstack-formulas/kubernetes-formula/compare/v1.1.0...v1.2.0) (2020-10-18)
+
+
+### Bug Fixes
+
+* **windows:** kubernetes-client fixed ([](https://github.com/saltstack-formulas/kubernetes-formula/commit/5160842))
+* **windows:** kubernetes.node fix (overwrite=true) ([](https://github.com/saltstack-formulas/kubernetes-formula/commit/e9050dd))
+
+
+### Documentation
+
+* **readme:** update os support ([](https://github.com/saltstack-formulas/kubernetes-formula/commit/10023a8))
+
+
+### Features
+
+* **windows:** store binaries in c:\kubernetes\bin ([](https://github.com/saltstack-formulas/kubernetes-formula/commit/bd94157))
+
 # [1.1.0](https://github.com/saltstack-formulas/kubernetes-formula/compare/v1.0.0...v1.1.0) (2020-10-18)
 
 
