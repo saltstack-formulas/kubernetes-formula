@@ -8,7 +8,7 @@
     {%- if d.client.pkg.use_upstream == 'binary' %}
 
 {{ formula }}-client-binary-install:
-        {%- if grains.os != 'Windows' %}
+        {%- if grains.os|lower != 'windows' %}
   pkg.installed:
     - names: {{ d.pkg.deps|json }}
     - require_in:
@@ -24,13 +24,10 @@
         {%- endif %}
     - makedirs: True
     - retry: {{ d.retry_option|json }}
-        {%- if grains.os != 'Windows' %}
+        {%- if grains.os|lower != 'windows' %}
     - mode: '0755'
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
-
-        {%- endif %}
-        {%- if grains.os != 'Windows' %}
 
 {{ formula }}-client-binary-install-symlink:
   file.symlink:
@@ -40,6 +37,19 @@
     - require:
       - cmd: {{ formula }}-client-binary-install
     - unless: {{ d.linux.altpriority|int > 0 }} || false
+
+        {%- elif grains.os|lower == 'windows' %}
+
+{{ formula }}-client-binary-install-bashrc:
+  file.replace:
+    - name: C:\cygwin64\home\{{ d.identity.rootuser }}\.bashrc
+    - pattern: '^export PATH=${PATH}:/cygdrive/c/kubernetes/bin$'
+    - repl: 'export PATH=${PATH}:/cygdrive/c/kubernetes/bin'
+    - append_if_not_found: True
+  cmd.run:
+    - name: sed -i -e "s/\r//g" C:\cygwin64\home\{{ d.identity.rootuser }}\.bashrc
+    - onchanges:
+      - file: {{ formula }}-client-binary-install-bashrc
 
         {%- endif %}
     {%- endif %}

@@ -11,8 +11,10 @@
 # osfamilymap: {}
 ---
 {%- if grains.os == 'MacOS' %}
-    {%- set macos_rootuser = salt['cmd.run']("stat -f '%Su' /dev/console") %}
-    {%- set macos_rootgroup = salt['cmd.run']("stat -f '%Sg' /dev/console") %}
+    {%- set rootuser = salt['cmd.run']("stat -f '%Su' /dev/console") %}
+    {%- set rootgroup = salt['cmd.run']("stat -f '%Sg' /dev/console") %}
+{%- elif grains.os == 'Windows' %}
+    {%- set rootuser = salt['cmd.run']("id -un") %}
 {%- endif %}
 
 Debian:
@@ -84,6 +86,8 @@ OpenBSD:
 
 Windows:
   div: '\\'
+  identity:
+    rootuser: {{ rootuser | d('') }}
   dir:
     base: C:\\kubernetes
     source: C:\\kubernetes\src\libs
@@ -185,8 +189,8 @@ MacOS:
   dir:
     default: /etc/defaults
   identity:
-    rootuser: {{ macos_rootuser | d('') }}
-    rootgroup: {{ macos_rootgroup | d('') }}
+    rootuser: {{ rootuser | d('') }}
+    rootgroup: {{ rootgroup | d('') }}
   server: {}
   node: {}
   client:

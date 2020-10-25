@@ -5,7 +5,7 @@
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
 
-    {%- if grains.os != 'Windows' %}
+    {%- if grains.os|lower != 'windows' %}
 
 {{ formula }}-sigs-binary-deps-install:
   pkg.installed:
@@ -29,20 +29,15 @@
                    {%- endif %}
     - makedirs: True
     - retry: {{ d.retry_option|json }}
-                   {%- if grains.os != 'Windows' %}
+                   {%- if grains.os|lower != 'windows' %}
     - mode: '0755'
     - require:
       - pkg: {{ formula }}-sigs-binary-deps-install
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
-                   {%- elif tool in ('kind',) %}
-  cmd.run:
-    - name: mv {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}{{ tool }} {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}{{ tool }}.exe
-    - onlyif: test -f {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}{{ tool }}
 
-                   {%- endif %}
-                   {%- if (d.linux.altpriority|int == 0 and grains.os != 'Windows') or grains.os_family in ('Arch', 'MacOS') %}
-                       {%- for cmd in p['commands']|unique %}
+                       {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
+                           {%- for cmd in p['commands']|unique %}
 
 {{ formula }}-sigs-binary-{{ tool }}-install-symlink-{{ cmd }}:
   file.symlink:
@@ -54,10 +49,29 @@
     - require:
       - file: {{ formula }}-sigs-binary-{{ tool }}-install
 
-                       {%- endfor %}
-                   {%- endif %}
+                           {%- endfor %}
+                       {%- endif %}
+                   {%- elif tool in ('kind',) %}
+  cmd.run:
+    - name: mv {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}{{ tool }} {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}{{ tool }}.exe
+    - onlyif: test -f {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}{{ tool }}
 
+                   {%- endif %}
                 {%- endif %}
             {%- endif %}
         {%- endfor %}
+        {%- if grains.os|lower == 'windows' %}
+
+{{ formula }}-sigs-binary-install-bashrc:
+  file.replace:
+    - name: C:\cygwin64\home\{{ d.identity.rootuser }}\.bashrc
+    - pattern: '^export PATH=${PATH}:/cygdrive/c/kubernetes/bin$'
+    - repl: 'export PATH=${PATH}:/cygdrive/c/kubernetes/bin'
+    - append_if_not_found: True
+  cmd.run:
+    - name: sed -i -e "s/\r//g" C:\cygwin64\home\{{ d.identity.rootuser }}\.bashrc
+    - onchanges:
+      - file: {{ formula }}-sigs-binary-install-bashrc
+
+        {%- endif %}
     {%- endif %}
