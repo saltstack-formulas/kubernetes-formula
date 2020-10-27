@@ -5,24 +5,24 @@
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
 {%- set formula = d.formula %}
 
-{%- if grains.kernel|lower in ('linux', 'darwin', 'windows') %}
-    {%- from tplroot ~ "/files/macros.jinja" import format_kwargs with context %}
-    {%- if d.client.pkg.use_upstream == 'archive' and 'pkg' in d.client and 'archive' in d.client['pkg'] %}
+    {%- if grains.kernel|lower in ('linux', 'darwin', 'windows') %}
+        {%- from tplroot ~ "/files/macros.jinja" import format_kwargs with context %}
+        {%- if d.client.pkg.use_upstream == 'archive' and 'pkg' in d.client and 'archive' in d.client['pkg'] %}
 
 {{ formula }}-client-archive-install:
-         {%- if grains.os != 'Windows' %}
+            {%- if grains.os|lower != 'windows' %}
   pkg.installed:
     - names: {{ d.pkg.deps|json }}
     - require_in:
       - file: {{ formula }}-client-archive-install
-         {%- endif %}
+            {%- endif %}
   file.directory:
     - name: {{ d.client.pkg.path }}
     - makedirs: True
     - clean: {{ d.clean }}
     - require_in:
       - archive: {{ formula }}-client-archive-install
-             {%- if grains.os != 'Windows' %}
+            {%- if grains.os|lower != 'windows' %}
     - mode: 755
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
@@ -30,25 +30,24 @@
         - user
         - group
         - mode
-             {%- endif %}
+            {%- endif %}
   archive.extracted:
     {{- format_kwargs(d.client['pkg']['archive']) }}
     - retry: {{ d.retry_option|json }}
     - enforce_toplevel: false
     - trim_output: true
     - force: true
-             {%- if grains.os != 'Windows' %}
+    - require:
+      - file: {{ formula }}-client-archive-install
+            {%- if grains.os|lower != 'windows' %}
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
     - recurse:
         - user
         - group
-             {%- endif %}
-    - require:
-      - file: {{ formula }}-client-archive-install
 
-        {%- if (d.linux.altpriority|int == 0 and grains.os != 'Windows') or grains.os_family in ('Arch', 'MacOS') %}
-            {%- for cmd in d.client.pkg.commands|unique %}
+                {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
+                    {%- for cmd in d.client.pkg.commands|unique %}
 
 {{ formula }}-client-archive-install-symlink-{{ cmd }}:
   file.symlink:
@@ -58,14 +57,29 @@
     - require:
       - archive: {{ formula }}-client-archive-install
 
-            {%- endfor %}
+                    {%- endfor %}
+                {%- endif %}
+            {%- endif %}
+            {%- if grains.os|lower == 'windows' %}
+
+{{ formula }}-client-archive-install-bashrc:
+  file.replace:
+    - name: C:\cygwin64\home\{{ d.identity.rootuser }}\.bashrc
+    - pattern: '^export PATH=${PATH}:/cygdrive/c/kubernetes/bin$'
+    - repl: 'export PATH=${PATH}:/cygdrive/c/kubernetes/bin'
+    - append_if_not_found: True
+  cmd.run:
+    - name: sed -i -e "s/\r//g" C:\cygwin64\home\{{ d.identity.rootuser }}\.bashrc
+    - onchanges:
+      - file: {{ formula }}-client-archive-install-bashrc
+
+            {%- endif %}
         {%- endif %}
-    {%- endif %}
-{%- else %}
+    {%- else %}
 
 {{ formula }}-client-archive-install-other:
   test.show_notification:
     - text: |
         The client archive is unavailable for {{ salt['grains.get']('finger', grains.os_family) }}
 
-{%- endif %}
+    {%- endif %}

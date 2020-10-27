@@ -48,14 +48,15 @@
     - recurse:
         - user
         - group
-                     {%- elif tool in ('devspace', 'k3s', 'kind', 'linkerd2', 'minikube', 'skaffold', 'stern') %}
+                     {%- else %}
+                         {%- if tool in ('devspace', 'k3s', 'kind', 'linkerd2', 'minikube', 'skaffold', 'stern') %}
   cmd.run:
     - name: mv {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}{{ tool }} {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}{{ tool }}.exe
     - onlyif: test -f {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}{{ tool }}
 
-                     {%- endif %}
-                     {%- if (d.linux.altpriority|int == 0 and grains.os != 'Windows') or grains.os_family in ('Arch', 'MacOS') %}
-                         {%- for cmd in d.devtools['pkg'][tool]['commands']|unique %}
+                         {%- endif %}
+                         {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
+                             {%- for cmd in d.devtools['pkg'][tool]['commands']|unique %}
 
 {{ formula }}-devtools-archive-{{ tool }}-install-symlink-{{ cmd }}:
   file.symlink:
@@ -67,18 +68,30 @@
     - require:
       - archive: {{ formula }}-devtools-archive-{{ tool }}-install
 
-                         {% endfor %}
-                     {% endif %}
-               {% endif %}
-            {% endif %}
+                             {%- endfor %}
+                         {%- endif %}
+                     {%- endif %}
+               {%- endif %}
+            {%- endif %}
         {%- endfor %}
-        {%- if grains.os == 'Windows' %}{# tidyup c:\kubernetes\bin #}
+        {%- if grains.os == 'Windows' %}
+
+{{ formula }}-devtools-archive-install-bashrc:
+  file.replace:
+    - name: C:\cygwin64\home\{{ d.identity.rootuser }}\.bashrc
+    - pattern: '^export PATH=${PATH}:/cygdrive/c/kubernetes/bin$'
+    - repl: 'export PATH=${PATH}:/cygdrive/c/kubernetes/bin'
+    - append_if_not_found: True
+  cmd.run:
+    - name: sed -i -e "s/\r//g" C:\cygwin64\home\{{ d.identity.rootuser }}\.bashrc
+    - onchanges:
+      - file: {{ formula }}-devtools-archive-install-bashrc
 
 {{ formula }}-devtools-archive-install-windows-tidyup:
   cmd.run:
     - names:
-      - mv {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}istio-{{ d.devtools.pkg.istio.version }}{{ d.div ~ 'bin' ~ d.div }}istioctl {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}  # noqa 204
-      - mv {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}octant_{{ d.devtools.pkg.octant.version }}_Windows-64Bit{{ d.div }}octant {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}  # noqa 204
+      - mv {{ d.dir.base ~ d.div }}istio-{{ d.devtools.pkg.istio.version }}{{ d.div ~ 'bin' ~ d.div }}istioctl {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }} || True  # noqa 204
+      - mv {{ d.dir.base ~ d.div }}octant_{{ d.devtools.pkg.octant.version }}_Windows-64Bit{{ d.div }}octant {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }} || True  # noqa 204
   file.absent:
     - names:
        - {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}/doc

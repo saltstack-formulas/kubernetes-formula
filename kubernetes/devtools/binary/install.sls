@@ -23,18 +23,21 @@
     - makedirs: True
     - force: True
     - retry: {{ d.retry_option|json }}
-                    {%- if grains.os != 'Windows' %}
-    - mode: '0755'
-    - user: {{ d.identity.rootuser }}
-    - group: {{ d.identity.rootgroup }}
-                    {%- elif tool in ('devspace', 'k3s', 'kind', 'linkerd2', 'minikube', 'skaffold', 'stern') %}
+                    {%- if grains.os|lower == 'windows' %}
+                        {%- if tool in ('devspace', 'k3s', 'kind', 'linkerd2', 'minikube', 'skaffold', 'stern') %}
   cmd.run:
     - name: mv {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}{{ tool }} {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}{{ tool }}.exe
     - onlyif: test -f {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}{{ tool }}
+                        {%- endif %}
 
-                    {%- endif %}
-                    {%- if (d.linux.altpriority|int == 0 and grains.os != 'Windows') or grains.os_family in ('Arch', 'MacOS') %}
-                        {%- for cmd in p[tool]['commands']|unique %}
+                    {%- else %}
+    - mode: '0755'
+    - user: {{ d.identity.rootuser }}
+    - group: {{ d.identity.rootgroup }}
+
+                        {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
+                            {%- for cmd in p[tool]['commands']|unique %}
+
 {{ formula }}-devtools-binary-{{ tool }}-install-symlink-{{ cmd }}:
   file.symlink:
     - name: /usr/local/bin/{{ cmd }}
@@ -44,10 +47,24 @@
       - test -f {{ p[tool]['path'] }}{{ tool }}/bin/{{ cmd }}
     - require:
       - file: {{ formula }}-devtools-binary-{{ tool }}-install
-                        {% endfor %}
-                    {% endif %}
-
-                {% endif %}
-            {% endif %}
+                            {%- endfor %}
+                        {%- endif %}
+                    {%- endif %}
+                {%- endif %}
+            {%- endif %}
         {%- endfor %}
+        {%- if grains.os|lower == 'windows' %}
+
+{{ formula }}-devtools-binary-install-bashrc:
+  file.replace:
+    - name: C:\cygwin64\home\{{ d.identity.rootuser }}\.bashrc
+    - pattern: '^export PATH=${PATH}:/cygdrive/c/kubernetes/bin$'
+    - repl: 'export PATH=${PATH}:/cygdrive/c/kubernetes/bin'
+    - append_if_not_found: True
+  cmd.run:
+    - name: sed -i -e "s/\r//g" C:\cygwin64\home\{{ d.identity.rootuser }}\.bashrc
+    - onchanges:
+      - file: {{ formula }}-devtools-binary-install-bashrc
+
+        {%- endif %}
     {%- endif %}
