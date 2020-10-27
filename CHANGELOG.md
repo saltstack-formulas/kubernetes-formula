@@ -1,5 +1,12 @@
 # Changelog
 
+# [1.3.0](https://github.com/saltstack-formulas/kubernetes-formula/compare/v1.2.0...v1.3.0) (2020-10-27)
+
+
+### Features
+
+* **windows:** add path to bashrc ([](https://github.com/saltstack-formulas/kubernetes-formula/commit/bfb9d87))
+
 # [1.2.0](https://github.com/saltstack-formulas/kubernetes-formula/compare/v1.1.0...v1.2.0) (2020-10-18)
 
 
