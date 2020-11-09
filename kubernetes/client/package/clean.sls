@@ -30,7 +30,7 @@ include:
     - runas: {{ d.identity.rootuser }}
     - onlyif:
       - test -x /usr/local/bin/brew
-      - grew list | grep ^kubectl$
+      - brew list | grep ^kubectl$
 
         {%- elif grains.os_family == 'Windows' %}
 
