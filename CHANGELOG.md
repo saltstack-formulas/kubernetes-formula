@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.1](https://github.com/saltstack-formulas/kubernetes-formula/compare/v1.3.0...v1.3.1) (2020-11-12)
+
+
+### Bug Fixes
+
+* **typo:** brew not grew ([](https://github.com/saltstack-formulas/kubernetes-formula/commit/7e76a3a))
+
 # [1.3.0](https://github.com/saltstack-formulas/kubernetes-formula/compare/v1.2.0...v1.3.0) (2020-10-27)
 
 
