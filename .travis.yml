@@ -74,6 +74,9 @@ jobs:
     - env: INSTANCE=redhat-fedora-31-master-py3
     - env: INSTANCE=default-opensuse-leap-151-master-py3
     - env: INSTANCE=default-amazonlinux-2-master-py3
+    # k3s script install tests
+    - env: INSTANCE=script-ubuntu-1804-master-py3
+    # - env: INSTANCE=script-amazonlinux-2-master-py3
     # - env: INSTANCE=default-debian-10-3000-2-py3
     # - env: INSTANCE=default-debian-9-3000-2-py3
     # - env: INSTANCE=default-ubuntu-1804-3000-2-py3

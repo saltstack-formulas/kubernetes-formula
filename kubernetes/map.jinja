@@ -95,7 +95,7 @@
                 {%- if 'source_hash' in p.script and p.script.source_hash %}
                     {%- do p.script.update({'source_hash': p.script.source_hash}) %}
                 {%- else %}
-                    {%- do p.script.update({'source_hash': url ~ '.sha256'}) %}
+                    {%- do p.script.update({'source_hash': '%s/%s'|format(p.uri_s, 'sha256') }) %}
                 {%- endif %}
             {%- endif %}
         {%- endif %}
