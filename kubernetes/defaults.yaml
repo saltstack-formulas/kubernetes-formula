@@ -417,7 +417,7 @@ kubernetes:
       binary:
         source_hash: '5ce3e0cea46501c652653ee59a40441ebd84d86eb7bf0a9845c9831f0d73bf20'
       script:
-        source_hash: 'b2856cee3432cf0148513b644b5369db8fa8b039793959f410aa7dfdb496b2b9'  # hash changes frequently
+        source_hash:
         killall: /usr/local/bin/k3s-killall.sh
         uninstall: /usr/local/bin/k3s-uninstall.sh
         env:
