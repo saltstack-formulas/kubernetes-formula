@@ -250,6 +250,9 @@
                         {%- set uri = '%s/v%s/%s-%s'|format(p.uri_b, p.version, i, grains.kernel|lower) %}
                         {%- set url = '%s-%s'|format(uri, d.arch) %}
 
+                    {%- elif i in ('krew',) %}
+                        {%- set url = '%s/v%s/%s.%s'|format(p.uri_b, p.version, i, p.suffix) %}
+
                     {%- elif i in ('minikube', 'devspace', 'skaffold', 'k3s') %}
                         {%- set kernel = '' if i in ('k3s',) else '-' ~ grains.kernel|lower %}
                         {%- set arch = '' if i in ('k3s',) and d.arch == 'amd64' else '-' ~ d.arch %}

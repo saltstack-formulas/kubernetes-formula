@@ -120,6 +120,8 @@ Windows:
       krew:
         use_upstream: binary
         suffix: exe
+        uri_b: 'https://github.com/kubernetes-sigs/krew/releases/download'
+        binary: {}
       kubebuilder:
         use_upstream: false  # no windows binary
 

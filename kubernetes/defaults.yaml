@@ -28,6 +28,7 @@ kubernetes:
           - kind
         use_upstream: binary
         uri_b: 'https://github.com/kubernetes-sigs/kind/releases/download'
+        uri_d: 'https://github.com/kubernetes-sigs/kind/tree/master/images'   # docker images
         binary:
           source_hash: '35a640e0ca479192d86a51b6fd31c657403d2cf7338368d62223938771500dc8'
       krew:
@@ -77,6 +78,8 @@ kubernetes:
         uri_b: 'https://github.com/devspace-cloud/devspace/releases/download'
         binary: {}  # needed
         suffix: null
+        container:
+          image: devspacesh/devspace
       octant:
         version: '0.16.3'
         commands:
@@ -103,6 +106,8 @@ kubernetes:
         uri_b: 'https://storage.googleapis.com/skaffold/releases'
         binary: {}  # needed
         suffix: ''
+        container:
+          image: shahidh/skaffold
       istio:
         version: 1.7.6
         commands:
@@ -112,6 +117,8 @@ kubernetes:
         archive:
           options: '--strip-components=1'
         suffix: tar.gz
+        container:
+          image: istio/base   # ??
       dive:
         version: '0.9.2'
         commands:
@@ -122,6 +129,8 @@ kubernetes:
           source_hash: 'fb0b6ee68831fbfc59a06d88638becea09e85da3bb2093a1de4a47ebd4e40296'  # x86_64
           options: '--strip-components=1'
         suffix: tar.gz
+        container:
+          image: wagoodman/dive
       kudo:
         version: '0.17.2'
         name: kubectl-kudo
@@ -155,6 +164,8 @@ kubernetes:
         binary:
           source_hash: 'e0b39dc26f3a0c7596b2408e4fb8da533352b76aaffdc18c7ad28c833c9eb7db'  # x86_64
         suffix: ''
+        container:
+          image: heriet/stern
       kubectx:
         version: '0.9.1'
         commands:
@@ -185,6 +196,8 @@ kubernetes:
           source_hash: '9d3131e470cdb5182afd9966688f1c052d383145cce005a947156b5591da39b7'  # x86_64
           options: ''
         suffix: tar.gz
+        container:
+          image: cuelang/cue
       audit2rbac:
         version: '0.8.0'
         commands:
@@ -277,6 +290,8 @@ kubernetes:
           binary: {}  # needed
           commands:
             - ansible-operator
+          container:
+            image: alaypatel07/ansible-operator
         helm-operator:
           version: 1.2.0
           use_upstream: binary
@@ -284,6 +299,8 @@ kubernetes:
           binary: {}  # needed
           commands:
             - helm-operator
+          container:
+            image: fluxcd/helm-operator
         operator-sdk:
           version: 1.2.0
           use_upstream: binary
@@ -291,6 +308,8 @@ kubernetes:
           binary: {}  # needed
           commands:
             - operator-sdk
+          container:
+            image: figaw/operator-sdk
 
   operators:
     # https://operatorhub.io
@@ -309,6 +328,8 @@ kubernetes:
           source_hash: '5df57fe3b25a4c2448ade9225c23e22e3c327c5796eae3bbe1eac168d4ba92a1'
           options: '--strip-components=1'
         suffix: tar.gz
+        container:
+          image: lightbend-docker-registry.bintray.io/lightbend/akkacluster-operator
       grafana-operator:
         version: 3.7.0
         use_upstream: archive
@@ -317,6 +338,8 @@ kubernetes:
           source_hash: '99bdf25e9ef61a5fe4ea6b3cc1d67de242014e97a7239743caf6ac5766a03b30'
           options: '--strip-components=1'
         suffix: tar.gz
+        container:
+          image: grafana/grafana
       prometheus-operator:
         version: '0.44.1'
         use_upstream: archive
@@ -325,6 +348,8 @@ kubernetes:
           source_hash: 'd935d737ed6ab4b856d69e3c1aeadbd33c3861cd74cc0a84f45e89a57ec846f3'
           options: '--strip-components=1'
         suffix: tar.gz
+        container:
+          image: quay.io/coreos/prometheus-operator
       istio-operator:
         name: ''
         version: '0.6.5'
@@ -334,6 +359,8 @@ kubernetes:
           source_hash: '8bbcf1c201707d9e01f204f3b2a698827b76757a8cdd593de943af64fe1e72d1'
           options: '--strip-components=1'
         suffix: tar.gz
+        container:
+          image: banzaicloud/istio-operator
       shell-operator:
         version: '1.0.0-beta.13'
         use_upstream: archive
@@ -342,6 +369,8 @@ kubernetes:
           source_hash: '21aa1863925923f65a0a729f521f9d703ab34450fe726eed93175cd2761362d4'
           options: '--strip-components=1'
         suffix: tar.gz
+        container:
+          image: flant/shell-operator
 
   server:
     version: '1.20.0'
@@ -451,6 +480,8 @@ kubernetes:
           # K3S_TOKEN_FILE: ''
           # KUBECONFIG: /etc/rancher/k3s/k3s.yaml
       suffix: tar.gz
+      container:
+        image: rancher/k3s
 
   identity:
     rootuser: root
