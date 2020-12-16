@@ -2,6 +2,7 @@
 # vim: ft=yaml
 ---
 # This formula works with no-pillars but here are some example configurations.
+# If you want custom values review default.yaml and add desired values below.
 
 kubernetes:
   supported:
