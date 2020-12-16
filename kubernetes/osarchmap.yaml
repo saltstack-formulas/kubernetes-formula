@@ -16,24 +16,24 @@ arm64:
     pkg:
       use_upstream: archive 
       archive:
-        source_hash: '594ca3eadc7974ec4d9e4168453e36ca434812167ef8359086cd64d048df525b7bd46424e7cc9c41e65c72bda3117326ba1662d1c9d739567f10f5684fd85bee'  # noqa 204
+        source_hash: '275727e1796791ca3cbe52aaa713a2660404eab6209466fdc1cfa8559c9b361fe55c64c6bcecbdeba536b6d56213ddf726e58adc60f959b6f77e4017834c5622'  # noqa 204
   node:
     pkg:
       use_upstream: archive
       archive:
-        source_hash: 'c207e9ab60587d135897b5366af79efe9d2833f33401e469b2a4e0d74ecd2cf6bb7d1e5bc18d80737acbe37555707f63dd581ccc6304091c1d98dafdd30130b7'  # noqa 204
+        source_hash: '5b8b63f617e248432b7eb913285a8ef8ba028255216332c05db949666c3f9e9cb9f4c393bbd68d00369bda77abf9bfa2da254a5c9fe0d79ffdad855a77a9d8ed'  # noqa 204
   server:
     pkg:
       use_upstream: archive
       archive:
-        source_hash: '842910a7013f61a60d670079716b207705750d55a9e4f1f93696d19d39e191644488170ac94d8740f8e3aa3f7f28f61a4347f69d7e93d149c69ac0efcf3688fe'  # noqa 204
+        source_hash: 'ffab155531d5a9b82487ee1abf4f6ef49626ea58b2de340656a762e46cf3e0f470bdbe7821210901fe1114224957c44c1d9cc1e32efb5ee24e51fe63990785b2'  # noqa 204
 
   sigs:
     pkg:
       kubebuiler:
         use_upstream: archive
         archive:
-          source_hash: '153ff1bc656820917fe5b3eb393bf7b607e04c299f8602817f8088040ecffb40'
+          source_hash: '14fce4206a8e31715f54e71da96903fcd03369859d8d9a2739ca6535f7700cef'
       kind:
         binary:
           source_hash: 'b33be1df8cdd842b0b6dfa306125fbf5ada9811c3e6db840854c89a66a194f3f'
@@ -48,13 +48,13 @@ arm64:
           source_hash: '097f0473fefd9651c3fd87726aed867ed6e8e3ac70dbdc129faee781e19c84d2'
       cue:
         archive:
-          source_hash: '66986314a9c4c160544f54b8b4a30eb5b9d3418ed444711951026e629f4ef9e7'
+          source_hash: 'd39dcb718d14071829f325bd79e57c069fa5bb1a84cabdb12df6a1eee87b18d0'
       audit2rbac:
         archive:
           source_hash: '819361a9b61ce02dc86bbe789b1da54dd887c2841f1a92ed0abb790738efc7f2'
       octant:
         archive:
-          source_hash: '6713da801fba0d9192ac4e31761046cf09ef3d1e85863b13b06c33bdb1a1a03c'
+          source_hash: 'faa3220a15e1dcf0e21d8c214333f49202e11b188df8c3512a0c23ac39697294'
       minikube:
         binary:
           source_hash: 'c4110205ba8ca130bbab89736b7fc7dd05ae98dde8b72f489f1882ea115f8764'
@@ -66,24 +66,24 @@ ppc64le:
     pkg:
       use_upstream: archive 
       archive:
-        source_hash: 'f80fb3769358cb20820ff1a1ce9994de5ed194aabe6c73fb8b8048bffc394d1b926de82c204f0e565d53ffe7562faa87778e97a3ccaaaf770034a992015e3a86'  # noqa 204
+        source_hash: '7a9965293029e9fcdb2b7387467f022d2026953b8461e6c84182abf35c28b7822d2389a6d8e4d8e532d2ea5d5d67c6fee5fb6c351363cb44c599dc8800649b04'  # noqa 204
   node:
     pkg:
       use_upstream: archive
       archive:
-        source_hash: 'a542ed5ed02722af44ef12d1602f363fcd4e93cf704da2ea5d99446382485679626835a40ae2ba47a4a26dce87089516faa54479a1cfdee2229e8e35aa1c17d7'  # noqa 204
+        source_hash: '60da7715996b4865e390640525d6e98593ba3cd45c6caeea763aa5355a7f989926da54f58cc5f657f614c8134f97cd3894b899f8b467d100dca48bc22dd4ff63'  # noqa 204
   server:
     pkg:
       use_upstream: archive
       archive:
-        source_hash: '95c5b952ac1c4127a5c3b519b664972ee1fb5e8e902551ce71c04e26ad44b39da727909e025614ac1158c258dc60f504b9a354c5ab7583c2ad769717b30b3836'  # noqa 204
+        source_hash: '9d5730d35c4ddfb4c5483173629fe55df35d1e535d96f02459468220ac2c97dc01b995f577432a6e4d1548b6edbfdc90828dc9c1f7cf7464481af6ae10aaf118'  # noqa 204
 
   sigs:
     pkg:
       kubebuiler:
         use_upstream: archive
         archive:
-          source_hash: '25c684402841cbb1d87daf05d2c5d76a16e9f8d3c2ad949a439dd947b5e52150'
+          source_hash: 'f5ce6445f20755331267a4e65200c32ead07692eadedf3f18b632836b78b71ed'
       kind:
         binary:
           source_hash: 'd17ab3cbdd2e5125424948aa86b0e99b2a399c62be95d793d94bd63ff19cf049'
@@ -122,7 +122,7 @@ x86_64:
     pkg:
       use_upstream: archive
       archive:
-        source_hash: '110844511b70f9f3ebb92c15105e6680a05a562cd83f79ce2d2e25c2dd70f0dbd91cae34433f61364ae1ce4bd573b635f2f632d52de8f72b54acdbc95a15e3f0'  # noqa 204
+        source_hash: '4c0a27dba1077aaee943e0eb7a787239dd697e1d968e78d1933c1e60b02d5d233d58541d5beec59807a4ffe3351d5152359e11da120bf64cacb3ee29fbc242e6'  # noqa 204
 
 armv6l:
   arch: armv6l
@@ -165,17 +165,17 @@ s390x:
     pkg:
       use_upstream: archive
       archive:
-        source_hash: 'a9b658108b6803d60fa3cd4e76d9e58bf75201017164fe54054b7ccadbb68c4ad7ba7800746940bc518d90475e6c0a96965a26fa50882f4f0e56df404f4ae586'  # noqa 204
+        source_hash: '85fc449ce1980f5f030cc32e8c8e2198c1cc91a448e04b15d27debc3ca56aa85d283f44b4f4e5fed26ac96904cc12808fa3e9af3d8bf823fc928befb9950d6f5'  # noqa 204
   node:
     pkg:
       use_upstream: archive
       archive:
-        source_hash: '651e0db73ee67869b2ae93cb0574168e4bd7918290fc5662a6b12b708fa628282e3f64be2b816690f5a2d0f4ff8078570f8187e65dee499a876580a7a63d1d19'  # noqa 204
+        source_hash: '9407dc55412bd04633f84fcefe3a1074f3eaa772a7cb9302242b8768d6189b75d37677a959f91130e8ad9dc590f9ba8408ba6700a0ceff6827315226dd5ee1e6'  # noqa 204
   server:
     pkg:
       use_upstream: archive
       archive:
-        source_hash: 'a46522d2119a0fd58074564c1fa95dd8a929a79006b82ba3c4245611da8d2db9fd785c482e1b61a9aa361c5c9a6d73387b0e15e6a7a3d84fffb3f65db3b9deeb'  # noqa 204
+        source_hash: '6e4c165306940e8b99dd6e590f8542e31aed23d2c7a6808af0357fa425cec1a57016dd66169cf2a95f8eb8ef70e1f29e2d500533aae889e2e3d9290d04ab8721'  # noqa 204
   devtools:
     pkg:
       minikube:
