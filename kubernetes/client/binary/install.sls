@@ -3,16 +3,15 @@
 
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
-{%- set formula = d.formula %}
 
     {%- if d.client.pkg.use_upstream == 'binary' %}
 
-{{ formula }}-client-binary-install:
+kubernetes-client-binary-install:
         {%- if grains.os|lower != 'windows' %}
   pkg.installed:
     - names: {{ d.pkg.deps|json }}
     - require_in:
-      - file: {{ formula }}-client-binary-install
+      - file: kubernetes-client-binary-install
         {%- endif %}
   file.managed:
     - name: {{ d.client.pkg.path }}
@@ -29,18 +28,18 @@
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
 
-{{ formula }}-client-binary-install-symlink:
+kubernetes-client-binary-install-symlink:
   file.symlink:
     - name: /usr/local/bin/kubectl
     - target: {{ d.client.pkg.path }}/bin/kubectl
     - force: True
     - require:
-      - cmd: {{ formula }}-client-binary-install
+      - cmd: kubernetes-client-binary-install
     - unless: {{ d.linux.altpriority|int > 0 }} || false
 
         {%- elif grains.os|lower == 'windows' %}
 
-{{ formula }}-client-binary-install-bashrc:
+kubernetes-client-binary-install-bashrc:
   file.replace:
     - name: C:\cygwin64\home\{{ d.identity.rootuser }}\.bashrc
     - pattern: '^export PATH=${PATH}:/cygdrive/c/kubernetes/bin$'
@@ -49,7 +48,7 @@
   cmd.run:
     - name: sed -i -e "s/\r//g" C:\cygwin64\home\{{ d.identity.rootuser }}\.bashrc
     - onchanges:
-      - file: {{ formula }}-client-binary-install-bashrc
+      - file: kubernetes-client-binary-install-bashrc
 
         {%- endif %}
     {%- endif %}

@@ -3,13 +3,12 @@
 
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
-{%- set formula = d.formula %}
 
 {%- set sls_alternatives_clean = tplroot ~ '.node.alternatives.clean' %}
 include:
   - {{ sls_alternatives_clean }}
 
-{{ formula }}-node-archive-absent:
+kubernetes-node-archive-absent:
   file.absent:
     - names:
       - {{ d.dir.tmp }}/kubernetes-node*

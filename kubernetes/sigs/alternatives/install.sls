@@ -3,7 +3,6 @@
 
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
-{%- set formula = d.formula %}
 
     {%- if d.linux.altpriority|int > 0 and grains.kernel == 'Linux' and grains.os_family not in ('Arch',) %}
         {%- set sls_archive_install = tplroot ~ '.sigs.archive.install' %}
@@ -18,7 +17,7 @@ include:
                     {%- for cmd in d.sigs.pkg[tool]['commands']|unique %}
 
 
-{{ formula }}-sigs-{{ tool }}-alternatives-install-bin-{{ cmd }}:
+kubernetes-sigs-{{ tool }}-alternatives-install-bin-{{ cmd }}:
                     {%- if grains.os_family not in ('Suse', 'Arch') %}
   alternatives.install:
     - name: link-k8s-sigs-{{ tool }}-{{ cmd }}
@@ -37,9 +36,9 @@ include:
     - require:
       - sls: {{ sls_archive_install if d.sigs.pkg[tool]['use_upstream'] == 'archive' else sls_binary_install }}
     - require_in:
-      - alternatives: {{ formula }}-sigs-{{ tool }}-alternatives-set-bin-{{ cmd }}
+      - alternatives: kubernetes-sigs-{{ tool }}-alternatives-set-bin-{{ cmd }}
 
-{{ formula }}-sigs-{{ tool }}-alternatives-set-bin-{{ cmd }}:
+kubernetes-sigs-{{ tool }}-alternatives-set-bin-{{ cmd }}:
   alternatives.set:
     - unless: {{ grains.os_family in ('Suse', 'Arch') }} || false
     - name: link-k8s-sigs-{{ tool }}-{{ cmd }}

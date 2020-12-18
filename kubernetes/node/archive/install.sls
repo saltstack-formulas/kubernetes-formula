@@ -3,24 +3,23 @@
 
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
-{%- set formula = d.formula %}
 {%- from tplroot ~ "/files/macros.jinja" import format_kwargs with context %}
 
     {%- if d.node.pkg.use_upstream == 'archive' and 'archive' in d.node.pkg %}
 
-{{ formula }}-node-archive-install:
+kubernetes-node-archive-install:
         {%- if grains.os|lower != 'windows' %}
   pkg.installed:
     - names: {{ d.pkg.deps|json }}
     - require_in:
-      - file: {{ formula }}-node-archive-install
+      - file: kubernetes-node-archive-install
         {%- endif %}
   file.directory:
     - name: {{ d.node.pkg.path }}
     - makedirs: True
     - clean: False   # don't
     - require_in:
-      - archive: {{ formula }}-node-archive-install
+      - archive: kubernetes-node-archive-install
         {%- if grains.os|lower != 'windows' %}
     - mode: 755
     - user: {{ d.identity.rootuser }}
@@ -38,7 +37,7 @@
     - force: true
     - overwrite: {{ d.overwrite }}
     - require:
-      - file: {{ formula }}-node-archive-install
+      - file: kubernetes-node-archive-install
         {%- if grains.os|lower != 'windows' %}
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
@@ -48,19 +47,19 @@
             {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
                 {%- for cmd in d.node.pkg.commands|unique %}
 
-{{ formula }}-node-archive-install-symlink-{{ cmd }}:
+kubernetes-node-archive-install-symlink-{{ cmd }}:
   file.symlink:
     - name: /usr/local/bin/{{ cmd }}
     - target: {{ d.node.pkg.path }}/bin/{{ cmd }}
     - force: True
     - require:
-      - archive: {{ formula }}-node-archive-install
+      - archive: kubernetes-node-archive-install
 
                 {%- endfor %}
             {%- endif %}
         {%- elif grains.os|lower == 'windows' %}
 
-{{ formula }}-node-archive-install-bashrc:
+kubernetes-node-archive-install-bashrc:
   file.replace:
     - name: C:\cygwin64\home\{{ d.identity.rootuser }}\.bashrc
     - pattern: '^export PATH=${PATH}:/cygdrive/c/kubernetes/bin$'
@@ -69,9 +68,9 @@
   cmd.run:
     - name: sed -i -e "s/\r//g" C:\cygwin64\home\{{ d.identity.rootuser }}\.bashrc
     - onchanges:
-      - file: {{ formula }}-node-archive-install-bashrc
+      - file: kubernetes-node-archive-install-bashrc
 
-{{ formula }}-node-archive-install-windows-tidyup:
+kubernetes-node-archive-install-windows-tidyup:
   cmd.run:
     - name: mv {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}*.exe {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }} || True
     - onlyif: test -d {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }}

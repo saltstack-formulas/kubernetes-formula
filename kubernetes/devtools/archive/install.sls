@@ -3,13 +3,12 @@
 
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
-{%- set formula = d.formula %}
 {%- from tplroot ~ "/files/macros.jinja" import format_kwargs with context %}
 
     {%- if 'wanted' in d.devtools and d.devtools.wanted %}
 
         {%- if grains.os != 'Windows' %}
-{{ formula }}-devtools-pkg-deps-install:
+kubernetes-devtools-pkg-deps-install:
   pkg.installed:
     - names: {{ d.pkg.deps|json }}
         {%- endif %}
@@ -19,16 +18,16 @@
                 {%- set p = d.devtools.pkg[tool] %}
                 {%- if p['use_upstream'] == 'archive' and 'archive' in p %}
 
-{{ formula }}-devtools-archive-{{ tool }}-install:
+kubernetes-devtools-archive-{{ tool }}-install:
   file.directory:
     - name: {{ d.devtools['pkg'][tool]['path'] }}
     - clean: {{ d.clean }}
     - makedirs: True
     - require_in:
-      - archive: {{ formula }}-devtools-archive-{{ tool }}-install
+      - archive: kubernetes-devtools-archive-{{ tool }}-install
                      {%- if grains.os != 'Windows' %}
     - require:
-      - pkg: {{ formula }}-devtools-pkg-deps-install
+      - pkg: kubernetes-devtools-pkg-deps-install
     - mode: 755
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
@@ -58,15 +57,15 @@
                          {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
                              {%- for cmd in d.devtools['pkg'][tool]['commands']|unique %}
 
-{{ formula }}-devtools-archive-{{ tool }}-install-symlink-{{ cmd }}:
+kubernetes-devtools-archive-{{ tool }}-install-symlink-{{ cmd }}:
   file.symlink:
     - name: /usr/local/bin/{{ cmd }}
-    - target: {{ d.devtools['pkg'][tool]['path'] }}/bin/{{ tool }}
+    - target: {{ d.devtools['pkg'][tool]['path'] }}/bin/{{ cmd }}
     - force: True
     - onlyif:
-      - test -f {{ d.devtools['pkg'][tool]['path'] }}/bin/{{ tool }}
+      - test -f {{ d.devtools['pkg'][tool]['path'] }}/bin/{{ cmd }}
     - require:
-      - archive: {{ formula }}-devtools-archive-{{ tool }}-install
+      - archive: kubernetes-devtools-archive-{{ tool }}-install
 
                              {%- endfor %}
                          {%- endif %}
@@ -76,7 +75,7 @@
         {%- endfor %}
         {%- if grains.os == 'Windows' %}
 
-{{ formula }}-devtools-archive-install-bashrc:
+kubernetes-devtools-archive-install-bashrc:
   file.replace:
     - name: C:\cygwin64\home\{{ d.identity.rootuser }}\.bashrc
     - pattern: '^export PATH=${PATH}:/cygdrive/c/kubernetes/bin$'
@@ -85,9 +84,9 @@
   cmd.run:
     - name: sed -i -e "s/\r//g" C:\cygwin64\home\{{ d.identity.rootuser }}\.bashrc
     - onchanges:
-      - file: {{ formula }}-devtools-archive-install-bashrc
+      - file: kubernetes-devtools-archive-install-bashrc
 
-{{ formula }}-devtools-archive-install-windows-tidyup:
+kubernetes-devtools-archive-install-windows-tidyup:
   cmd.run:
     - names:
       - mv {{ d.dir.base ~ d.div }}istio-{{ d.devtools.pkg.istio.version }}{{ d.div ~ 'bin' ~ d.div }}istioctl {{ d.dir.base ~ d.div ~ 'bin' ~ d.div }} || True  # noqa 204

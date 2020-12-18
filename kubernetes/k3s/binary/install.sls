@@ -3,16 +3,15 @@
 
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
-{%- set formula = d.formula %}
 
     {%- if d.k3s.pkg.use_upstream == 'binary' %}
 
-{{ formula }}-k3s-binary-install:
+kubernetes-k3s-binary-install:
         {%- if grains.os|lower != 'windows' %}
   pkg.installed:
     - names: {{ d.pkg.deps|json }}
     - require_in:
-      - file: {{ formula }}-k3s-binary-install
+      - file: kubernetes-k3s-binary-install
         {%- endif %}
   file.managed:
     - name: {{ d.k3s.pkg.path }}k3s
@@ -28,13 +27,13 @@
             {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
                 {%- for cmd in d.k3s.pkg['commands']|unique %}
 
-{{ formula }}-k3s-binary-install-symlink:
+kubernetes-k3s-binary-install-symlink:
   file.symlink:
     - name: /usr/local/bin/k3s
     - target: {{ d.k3s.pkg.path }}/k3s
     - force: True
     - require:
-      - file: {{ formula }}-k3s-binary-install
+      - file: kubernetes-k3s-binary-install
     - unless: {{ d.linux.altpriority|int > 0 }} || false
 
                 {%- endfor %}
@@ -45,7 +44,7 @@
     - name: mv {{ d.k3s.pkg.path }}k3s {{ d.k3s.pkg.path }}k3s.exe
     - onlyif: test -f {{ d.k3s.pkg.path }}k3s
 
-{{ formula }}-k3s-archive-install-bashrc:
+kubernetes-k3s-archive-install-bashrc:
   file.replace:
     - name: C:\cygwin64\home\{{ d.identity.rootuser }}\.bashrc
     - pattern: '^export PATH=${PATH}:/cygdrive/c/kubernetes/bin$'
@@ -54,7 +53,7 @@
   cmd.run:
     - name: sed -i -e "s/\r//g" C:\cygwin64\home\{{ d.identity.rootuser }}\.bashrc
     - onchanges:
-      - file: {{ formula }}-k3s-archive-install-bashrc
+      - file: kubernetes-k3s-archive-install-bashrc
 
         {%- endif %}
     {%- endif %}

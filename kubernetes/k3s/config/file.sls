@@ -3,7 +3,6 @@
 
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
-{%- set formula = d.formula %}
 
 {%- if 'config' in d.k3s and d.k3s.config %}
     {%- set sls_archive_install = tplroot ~ '.k3s.archive.install' %}
@@ -14,7 +13,7 @@
 include:
   - {{ sls_archive_install if d.k3s.pkg.use_upstream == 'archive' else sls_binary_install if d.k3s.pkg.use_upstream == 'binary' else sls_package_install }}   # noqa 204
 
-{{ formula }}-k3s-config-file-install-file-managed:
+kubernetes-k3s-config-file-install-file-managed:
   file.managed:
     - name: {{ d.k3s.config_file }}
     - source: {{ files_switch(['config.yml.jinja'],

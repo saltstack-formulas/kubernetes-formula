@@ -3,7 +3,6 @@
 
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
-{%- set formula = d.formula %}
 
     {%- if d.linux.altpriority|int > 0 and grains.kernel == 'Linux' and grains.os_family not in ('Arch',) %}
         {%- set sls_script_install = tplroot ~ '.k3s.script.install' %}
@@ -15,7 +14,7 @@ include:
 
         {%- for cmd in d.k3s['pkg']['commands']|unique %}
 
-{{ formula }}-k3s-alternatives-install-bin-{{ cmd }}:
+kubernetes-k3s-alternatives-install-bin-{{ cmd }}:
             {%- if grains.os_family in ('Suse', 'Arch') %}
   alternatives.install:
     - name: link-k8s-k3s-{{ cmd }}
@@ -34,9 +33,9 @@ include:
     - require:
       - sls: {{ sls_script_install if d.k3s.pkg['use_upstream'] == 'script' else sls_binary_install }}
     - require_in:
-      - alternatives: {{ formula }}-k3s-alternatives-set-bin-{{ cmd }}
+      - alternatives: kubernetes-k3s-alternatives-set-bin-{{ cmd }}
 
-{{ formula }}-k3s-alternatives-set-bin-{{ cmd }}:
+kubernetes-k3s-alternatives-set-bin-{{ cmd }}:
   alternatives.set:
     - unless: {{ grains.os_family in ('Suse', 'Arch') }} || false
     - name: link-k8s-k3s-{{ cmd }}

@@ -3,7 +3,6 @@
 
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
-{%- set formula = d.formula %}
 
     {%- if d.node.pkg.use_upstream in ('package', 'repo') %}
         {%- if grains.os_family|lower in ('redhat', 'debian') %}
@@ -13,13 +12,13 @@ include:
   - {{ sls_repo_clean }}
             {%- endif %}
 
-{{ formula }}-node-package-clean-pkgs:
+kubernetes-node-package-clean-pkgs:
   pkg.removed:
     - names: {{ d.node.pkg.commands|unique|json }}
     - reload_modules: true
             {%- if d.node.pkg.use_upstream == 'repo' %}
     - require:
-      - pkgrepo: {{ formula }}-package-repo-absent
+      - pkgrepo: kubernetes-package-repo-absent
             {%- endif %}
 
         {%- endif %}

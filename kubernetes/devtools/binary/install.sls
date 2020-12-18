@@ -3,7 +3,6 @@
 
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
-{%- set formula = d.formula %}
 
     {%- if 'wanted' in d.devtools and d.devtools.wanted %}
         {%- for tool in d.devtools.wanted|unique %}
@@ -11,7 +10,7 @@
                 {%- set p = d.devtools['pkg'] %}
                 {%- if 'binary' in p[tool] and 'source' in p[tool]['binary'] %}
 
-{{ formula }}-devtools-binary-{{ tool }}-install:
+kubernetes-devtools-binary-{{ tool }}-install:
   file.managed:
     - name: {{ p[tool]['path'] }}{{ tool }}
     - source: {{ p[tool]['binary']['source'] }}
@@ -39,7 +38,7 @@
                         {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
                             {%- for cmd in p[tool]['commands']|unique %}
 
-{{ formula }}-devtools-binary-{{ tool }}-install-symlink-{{ cmd }}:
+kubernetes-devtools-binary-{{ tool }}-install-symlink-{{ cmd }}:
   file.symlink:
     - name: /usr/local/bin/{{ cmd }}
     - target: {{ p[tool]['path'] }}{{ tool }}/bin/{{ cmd }}
@@ -47,7 +46,7 @@
     - onlyif:
       - test -f {{ p[tool]['path'] }}{{ tool }}/bin/{{ cmd }}
     - require:
-      - file: {{ formula }}-devtools-binary-{{ tool }}-install
+      - file: kubernetes-devtools-binary-{{ tool }}-install
                             {%- endfor %}
                         {%- endif %}
                     {%- endif %}
@@ -56,7 +55,7 @@
         {%- endfor %}
         {%- if grains.os|lower == 'windows' %}
 
-{{ formula }}-devtools-binary-install-bashrc:
+kubernetes-devtools-binary-install-bashrc:
   file.replace:
     - name: C:\cygwin64\home\{{ d.identity.rootuser }}\.bashrc
     - pattern: '^export PATH=${PATH}:/cygdrive/c/kubernetes/bin$'
@@ -65,7 +64,7 @@
   cmd.run:
     - name: sed -i -e "s/\r//g" C:\cygwin64\home\{{ d.identity.rootuser }}\.bashrc
     - onchanges:
-      - file: {{ formula }}-devtools-binary-install-bashrc
+      - file: kubernetes-devtools-binary-install-bashrc
 
         {%- endif %}
     {%- endif %}

@@ -3,13 +3,12 @@
 
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
-{%- set formula = d.formula %}
 {%- from tplroot ~ "/files/macros.jinja" import format_kwargs with context %}
 
     {%- if 'wanted' in d.devlibs and d.devlibs.wanted %}
 
         {%- if grains.os != 'Windows' %}
-{{ formula }}-devlibs-pkg-deps-install:
+kubernetes-devlibs-pkg-deps-install:
   pkg.installed:
     - names: {{ d.pkg.deps|json }}
         {%- endif %}
@@ -19,16 +18,16 @@
                 {%- set p = d.devlibs.pkg[tool] %}
                 {%- if p['use_upstream'] == 'archive' and 'archive' in p %}
 
-{{ formula }}-devlibs-archive-{{ tool }}-install:
+kubernetes-devlibs-archive-{{ tool }}-install:
   file.directory:
     - name: {{ p['path'] }}
     - clean: {{ d.clean }}
     - makedirs: True
     - require_in:
-      - archive: {{ formula }}-devlibs-archive-{{ tool }}-install
+      - archive: kubernetes-devlibs-archive-{{ tool }}-install
                    {%- if grains.os != 'Windows' %}
     - require:
-      - pkg: {{ formula }}-devlibs-pkg-deps-install
+      - pkg: kubernetes-devlibs-pkg-deps-install
     - mode: 755
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}

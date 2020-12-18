@@ -3,7 +3,6 @@
 
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
-{%- set formula = d.formula %}
 
 {%- if 'config' in d.node and d.node.config %}
     {%- from tplroot ~ "/libtofs.jinja" import files_switch with context %}
@@ -13,7 +12,7 @@
 include:
   - {{ sls_archive_install if d.node.pkg.use_upstream == 'archive' else sls_package_install }}
 
-{{ formula }}-node-config-file-install-file-managed:
+kubernetes-node-config-file-install-file-managed:
   file.managed:
     - name: {{ d.node.config_file }}
     - source: {{ files_switch(['config.yml.jinja'],
