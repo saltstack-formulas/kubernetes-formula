@@ -5,14 +5,15 @@ kubernetes-formula
 
 Extensible formula to manage kubernetes on MacOS, Windows, and GNU/Linux. Currently supports:
 
-* `server`  (https://kubernetes.io) [Linux OS]
-* `node`    (https://kubernetes.io) [all OS]
+* `server` (https://kubernetes.io) [Linux OS]
+* `node` (https://kubernetes.io) [all OS]
 * `client`  (https://kubernetes.io, aliases) [all OS]
 * `operator` (sdk, etc)
 * `operators` (https://operatorhub.io)  [all OS]
 * `devtools` (extensive collection of tools, kubectx, kubens, cue, attr2rbac, dive, stern, etc)  [all OS]
 * `devlibs`  (kubernetes clients, source software)  [all OS]
 * `sigs`  (https://github.com/kubernetes-sigs, special interest groups)  [all OS]
+* `crimgr` (cri-resource-manager, etc) [linux]
 
 
 The default `kubernetes.sigs` state includes the following:
@@ -64,6 +65,10 @@ The default `kubernetes.devlibs` state includes [all OS]:
 * `Javascript client library for kubernetes` (https://github.com/kubernetes-client/javascript)
 * `Python kubernetes-operator library` (https://github.com/zalando-incubator/kopf)
 * `Simple kubernetes Go client` (https://github.com/ericchiang/k8s)
+
+The default `kubernetes.crimgr` state includes (linux):
+
+* `cri` CRI Resource Manager (https://github.com/intel/cri-resource-manager)
 
 
 |img_travis| |img_sr|
@@ -231,6 +236,18 @@ This state installs selected kubernetes developer libraries
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state uninstalls selected kubernetes developer libraries (i.e. kubernetes client libraries, kopf, etc).
+
+``kubernetes.crimgr``
+^^^^^^^^^^^^^^^^^^^^^
+
+This state installs kubernetes cri-resource-manager
+
+* https://github.com/intel/cri-resource-manager
+
+``kubernetes.crimgr.clean``
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+This state uninstalls kubernetes cri-resource-manager
 
 
 Main Sub-states

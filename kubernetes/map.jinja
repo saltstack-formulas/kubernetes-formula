@@ -32,7 +32,7 @@
 {%- for c in d.supported %}
     {%- set path = d.dir.base %}
     {%- set url = False %}
-    {%- set list = ('client', 'server', 'node', 'k3s') %}
+    {%- set list = ('client', 'server', 'node', 'k3s', 'crimgr') %}
     {%- if c in list and c in d and d[c] and 'pkg' in d[c] and 'version' in d[c] %}
         {%- set p = d[c]['pkg'] %}
 
@@ -45,8 +45,14 @@
                 {%- do p.update({ 'path': '%sk8s-%s-%s%s'|format(d.dir.base, c, d[c]['version'], d.div) }) %}
             {%- endif %}
 
-            {%- set uri = '%s/v%s/kubernetes-%s-%s'|format(p.uri_a, d[c]['version'], c, grains.kernel|lower) %}
-            {%- set url = '%s-%s.%s'|format(uri, d.arch, p.suffix) %}
+            {%- if c in ('crimgr',) %}
+                {%- set arch = 'x86_64' if c in ('crimgr',) and d.arch == 'amd64' else d.arch %}
+                {%- set url = '%s/v%s/cri-resource-manager-%s.%s.%s'|format(p.uri_a, d[c]['version'], d[c]['version'], arch, p.suffix) %}
+            {%- else %}
+            {%- set arch = d.arch %}
+                {%- set uri = '%s/v%s/kubernetes-%s-%s'|format(p.uri_a, d[c]['version'], c, grains.kernel|lower) %}
+                {%- set url = '%s-%s.%s'|format(uri, arch, p.suffix) %}
+            {%- endif %}
             {%- do p.archive.update({ 'name': p.path, 'source': url }) %}
 
             {%- if 'source_hash' in p.archive and p.archive.source_hash %}
@@ -152,9 +158,9 @@
         {%- endfor %}
     {%- endif %}
 
-    ## SIGS / DEVTOOLS / DEVLIBS / OPERATORS / MANAGERS ##
+    ## SIGS / DEVTOOLS / DEVLIBS / OPERATORS ##
     {%- set path = d.dir.source if c in ('devlibs', 'operators') else d.dir.base %}
-    {%- set list = ('devlibs', 'operators', 'sigs', 'devtools', 'managers') %}
+    {%- set list = ('devlibs', 'operators', 'sigs', 'devtools') %}
 
     {%- if c in list and c in d and d[c] and 'pkg' in d[c] and d[c]['pkg'] %}
         {%- for i in d[c]['wanted'] %}
@@ -193,10 +199,6 @@
                         {%- set arch = 'amd64' if i in ('stern',) and d.arch == 'x86_64' else d.arch %}
                         {%- set url = '%s/%s/%s_%s_%s'|format(p.uri_a, p.version, i, grains.kernel, arch) %}
 
-                    {%- elif i in ('cri_resource_manager',) %}
-                        {%- set arch = 'x86_64' if i in ('cri_resource_manager',) and d.arch == 'amd64' else d.arch %}
-                        {%- set url = '%s/v%s/%s-%s.%s.%s'|format(p.uri_a, p.version, i|replace('_', '-'), arch, p.suffix) %}
-
                     {%- elif i in ('istio',) %}
                         {%- set kernel = 'osx' if grains.kernel == 'Darwin' else grains.kernel|lower %}
                         {%- set kernel = 'win' if kernel|lower == 'windows' else kernel %}
@@ -228,8 +230,6 @@
                         {%- do p.update({ 'path': '%sk8s-%s-%s-%s%s'|format(path, c, i, p.version, d.div) }) %}
                         {%- if i in ('audit2rbac', 'cue', 'dive', 'istio', 'kubens', 'kubectx', 'octant', 'krew') %}
                             {%- do p.update({ 'path': '%s%sbin%s'|format(p.path, d.div, d.div) }) %}
-			{%- elif i in ('cri_resource_manager',) %}
-                            {%- do p.update({ 'path': '/'}) %}
                         {%- endif %}
                     {%- endif %}
 

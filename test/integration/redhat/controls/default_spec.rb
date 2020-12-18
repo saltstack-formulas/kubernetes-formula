@@ -98,6 +98,14 @@ control 'kubernetes archive' do
     it { should be_symlink }
     it { should_not be_directory }
   end
+    describe file('/opt/intel/bin/cri-resmgr') do
+    it { should exist }
+    its('mode') { should cmp '0755' }
+  end
+  describe file('/usr/local/bin/cri-resmgr') do
+    # it { should be_symlink }
+    it { should_not be_directory }
+  end
   describe file('/usr/local/k8s-devtools-stern-1.11.0/bin/stern') do
     it { should exist }
     its('mode') { should cmp '0755' }
