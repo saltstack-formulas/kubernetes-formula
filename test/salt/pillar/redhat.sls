@@ -14,6 +14,7 @@ kubernetes:
     - devlibs
     - devtools
     - sigs
+    - crimgr
   sigs:
     wanted:
       - kind

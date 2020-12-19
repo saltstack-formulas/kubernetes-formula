@@ -16,6 +16,7 @@ kubernetes:
     - devlibs
     - devtools
     - sigs
+    - crimgr
   sigs:
     wanted:
       - kind
@@ -432,6 +433,23 @@ kubernetes:
       uri_a: 'https://dl.k8s.io'
       archive:
         source_hash: '3e6c90561dd1c27fa1dff6953c503251c36001f7e0f8eff3ec918c74ae2d9aa25917d8ac87d5b4224b8229f620b1830442e6dce3b2a497043f8497eee3705696'  # noqa 204
+        options: '--strip-components=2'
+      suffix: tar.gz
+
+  crimgr:
+    version: '0.4.1'
+    config_file: /etc/cri-resmgr/fallback.cfg
+    config: {}
+    environ: {}
+    environ_file: /etc/default/cri-resource-manager
+    service: {}
+    pkg:
+      commands:
+        - cri-resmgr
+      use_upstream: archive
+      uri_a: 'https://github.com/intel/cri-resource-manager/releases/download'
+      archive:
+        source_hash: '8f1fd0b828ff5e3ba7905e292e4202f12f7caf422a0a65c25364bf578c8f81b1'
         options: '--strip-components=2'
       suffix: tar.gz
 

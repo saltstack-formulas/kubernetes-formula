@@ -11,3 +11,4 @@ include:
   - .devtools
   - .devlibs
   - .sigs
+  - .crimgr

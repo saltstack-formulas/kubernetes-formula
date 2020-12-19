@@ -3,7 +3,6 @@
 
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
-{%- set formula = d.formula %}
 
 {%- if grains.kernel|lower in ('linux', 'darwin', 'windows') %}
     {%- if 'wanted' in d.operator.sdk and d.operator.sdk.wanted %}
@@ -12,7 +11,7 @@
                 {%- set p = d.operator.sdk['pkg'] %}
                 {%- if item in p and 'binary' in p[item] and 'source' in p[item]['binary'] %}
 
-{{ formula }}-operator-sdk-binary-{{ item }}-install:
+kubernetes-operator-sdk-binary-{{ item }}-install:
   file.managed:
     - name: {{ p[item]['path'] }}{{ item }}
     - source: {{ p[item]['binary']['source'] }}
@@ -30,7 +29,7 @@
       - mode
                     {%- endif %}
 
-{{ formula }}-operator-sdk-binary-{{ item }}-verify:
+kubernetes-operator-sdk-binary-{{ item }}-verify:
   file.managed:
     - name: {{ p[item]['path'] }}/{{ item }}.asc
     - source: {{ p[item]['binary']['source_hash'] }}
@@ -53,16 +52,16 @@
       - gpg --verify {{ p[item]['path'] }}{{ item }}.asc
       - rm {{ p[item]['path'] }}{{ item }}.asc
     - require:
-      - file: {{ formula }}-operator-sdk-binary-{{ item }}-install
-      - file: {{ formula }}-operator-sdk-binary-{{ item }}-verify
+      - file: kubernetes-operator-sdk-binary-{{ item }}-install
+      - file: kubernetes-operator-sdk-binary-{{ item }}-verify
 
-{{ formula }}-operator-sdk-binary-{{ item }}-failure:
+kubernetes-operator-sdk-binary-{{ item }}-failure:
   file.absent:
     - names:
       - {{ p[item]['path'] }}{{ item }}
       - {{ p[item]['path'] }}{{ item }}.asc
     - onfail:
-      - cmd: {{ formula }}-operator-sdk-binary-{{ item }}-verify
+      - cmd: kubernetes-operator-sdk-binary-{{ item }}-verify
 
                 {%- endif %}
             {%- endif %}

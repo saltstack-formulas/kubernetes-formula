@@ -3,11 +3,10 @@
 
 {%- set tplroot = tpldir.split('/')[0] %}
 {%- from tplroot ~ "/map.jinja" import data as d with context %}
-{%- set formula = d.formula %}
 
     {%- if grains.os|lower != 'windows' %}
 
-{{ formula }}-sigs-binary-deps-install:
+kubernetes-sigs-binary-deps-install:
   pkg.installed:
     - names: {{ d.pkg.deps|json }}
 
@@ -18,7 +17,7 @@
                 {%- if d.sigs.pkg[tool]['use_upstream'] == 'binary' and 'binary' in d.sigs.pkg[tool] %}
                     {%- set p = d.sigs['pkg'][tool] %}
 
-{{ formula }}-sigs-binary-{{ tool }}-install:
+kubernetes-sigs-binary-{{ tool }}-install:
   file.managed:
     - name: {{ p['path'] }}{{ tool }}
     - source: {{ p['binary']['source'] }}
@@ -32,22 +31,22 @@
                    {%- if grains.os|lower != 'windows' %}
     - mode: '0755'
     - require:
-      - pkg: {{ formula }}-sigs-binary-deps-install
+      - pkg: kubernetes-sigs-binary-deps-install
     - user: {{ d.identity.rootuser }}
     - group: {{ d.identity.rootgroup }}
 
                        {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
                            {%- for cmd in p['commands']|unique %}
 
-{{ formula }}-sigs-binary-{{ tool }}-install-symlink-{{ cmd }}:
+kubernetes-sigs-binary-{{ tool }}-install-symlink-{{ cmd }}:
   file.symlink:
     - name: /usr/local/bin/{{ cmd }}
-    - target: {{ p['path'] }}/bin/{{ tool }}
+    - target: {{ p['path'] }}/bin/{{ cmd }}
     - force: True
     - onlyif:
-      - test -f {{ p['path'] }}/bin/{{ tool }}
+      - test -f {{ p['path'] }}/bin/{{ cmd }}
     - require:
-      - file: {{ formula }}-sigs-binary-{{ tool }}-install
+      - file: kubernetes-sigs-binary-{{ tool }}-install
 
                            {%- endfor %}
                        {%- endif %}
@@ -62,7 +61,7 @@
         {%- endfor %}
         {%- if grains.os|lower == 'windows' %}
 
-{{ formula }}-sigs-binary-install-bashrc:
+kubernetes-sigs-binary-install-bashrc:
   file.replace:
     - name: C:\cygwin64\home\{{ d.identity.rootuser }}\.bashrc
     - pattern: '^export PATH=${PATH}:/cygdrive/c/kubernetes/bin$'
@@ -71,7 +70,7 @@
   cmd.run:
     - name: sed -i -e "s/\r//g" C:\cygwin64\home\{{ d.identity.rootuser }}\.bashrc
     - onchanges:
-      - file: {{ formula }}-sigs-binary-install-bashrc
+      - file: kubernetes-sigs-binary-install-bashrc
 
         {%- endif %}
     {%- endif %}

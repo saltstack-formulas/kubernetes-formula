@@ -11,3 +11,4 @@ include:
   - .devtools.clean
   - .devlibs.clean
   - .sigs.clean
+  - .crimgr.clean

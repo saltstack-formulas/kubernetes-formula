@@ -12,9 +12,8 @@ include:
     {%- else %}
         {%- set tplroot = tpldir.split('/')[0] %}
         {%- from tplroot ~ "/map.jinja" import data as d with context %}
-        {%- set formula = d.formula %}
 
-{{ formula }}-server-archive-install-other:
+kubernetes-server-archive-install-other:
   test.show_notification:
     - text: |
         The server is unavailable for {{ salt['grains.get']('finger', grains.os_family) }}

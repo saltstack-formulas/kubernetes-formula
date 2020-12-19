@@ -5,7 +5,6 @@
 
     {%- set tplroot = tpldir.split('/')[0] %}
     {%- from tplroot ~ "/map.jinja" import data as d with context %}
-    {%- set formula = d.formula %}
 
     {%- if 'wanted' in d.operator.sdk and d.operator.sdk.wanted %}
         {%- for item in d.operator.sdk.wanted|unique %}
@@ -13,7 +12,7 @@
                 {%- set p = d.operator.sdk['pkg'] %}
                 {%- if item in p and 'binary' in p[item] and 'source' in p[item]['binary'] %}
 
-{{ formula }}-operator-sdk-binary-{{ item }}-clean:
+kubernetes-operator-sdk-binary-{{ item }}-clean:
   file.absent:
     - name: {{ p[item]['path'] }}/{{ item }}
 
