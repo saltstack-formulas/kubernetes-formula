@@ -102,7 +102,7 @@ Windows:
       use_upstream: package
       binary:
         options: '--strip-components=2'   # windows
-        source_hash: '4c0a27dba1077aaee943e0eb7a787239dd697e1d968e78d1933c1e60b02d5d233d58541d5beec59807a4ffe3351d5152359e11da120bf64cacb3ee29fbc242e6'
+        source_hash: '88e30aee1103ab6b4f3c2bd5570b4f739cbc01b4755bfaee915dcb717ae4d8b0b99457e2bb44cc60f47b77822ce6119fbe77bdfbaaf4afa4220b78b40b1c9b2c'  # noqa 204
   server: {}   # none
   node:
     config_file: C:\kubernetes\etc\node.ini
@@ -110,13 +110,13 @@ Windows:
       use_upstream: archive
       archive:
         options: '--strip-components=3'   # windows
-        source_hash: '9d4261af343cc330e6359582f80dbd6efb57d41f882747a94bbf47b4f93292d43dd19a86214d4944d268941622dfbc96847585e6fec15fddc4dbd93d17015fa8'  # noqa 204
+        source_hash: 'a38016acc743eb87d4803d2d06c24fc3315a4db6eacbd3f2060f28355ca96f1b3294b30483b74ecea18fe220a9d1319509f26fe02615fbaa7f1ecd11f76b1f6b'  # noqa 204
 
   sigs:
     pkg:
       kind:
         binary:
-          source_hash: '6f34dbf6f6a9ebdd1d2a2b41a1d7b92d490a53569e45a791f7175c2b4143447f'
+          source_hash: 'd309d8056cec8bcabb24e185200ef8f9702e0c01a9ec8a7f7185fe956783ed97'
       krew:
         use_upstream: binary
         suffix: exe
@@ -131,27 +131,26 @@ Windows:
         suffix: exe
         config_file: C:\kubernetes\etc\minikube.ini
         environ_file: C:\kubernetes\etc\minkube.sh
-        binary:
-          source_hash: '36cfbbbe0736aef9c16f8e042943158c926f657d38b61cf1b0fa2a360944ca20'
+        binary: {}
       devspace:
         name: devspace
         suffix: exe
       octant:
         suffix: zip
         archive:
-          source_hash: '15bafbb6354257102c51478dda889eefa7676c60ea291b2756911a5fcb2e1f71'
+          source_hash: '39c484e6d5e957cb1403afbc99cc0b11d77d101c57e7c9fa686d5db72bd3064a'  # noqa 204
           options: ''  # zipfile
       k3s:
         use_upstream: false   # no windows binary
       kubectx:
         suffix: zip
         archive:
-          source_hash: '50da8ffd2ac9ca7f41c8aa6bf47a7fbd91d17603827b24267b8618fc30e7923f'  # x86_64
+          source_hash: '31a30912ace13fe0a458a253bc76bd106c48f3b0967ac2676cfd8b7fae71e314'  # noqa 204
           options: ''
       kubens:
         suffix: zip
         archive:
-          source_hash: 'bd60e0bd71ef0c0d628dcf09600902e2d67998a29cc5998a404b200fe2d98de8'  # x86_64
+          source_hash: 'de907e5dbb1684093af2c4aee4e0c6fea21144d1393083783a59346e010655f3'  # noqa 204
           options: ''
       kudo:
         use_upstream: false  # windows not available
@@ -163,19 +162,19 @@ Windows:
       cue:
         suffix: zip
         archive:
-          source_hash: '936084adace91705b4e3720d3f54b3a6156d1e2d8662f5bbb1b79fe8afcb2dae'  # x86_64
+          source_hash: '13a2db61e78473db0fab0530e8ebf70aa37ed6fb88ee14df240880ec7e70c0f1'  # noqa 204
           options: ''
       audit2rbac:
         archive:
-          source_hash: '57e1b6f108141da818eb29ad5755d386f56be067737302fabfa092e335c6ce57'
+          source_hash: '57e1b6f108141da818eb29ad5755d386f56be067737302fabfa092e335c6ce57'  # noqa 204
       stern:
         suffix: exe
         binary:
-          source_hash: '75708b9acf6ef0eeffbe1f189402adc0405f1402e6b764f1f5152ca288e3109e'  # amd64
+          source_hash: '75708b9acf6ef0eeffbe1f189402adc0405f1402e6b764f1f5152ca288e3109e'  # noqa 204
       dive:
         suffix: zip
         archive:
-          source_hash: '4e8e48263077f94fccfb1f1c385a95640ef3c7a48fd8ca41cc7e5889ba82da28'  # amd64
+          source_hash: 'e88cf463b48d9edc22f71b63d43f076826f32f6777ac9a8d288dd3dd8f0599e3'  # noqa 204
           options: ''
       linkerd2:
         name: linkerd2-cli-edge
@@ -197,17 +196,17 @@ MacOS:
       name: kubernetes-cli         # homebrew
       use_upstream: archive
       archive:
-        source_hash: '7093a34298297e46bcd1ccb77a9c83ca93b8ccb63ce2099d3d8cd8911ccc384470ac202644843406f031c505a8960d247350a740d683d8910ca70a0b58791a1b'  # noqa 204
+        source_hash: '41dcfff40498335c92d872eb6aa6215d9d84908f79bdf61777d52243a446fffb114313fb586ec6a58908684eaf86fae6b2fbaa70a2a3f06f78470a20ca4d9727'  # noqa 204
 
   sigs:
     pkg:
       kubebuilder:
         archive:
-          source_hash: '39314d45053b6c31eb17e35c9b8d923f8a38277a9a136448345dd4b7f0f308f4'
+          source_hash: '2a6c5e0e276b65cfbe173fca07b318ecff1752bf947002641b808c4a40187f2c'  # noqa 204
       kind:
         name: kind      # homebrew
         binary:
-          source_hash: '849034ffaea8a0e50f9153078890318d5863bafe01495418ea0ad037b518de90'
+          source_hash: '432bef555a70e9360b44661c759658265b9eaaf7f75f1beec4c4d1e6bbf97ce3'  # noqa 204
       krew:
         commands:
           - krew-darwin_amd64
@@ -218,43 +217,61 @@ MacOS:
         check: sysctl -a | grep machdep.cpu.features
         name: minikube               # homebrew
         use_upstream: binary
-        binary:
-          source_hash: '1ef0ca8ce0aa43f2c7092af173742b597f7876a5e67ab829c5f266dbecdf9469'
+        binary: {}
       devspace:
         use_upstream: binary
       kudo:
         name: kudo-cli    # homebrew
         tapname: kudobuilder/tap
         binary:
-          source_hash: 'df8ca9034ef78000638e9cb08e65c7f054938b4827368755b613a63a8ea8efc7'
+          source_hash: '95a62092b75b43c147f5b9942f8b0b06ecf3cf34ccad4f301295c618c8ae3514'  # noqa 204
       octant:
         suffix: zip
         archive:
-          source_hash: 'f3ac074585bd3afbf529da7e37e5e8844150504fdb420f0cc930f31e766ce24a'
+          source_hash: '26004633ee0abca5e810e0fe3dacc950dccdd5b963a6d6f35c2f3addb21df5df'  # noqa 204
           options: '' # zipfile
       linkerd2:
         binary:
-          source_hash: '1adc9c53fe968383020b6c4047d42452754e05bc90d1a65f2261d729c6fab4df'
+          source_hash: '1adc9c53fe968383020b6c4047d42452754e05bc90d1a65f2261d729c6fab4df'  # noqa 204
       k3s:
         use_upstream: false   # no macos binary
       kubectx:
         archive:
-          source_hash: 'a46c5cf1f6ba8f6aa4dc75fc5a7086d294a28a19cf2fbbf18ac54108a7f713e1'  # x86_64
+          source_hash: '7adeaf057809ef756b6f290c2e0557e86c1d04718239166a9ef0298db6fe5b27'  # noqa 204
       kubens:
         archive:
-          source_hash: '4ae390ba702d57355d5fb9f2bba04c9b00ae39f740c59044c2d39cd6bfa0ab18'  # x86_64
+          source_hash: 'ef43ab1217e09ac1b929d4b9dd2c22cbb10540ef277a3a9b484c020820c988b1'  # noqa 204
       cue:
         archive:
-          source_hash: '936084adace91705b4e3720d3f54b3a6156d1e2d8662f5bbb1b79fe8afcb2dae'  # x86_64
+          source_hash: '24717a72b067a4d8f4243b51832f4a627eaa7e32abc4b9117b0af9aa63ae0332'  # noqa 204
       stern:
         archive:
-          source_hash: '7aea3b6691d47b3fb844dfc402905790665747c1e6c02c5cabdd41994533d7e9'  # x86_64
+          source_hash: '7aea3b6691d47b3fb844dfc402905790665747c1e6c02c5cabdd41994533d7e9'  # noqa 204
       dive:
         archive:
-          source_hash: '1da3581355d432db38154d80ca9929fc3bca55c473ba286e7869814718f6d578'  # x86_64
+          source_hash: 'b4cad081146defcb90b418215cdfdf835372abd4adf1b0f33aaf1ea5d9bb3244'  # noqa 204
       audit2rbac:
         archive:
-          source_hash: 'e89d9e7e6e68d7fdf135ab0912f57afda0fea07931ac443a367d35671f83d1b1'
+          source_hash: 'e89d9e7e6e68d7fdf135ab0912f57afda0fea07931ac443a367d35671f83d1b1'  # noqa 204
       skaffold:
         binary:
-          source_hash: '1e9ad5ed0ba3b277c582dbdb7e13c3307ff1dc21887bf18d4c5aece486e0518c'
+          source_hash: '1e9ad5ed0ba3b277c582dbdb7e13c3307ff1dc21887bf18d4c5aece486e0518c'  # noqa 204
+
+  operator:
+    sdk:
+      pkg:
+        ansible-operator:
+          binary:
+            source_hash: 'd1d2414318a3417112b788ddf04b99ad00c133721e313a74c678c47df3bb7bac'  # noqa 204
+        helm-operator:
+          binary:
+            source_hash: '14ccf72c1f4781096174d62ff385bd9de9617ef4fc0d612f21f0ae00439b2fd9'  # noqa 204
+        operator-sdk:
+          binary:
+            source_hash: '37c246ea83bfc339d0e323bb4b02712cd6e1ba71f87be658d42ecfb12f03fd46'  # noqa 204
+
+  operators:
+    pkg:
+      grafana-operator:
+        archive:
+          source_hash: '65a0ae518331e0830fcb73ff83ab09fae8b101037610587a0038b8c0f6fb64db'  # noqa 204
