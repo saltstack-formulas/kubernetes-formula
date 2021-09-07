@@ -10,7 +10,7 @@ kubernetes:
   operator:
     wanted:
       - sdk
-# test script installation
+  # test script installation
   k3s:
     pkg:
       use_upstream: script

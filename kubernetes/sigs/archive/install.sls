@@ -54,10 +54,9 @@ kubernetes-sigs-archive-{{ tool }}-install:
 kubernetes-sigs-archive-{{ tool }}-install-symlink-{{ cmd }}:
   file.symlink:
     - name: /usr/local/bin/{{ cmd }}
-    - target: {{ p['path'] }}/bin/{{ cmd }}
+    - target: {{ p['path'] }}/{{ cmd }}
     - force: True
-    - onlyif:
-      - test -f {{ p['path'] }}/bin/{{ cmd }}
+    - onlyif: test -x {{ p['path'] }}/{{ cmd }}
     - require:
       - archive: kubernetes-sigs-archive-{{ tool }}-install
 

@@ -98,7 +98,7 @@ control 'kubernetes archive' do
     it { should be_symlink }
     it { should_not be_directory }
   end
-    describe file('/opt/intel/bin/cri-resmgr') do
+  describe file('/usr/local/opt/intel/bin/cri-resmgr') do
     it { should exist }
     its('mode') { should cmp '0755' }
   end
@@ -184,29 +184,14 @@ control 'kubernetes archive' do
     it { should be_file }
     it { should_not be_directory }
   end
-  describe file('/usr/local/k8s-sigs-kubebuilder-3.1.0/bin/etcd') do
-    it { should_not be_symlink }
-    it { should be_file }
-    it { should_not be_directory }
-  end
-  describe file('/usr/local/k8s-sigs-kubebuilder-3.1.0/bin/kube-apiserver') do
-    it { should_not be_symlink }
-    it { should be_file }
-    it { should_not be_directory }
-  end
-  describe file('/usr/local/k8s-sigs-kubebuilder-3.1.0/bin/kubectl') do
-    it { should_not be_symlink }
-    it { should be_file }
-    it { should_not be_directory }
-  end
   describe file('/usr/local/k8s-sigs-kubebuilder-3.1.0/bin/kubebuilder') do
     it { should_not be_symlink }
     it { should be_file }
     it { should_not be_directory }
   end
   describe file('/usr/local/bin/kubebuilder') do
-    # it { should be_symlink }
-    # it { should be_file }
+    it { should be_symlink }
+    it { should be_file }
     it { should_not be_directory }
   end
   describe file('/usr/local/k8s-devtools-istio-1.11.2/bin/istioctl') do
@@ -224,26 +209,14 @@ control 'kubernetes archive' do
     it { should be_file }
     it { should_not be_directory }
   end
-  describe file('/usr/local/bin/kubectx') do
-    it { should be_symlink }
-    it { should_not be_directory }
-  end
   describe file('/usr/local/k8s-devtools-kubens-0.9.4/bin/kubens') do
     it { should_not be_symlink }
     it { should be_file }
     it { should_not be_directory }
   end
-  describe file('/usr/local/bin/kubens') do
-    it { should be_symlink }
-    it { should_not be_directory }
-  end
-  describe file('/usr/local/k8s-devtools-cue-0.4.0/bin/cue') do
+  describe file('/usr/local/k8s-devtools-cue-v0.4.0/bin/cue') do
     it { should_not be_symlink }
     it { should be_file }
-    it { should_not be_directory }
-  end
-  describe file('/usr/local/bin/cue') do
-    it { should be_symlink }
     it { should_not be_directory }
   end
   describe file('/usr/local/k8s-devtools-linkerd2-21.9.1') do
@@ -262,18 +235,8 @@ control 'kubernetes archive' do
     it { should be_file }
     it { should_not be_directory }
   end
-  describe file('/usr/local/bin/audit2rbac') do
-    it { should be_symlink }
-    it { should be_file }
-    it { should_not be_directory }
-  end
   describe file('/usr/local/k8s-devtools-octant-0.23.0/bin/octant') do
     it { should_not be_symlink }
-    it { should be_file }
-    it { should_not be_directory }
-  end
-  describe file('/usr/local/bin/octant') do
-    it { should be_symlink }
     it { should be_file }
     it { should_not be_directory }
   end

@@ -31,7 +31,7 @@ kubernetes:
         uri_b: 'https://github.com/kubernetes-sigs/kind/releases/download'
         uri_d: 'https://github.com/kubernetes-sigs/kind/tree/master/images'   # docker images
         binary:
-          source_hash: '432bef555a70e9360b44661c759658265b9eaaf7f75f1beec4c4d1e6bbf97ce3'  # noqa 204
+          source_hash: '949f81b3c30ca03a3d4effdecda04f100fa3edc07a28b19400f72ede7c5f0491'  # noqa 204
       krew:
         version: 0.4.1
         commands:
@@ -48,12 +48,10 @@ kubernetes:
           # kube-apiserver
           - kubebuilder
           # kubectl
-        use_upstream: archive
+        use_upstream: binary
         uri_a: 'https://github.com/kubernetes-sigs/kubebuilder/releases/download'
-        archive:
+        binary:
           source_hash: 'a4af6a2110cf506855cdc86d0291c6e76203ae9fb3c918f7fdc05e7962e4b488'  # noqa 204
-          options: '--strip-components=1'
-        suffix: tar.gz
 
   devtools:
     wanted:
@@ -188,7 +186,7 @@ kubernetes:
           options: ''
         suffix: tar.gz
       cue:
-        version: 0.4.0
+        version: v0.4.0
         commands:
           - cue
         use_upstream: archive
@@ -225,7 +223,7 @@ kubernetes:
         use_upstream: archive
         uri_a: 'https://github.com/kubernetes-client'
         archive:
-          source_hash: ''
+          source_hash: '71107d0fc1e2530a767c8bd71e1f939af6cd4e412acc032289ff109bffba9867'  # noqa 204
           options: '--strip-components=1'
         suffix: tar.gz
       python:
@@ -234,7 +232,7 @@ kubernetes:
         use_upstream: archive
         uri_a: 'https://github.com/kubernetes-client'
         archive:
-          source_hash: ''
+          source_hash: '5320cec65d9dab7baa28fe542847888d604fb02e511f0464d0e93a948ac071c8'  # noqa 204
           options: '--strip-components=1'
         suffix: tar.gz
       csharp:
@@ -252,7 +250,7 @@ kubernetes:
         use_upstream: archive
         uri_a: 'https://github.com/kubernetes-client'
         archive:
-          source_hash: ''
+          source_hash: '06aa836c5f9d2704711af79736ae42283007320d0b00987b9a325cbe38728e83'
           options: '--strip-components=1'
         suffix: tar.gz
       kopf:
@@ -339,7 +337,7 @@ kubernetes:
         use_upstream: archive
         uri_a: 'https://github.com/integr8ly/grafana-operator/archive'
         archive:
-          source_hash: '4eaaf61c8263d80ef116baed5cebf4638c0ef092c632244759d73bc55ca5cffa'  # noqa 204
+          source_hash: 'b12a2f3bce7e5f8192f59a6e12597e4ead5f3c536ae4646c8755142429212c3a'  # noqa 204
           options: '--strip-components=1'
         suffix: tar.gz
         container:
@@ -355,7 +353,6 @@ kubernetes:
         container:
           image: quay.io/coreos/prometheus-operator
       istio-operator:
-        name: ''
         version: 0.10.6
         use_upstream: archive
         uri_a: 'https://github.com/banzaicloud/istio-operator/archive'
@@ -447,13 +444,10 @@ kubernetes:
     environ_file: /etc/default/cri-resource-manager
     service: {}
     pkg:
-      commands:
-        - cri-resmgr
       use_upstream: archive
       uri_a: 'https://github.com/intel/cri-resource-manager/releases/download'
       archive:
         source_hash: '97e117989b3d515dac86cfb0e5c14a69406a29bc5a17b5d8f13e41234b630f0b'  # noqa 204
-        options: '--strip-components=2'
       suffix: tar.gz
 
   k3s:

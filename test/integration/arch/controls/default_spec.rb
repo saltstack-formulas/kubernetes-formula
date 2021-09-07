@@ -94,26 +94,13 @@ control 'kubernetes archive' do
     it { should exist }
     its('mode') { should cmp '0755' }
   end
-  describe file('/usr/local/bin/kind') do
-    # it { should be_symlink }
-    it { should_not be_directory }
-  end
-    describe file('/opt/intel/bin/cri-resmgr') do
+  describe file('/usr/local/opt/intel/bin/cri-resmgr') do
     it { should exist }
     its('mode') { should cmp '0755' }
-  end
-  describe file('/usr/local/bin/cri-resmgr') do
-    # it { should be_symlink }
-    it { should_not be_directory }
   end
   describe file('/usr/local/k8s-devtools-stern-1.11.0/bin/stern') do
     it { should exist }
     its('mode') { should cmp '0755' }
-  end
-  describe file('/usr/local/bin/stern') do
-    # it { should be_symlink }
-    # it { should be_file }
-    it { should_not be_directory }
   end
   describe file('/usr/local/k8s-node-1.22.1/bin/kubectl') do
     it { should exist }
@@ -128,11 +115,6 @@ control 'kubernetes archive' do
     it { should exist }
     its('mode') { should cmp '0755' }
   end
-  describe file('/usr/local/bin/kubectl') do
-    it { should be_symlink }
-    it { should be_file }
-    it { should_not be_directory }
-  end
   describe file('/usr/local/k8s-devtools-minikube-1.23.0/bin') do
     it { should exist }
     it { should be_directory }
@@ -141,11 +123,6 @@ control 'kubernetes archive' do
   describe file('/usr/local/k8s-devtools-minikube-1.23.0/bin/minikube') do
     it { should exist }
     its('mode') { should cmp '0755' }
-  end
-  describe file('/usr/local/bin/minikube') do
-    # it { should be_symlink }
-    # it { should be_file }
-    it { should_not be_directory }
   end
   describe file('/usr/local/k8s-devtools-devspace-5.15.0/bin') do
     it { should exist }
@@ -156,22 +133,12 @@ control 'kubernetes archive' do
     it { should exist }
     its('mode') { should cmp '0755' }
   end
-  describe file('/usr/local/bin/devspace') do
-    # it { should be_symlink }
-    # it { should be_file }
-    it { should_not be_directory }
-  end
   describe file('/usr/local/k8s-k3s-v1.21.4+k3s1/bin/k3s') do
     it { should exist }
     it { should_not be_directory }
     its('type') { should eq :file }
   end
   describe file('/usr/local/bin/k3s') do
-    it { should be_file }
-    it { should_not be_directory }
-  end
-  describe file('/usr/local/bin/kube-apiserver') do
-    it { should be_symlink }
     it { should be_file }
     it { should_not be_directory }
   end
@@ -184,38 +151,13 @@ control 'kubernetes archive' do
     # it { should be_file }
     it { should_not be_directory }
   end
-  describe file('/usr/local/k8s-sigs-kubebuilder-3.1.0/bin/etcd') do
-    it { should_not be_symlink }
-    it { should be_file }
-    it { should_not be_directory }
-  end
-  describe file('/usr/local/k8s-sigs-kubebuilder-3.1.0/bin/kube-apiserver') do
-    it { should_not be_symlink }
-    it { should be_file }
-    it { should_not be_directory }
-  end
-  describe file('/usr/local/k8s-sigs-kubebuilder-3.1.0/bin/kubectl') do
-    it { should_not be_symlink }
-    it { should be_file }
-    it { should_not be_directory }
-  end
   describe file('/usr/local/k8s-sigs-kubebuilder-3.1.0/bin/kubebuilder') do
     it { should_not be_symlink }
     it { should be_file }
     it { should_not be_directory }
   end
-  describe file('/usr/local/bin/kubebuilder') do
-    # it { should be_symlink }
-    # it { should be_file }
-    it { should_not be_directory }
-  end
   describe file('/usr/local/k8s-devtools-istio-1.11.2/bin/istioctl') do
     it { should_not be_symlink }
-    # it { should be_file }
-    it { should_not be_directory }
-  end
-  describe file('/usr/local/bin/istioctl') do
-    # it { should be_symlink }
     # it { should be_file }
     it { should_not be_directory }
   end
@@ -224,26 +166,14 @@ control 'kubernetes archive' do
     it { should be_file }
     it { should_not be_directory }
   end
-  describe file('/usr/local/bin/kubectx') do
-    # it { should be_symlink }
-    it { should_not be_directory }
-  end
   describe file('/usr/local/k8s-devtools-kubens-0.9.4/bin/kubens') do
     it { should_not be_symlink }
     it { should be_file }
     it { should_not be_directory }
   end
-  describe file('/usr/local/bin/kubens') do
-    # it { should be_symlink }
-    it { should_not be_directory }
-  end
-  describe file('/usr/local/k8s-devtools-cue-0.4.0/bin/cue') do
+  describe file('/usr/local/k8s-devtools-cue-v0.4.0/bin/cue') do
     it { should_not be_symlink }
     it { should be_file }
-    it { should_not be_directory }
-  end
-  describe file('/usr/local/bin/cue') do
-    # it { should be_symlink }
     it { should_not be_directory }
   end
   describe file('/usr/local/k8s-devtools-linkerd2-21.9.1') do
@@ -262,28 +192,13 @@ control 'kubernetes archive' do
     it { should be_file }
     it { should_not be_directory }
   end
-  describe file('/usr/local/bin/audit2rbac') do
-    # it { should be_symlink }
-    # it { should be_file }
-    it { should_not be_directory }
-  end
   describe file('/usr/local/k8s-devtools-octant-0.23.0/bin/octant') do
     it { should_not be_symlink }
     it { should be_file }
     it { should_not be_directory }
   end
-  describe file('/usr/local/bin/octant') do
-    # it { should be_symlink }
-    # it { should be_file }
-    it { should_not be_directory }
-  end
   describe file('/usr/local/k8s-devtools-skaffold-1.31.0/bin/skaffold') do
     it { should be_file }
-  end
-  describe file('/usr/local/bin/skaffold') do
-    # it { should be_symlink }
-    # it { should be_file }
-    it { should_not be_directory }
   end
   describe file('/usr/local/k8s-devtools-dive-0.10.0/bin/dive') do
     # it { should be_file }
@@ -292,18 +207,8 @@ control 'kubernetes archive' do
   describe file('/usr/local/k8s-devtools-dive-0.10.0') do
     it { should be_directory }
   end
-  describe file('/usr/local/bin/dive') do
-    # it { should be_symlink }
-    # it { should be_file }
-    it { should_not be_directory }
-  end
   describe file('/usr/local/k8s-sigs-krew-0.4.1') do
     it { should be_directory }
-  end
-  describe file('/usr/local/bin/krew') do
-    # it { should be_symlink }
-    # it { should be_file }
-    it { should_not be_directory }
   end
   describe file('/etc/default/kubernetes-aliases.sh') do
     it { should be_file }

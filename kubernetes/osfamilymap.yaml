@@ -33,9 +33,6 @@ RedHat:
     deps:
       - tar
       - gzip
-         {%- if grains.os not in ('Amazon',) %}
-      - container-selinux
-         {%- endif %}
     deps_url:
       - https://rpm.rancher.io/k3s-selinux-0.1.1-rc1.el7.noarch.rpm
     repo:
@@ -201,7 +198,7 @@ MacOS:
   sigs:
     pkg:
       kubebuilder:
-        archive:
+        binary:
           source_hash: '2a6c5e0e276b65cfbe173fca07b318ecff1752bf947002641b808c4a40187f2c'  # noqa 204
       kind:
         name: kind      # homebrew
