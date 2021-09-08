@@ -3,7 +3,7 @@
 kubernetes-formula
 ==================
 
-Extensible formula to manage kubernetes on MacOS, Windows, and GNU/Linux. Currently supports:
+Extensible formula to install kubernetes on MacOS, Windows, and GNU/Linux. Support for:
 
 * `server` (https://kubernetes.io) [Linux OS]
 * `node` (https://kubernetes.io) [all OS]
@@ -99,7 +99,7 @@ Contributing to this repo
 
 **Commit message formatting is significant!!**
 
-Please see :ref:`How to contribute <CONTRIBUTING>` for more details.
+Please see `How to contribute <https://github.com/saltstack-formulas/.github/blob/master/CONTRIBUTING.rst>`_ for more details.
 
 Available Meta states
 ----------------------
@@ -132,12 +132,12 @@ This state installs kubernetes package repository only (see https://kubernetes.i
 This state removes kubernetes package repository only.
 
 ``kubernetes.client``
-^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^
 
 This state installs kubernetes cli and libraries only  (see https://kubernetes.io/docs/reference/kubectl, (https://kubernetes.io/docs/setup/release/notes/#client-binaries, and https://kubernetes.io/docs/reference/using-api/client-libraries)
 
 ``kubernetes.client.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state uninstalls kubernetes cli and libraries only.
 
@@ -172,7 +172,7 @@ This state installs kubernetes sig archives only
 This state uninstalls kubernetes sig archives only
 
 ``kubernetes.operator``
-^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^
 
 This state installs operator archives only (Linux/MacOS)
 
@@ -269,12 +269,12 @@ This state installs server packages from repo.
 This state uninstalls server packages only 
 
 ``kubernetes.server.archive``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state installs server archive only
 
 ``kubernetes.server.archive.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state uninstalls server archive only
 
@@ -316,12 +316,12 @@ This state installs kubernetes developer aliases to /etc/defaults.
 This state uninstalls kubectl package only
 
 ``kubernetes.client.archive``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state installs kubectl archive only
 
 ``kubernetes.client.archive.clean``
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This state uninstalls kubectl archive only
 

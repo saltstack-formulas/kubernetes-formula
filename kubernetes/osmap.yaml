@@ -14,3 +14,24 @@ Fedora:
   pkg:
     deps:
       - selinux-policy-minimum
+
+RedHat:
+  pkg:
+    deps:
+      - tar
+      - gzip
+      - container-selinux
+
+CentOS:
+  pkg:
+    deps:
+      - tar
+      - gzip
+      - container-selinux
+
+Rocky:
+  pkg:
+    deps:
+      - tar
+      - gzip
+      - container-selinux

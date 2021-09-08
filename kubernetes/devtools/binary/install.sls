@@ -41,10 +41,9 @@ kubernetes-devtools-binary-{{ tool }}-install:
 kubernetes-devtools-binary-{{ tool }}-install-symlink-{{ cmd }}:
   file.symlink:
     - name: /usr/local/bin/{{ cmd }}
-    - target: {{ p[tool]['path'] }}{{ tool }}/bin/{{ cmd }}
+    - target: {{ p[tool]['path'] }}{{ cmd }}
     - force: True
-    - onlyif:
-      - test -f {{ p[tool]['path'] }}{{ tool }}/bin/{{ cmd }}
+    - onlyif: test -x {{ p[tool]['path'] }}{{ cmd }}
     - require:
       - file: kubernetes-devtools-binary-{{ tool }}-install
                             {%- endfor %}

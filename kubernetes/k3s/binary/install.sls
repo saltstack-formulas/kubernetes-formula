@@ -32,6 +32,7 @@ kubernetes-k3s-binary-install-symlink:
     - name: /usr/local/bin/k3s
     - target: {{ d.k3s.pkg.path }}/k3s
     - force: True
+    - onlyif: test -x {{ d.k3s.pkg.path }}/k3s
     - require:
       - file: kubernetes-k3s-binary-install
     - unless: {{ d.linux.altpriority|int > 0 }} || false

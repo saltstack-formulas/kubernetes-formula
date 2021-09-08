@@ -24,16 +24,16 @@ kubernetes:
       - kubebuilder
     pkg:
       kind:
-        version: '0.9.0'
+        version: 0.11.1
         commands:
           - kind
         use_upstream: binary
         uri_b: 'https://github.com/kubernetes-sigs/kind/releases/download'
         uri_d: 'https://github.com/kubernetes-sigs/kind/tree/master/images'   # docker images
         binary:
-          source_hash: '35a640e0ca479192d86a51b6fd31c657403d2cf7338368d62223938771500dc8'
+          source_hash: '949f81b3c30ca03a3d4effdecda04f100fa3edc07a28b19400f72ede7c5f0491'  # noqa 204
       krew:
-        version: '0.4.0'
+        version: 0.4.1
         commands:
           - krew-linux_amd64
         use_upstream: archive
@@ -42,18 +42,16 @@ kubernetes:
           options: '--strip-components=1'
         suffix: tar.gz
       kubebuilder:
-        version: '2.3.1'
+        version: 3.1.0
         commands:
           # etcd
           # kube-apiserver
           - kubebuilder
           # kubectl
-        use_upstream: archive
+        use_upstream: binary
         uri_a: 'https://github.com/kubernetes-sigs/kubebuilder/releases/download'
-        archive:
-          source_hash: 'ff496970f209706763f2aba2bdcefc2de8d00085b3b972b5790117b59ea4ed10'
-          options: '--strip-components=1'
-        suffix: tar.gz
+        binary:
+          source_hash: 'a4af6a2110cf506855cdc86d0291c6e76203ae9fb3c918f7fdc05e7962e4b488'  # noqa 204
 
   devtools:
     wanted:
@@ -72,7 +70,7 @@ kubernetes:
       - stern
     pkg:
       devspace:
-        version: 5.6.2
+        version: 5.15.0
         commands:
           - devspace
         use_upstream: binary
@@ -82,17 +80,17 @@ kubernetes:
         container:
           image: devspacesh/devspace
       octant:
-        version: '0.16.3'
+        version: 0.23.0
         commands:
           - octant
         use_upstream: archive
         uri_a: 'https://github.com/vmware-tanzu/octant/releases/download'
-        archive:
-          source_hash: '1df88ddf8990a85fd8182c25687249eab718ac2356e60f9618932412513bdbb0'  # 64Bit
+        archive:  # 64bit
+          source_hash: '91a49c4438b07def60078ebbd86469d96517832ee214b975c79a8c63350f39c9'  # noqa 204
           options: '--strip-components=1'
         suffix: tar.gz
       linkerd2:
-        version: 20.12.3
+        version: 21.9.1
         commands:
           - linkerd2
         use_upstream: binary
@@ -100,7 +98,7 @@ kubernetes:
         binary: {}  # needed
         suffix: ''
       skaffold:
-        version: 1.17.2
+        version: 1.31.0
         commands:
           - skaffold
         use_upstream: binary
@@ -110,7 +108,7 @@ kubernetes:
         container:
           image: shahidh/skaffold
       istio:
-        version: 1.7.6
+        version: 1.11.2
         commands:
           - istioctl
         use_upstream: archive
@@ -121,29 +119,29 @@ kubernetes:
         container:
           image: istio/base   # ??
       dive:
-        version: '0.9.2'
+        version: 0.10.0
         commands:
           - dive
         use_upstream: archive
         uri_a: 'https://github.com/wagoodman/dive/releases/download'
         archive:
-          source_hash: 'fb0b6ee68831fbfc59a06d88638becea09e85da3bb2093a1de4a47ebd4e40296'  # x86_64
+          source_hash: '9541997876d4985de66d0fa5924dac72258a3094ef7d3f6ef5fa5dcf6f6a47ad'  # noqa 204
           options: '--strip-components=1'
         suffix: tar.gz
         container:
           image: wagoodman/dive
       kudo:
-        version: '0.17.2'
+        version: 0.19.0
         name: kubectl-kudo
         commands:
           - kudo
         use_upstream: binary
         uri_b: 'https://github.com/kudobuilder/kudo/releases/download'
         binary:
-          source_hash: '8d60af215ba20b992a919a826137a84c709bc8156cc65ff5b908e96edb2d4ad5'
+          source_hash: '6a13d44cfe1afc8fd949f162f072142375f072783b94f4034e8d7b1efcd02bd9'  # noqa 204
         suffix: tar.gz
       minikube:
-        version: '1.16.0-beta.0'
+        version: 1.23.0
         commands:
           - minikube
         config_file: /etc/default/minikube.ini
@@ -157,56 +155,56 @@ kubernetes:
         binary: {}  # needed
         suffix: null
       stern:
-        version: '1.11.0'
+        version: 1.11.0
         commands:
           - stern
         use_upstream: binary
         uri_b: 'https://github.com/wercker/stern/releases/download'
         binary:
-          source_hash: 'e0b39dc26f3a0c7596b2408e4fb8da533352b76aaffdc18c7ad28c833c9eb7db'  # x86_64
+          source_hash: 'e0b39dc26f3a0c7596b2408e4fb8da533352b76aaffdc18c7ad28c833c9eb7db'  # noqa 204
         suffix: ''
         container:
           image: heriet/stern
       kubectx:
-        version: '0.9.1'
+        version: 0.9.4
         commands:
           - kubectx
         use_upstream: archive
         uri_a: 'https://github.com/ahmetb/kubectx/releases/download'
         archive:
-          source_hash: 'ce689516f3ae916492bb8f9ee3344da03f6b5a098c1ce2c4a5107b8e9e1cf445'  # x86_64
+          source_hash: 'db5a48e85ff4d8c6fa947e3021e11ba4376f9588dd5fa779a80ed5c18287db22'  # noqa 204
           options: ''
         suffix: tar.gz
       kubens:
-        version: '0.9.1'
+        version: 0.9.4
         commands:
           - kubens
         use_upstream: archive 
         uri_a: 'https://github.com/ahmetb/kubectx/releases/download'
         archive:
-          source_hash: 'dea7839158e4847b8b52709dbfbe9ff2d974df4416b8ea8a86ce4bd622786f52'  # x86_64
+          source_hash: '8b3672961fb15f8b87d5793af8bd3c1cca52c016596fbf57c46ab4ef39265fcd'  # noqa 204
           options: ''
         suffix: tar.gz
       cue:
-        version: '0.3.0-alpha5'
+        version: v0.4.0
         commands:
           - cue
         use_upstream: archive
         uri_a: 'https://github.com/cuelang/cue/releases/download'
         archive:
-          source_hash: '9d3131e470cdb5182afd9966688f1c052d383145cce005a947156b5591da39b7'  # x86_64
+          source_hash: 'a118177d9c605b4fc1a61c15a90fddf57a661136c868dbcaa9d2406c95897949'  # noqa 204
           options: ''
         suffix: tar.gz
         container:
           image: cuelang/cue
       audit2rbac:
-        version: '0.8.0'
+        version: 0.8.0
         commands:
           - audit2rbac
         use_upstream: archive
         uri_a: 'https://github.com/liggitt/audit2rbac/releases/download'
         archive:
-          source_hash: '7703cbf3c9c555ea91d4120acf106502fce64c6afdbe1c5aec603a4864560631'  # x86_64
+          source_hash: '7703cbf3c9c555ea91d4120acf106502fce64c6afdbe1c5aec603a4864560631'  # noqa 204
           options: '--strip-components=0'
         suffix: tar.gz
 
@@ -221,25 +219,25 @@ kubernetes:
     pkg:
       java:
         name: 'client-java-parent-'
-        version: '10.0.0'
+        version: 13.0.0
         use_upstream: archive
         uri_a: 'https://github.com/kubernetes-client'
         archive:
-          source_hash: 'f1cb406f09fb829abd9c48d308d8c208d9df402373761456e1c4ef8bb1d14bad'
+          source_hash: '71107d0fc1e2530a767c8bd71e1f939af6cd4e412acc032289ff109bffba9867'  # noqa 204
           options: '--strip-components=1'
         suffix: tar.gz
       python:
         name: v
-        version: '12.0.1'
+        version: 18.20.0
         use_upstream: archive
         uri_a: 'https://github.com/kubernetes-client'
         archive:
-          source_hash: '6d0770a25db9e4e6b4188cf7485c32bef3f0317f729cca19c9af0b6f7d275dc8'
+          source_hash: '5320cec65d9dab7baa28fe542847888d604fb02e511f0464d0e93a948ac071c8'  # noqa 204
           options: '--strip-components=1'
         suffix: tar.gz
       csharp:
         name: ''
-        version: '1.2.0'
+        version: 1.2.0
         use_upstream: archive
         uri_a: 'https://github.com/kubernetes-client'
         archive:
@@ -248,16 +246,16 @@ kubernetes:
         suffix: tar.gz
       javascript:
         name: ''
-        version: '0.12.1'
+        version: 0.15.0
         use_upstream: archive
         uri_a: 'https://github.com/kubernetes-client'
         archive:
-          source_hash: '60a96ce1c2a1303b7ad750688fb8033e3d6f7bccecfa84158f0eec57ebac4a88'
+          source_hash: '06aa836c5f9d2704711af79736ae42283007320d0b00987b9a325cbe38728e83'
           options: '--strip-components=1'
         suffix: tar.gz
       kopf:
         name: ''
-        version: '0.27'
+        version: 0.27
         use_upstream: archive
         uri_a: 'https://github.com/zalando-incubator/kopf/archive'
         archive:
@@ -266,7 +264,7 @@ kubernetes:
         suffix: tar.gz
       k8s:
         name: v
-        version: '1.2.0'
+        version: 1.2.0
         use_upstream: archive
         uri_a: 'https://github.com/ericchiang/k8s/archive'
         archive:
@@ -285,28 +283,31 @@ kubernetes:
         - operator-sdk
       pkg:
         ansible-operator:
-          version: 1.2.0
+          version: 1.11.0
           use_upstream: binary
           uri_b: 'https://github.com/operator-framework/operator-sdk/releases/download'
-          binary: {}  # needed
+          binary:
+            source_hash: '32c1291d32f6c0389f3331f4797a1e03be6797c85b3c471be5c588cb16b0261d'  # noqa 204
           commands:
             - ansible-operator
           container:
             image: alaypatel07/ansible-operator
         helm-operator:
-          version: 1.2.0
+          version: 1.11.0
           use_upstream: binary
           uri_b: 'https://github.com/operator-framework/operator-sdk/releases/download'
-          binary: {}  # needed
+          binary:
+            source_hash: 'fc951746e94796c8377f4dce499fd275aae4f59a364efde79e9101d64486d70d'  # noqa 204
           commands:
             - helm-operator
           container:
             image: fluxcd/helm-operator
         operator-sdk:
-          version: 1.2.0
+          version: 1.11.0
           use_upstream: binary
           uri_b: 'https://github.com/operator-framework/operator-sdk/releases/download'
-          binary: {}  # needed
+          binary:
+            source_hash: 'b1f6fb02c619cfcdb46edf41cbeb4d66f627fd8bba122edaeeb06718965299eb'  # noqa 204
           commands:
             - operator-sdk
           container:
@@ -322,59 +323,58 @@ kubernetes:
       - shell-operator
     pkg:
       akka-cluster-operator:
-        version: 1.0.2
+        version: 1.0.3
         use_upstream: archive
         uri_a: 'https://github.com/lightbend/akka-cluster-operator/archive'
         archive:
-          source_hash: '5df57fe3b25a4c2448ade9225c23e22e3c327c5796eae3bbe1eac168d4ba92a1'
+          source_hash: 'c015898a4f580386b62003fc467df2aac3877206c02ea298bae0d0a3feba8186'  # noqa 204
           options: '--strip-components=1'
         suffix: tar.gz
         container:
           image: lightbend-docker-registry.bintray.io/lightbend/akkacluster-operator
       grafana-operator:
-        version: 3.7.0
+        version: 3.10.3
         use_upstream: archive
         uri_a: 'https://github.com/integr8ly/grafana-operator/archive'
         archive:
-          source_hash: '99bdf25e9ef61a5fe4ea6b3cc1d67de242014e97a7239743caf6ac5766a03b30'
+          source_hash: 'b12a2f3bce7e5f8192f59a6e12597e4ead5f3c536ae4646c8755142429212c3a'  # noqa 204
           options: '--strip-components=1'
         suffix: tar.gz
         container:
           image: grafana/grafana
       prometheus-operator:
-        version: '0.44.1'
+        version: 0.50.0
         use_upstream: archive
         uri_a: 'https://github.com/coreos/prometheus-operator/archive'
         archive:
-          source_hash: 'd935d737ed6ab4b856d69e3c1aeadbd33c3861cd74cc0a84f45e89a57ec846f3'
+          source_hash: '4f5c7e251c07034a0916bdb1dc1cd76894d5810811bc977682c9831aeecaae63'  # noqa 204
           options: '--strip-components=1'
         suffix: tar.gz
         container:
           image: quay.io/coreos/prometheus-operator
       istio-operator:
-        name: ''
-        version: '0.6.5'
+        version: 0.10.6
         use_upstream: archive
         uri_a: 'https://github.com/banzaicloud/istio-operator/archive'
         archive:
-          source_hash: '8bbcf1c201707d9e01f204f3b2a698827b76757a8cdd593de943af64fe1e72d1'
+          source_hash: '77e09fc27f9bf43da86c0d2383e35b175df04256e445e4e7e049ad3cb5cec50f'  # noqa 204
           options: '--strip-components=1'
         suffix: tar.gz
         container:
           image: banzaicloud/istio-operator
       shell-operator:
-        version: '1.0.0-beta.13'
+        version: 1.0.3
         use_upstream: archive
         uri_a: 'https://github.com/flant/shell-operator/archive'
         archive:
-          source_hash: '21aa1863925923f65a0a729f521f9d703ab34450fe726eed93175cd2761362d4'
+          source_hash: '44c1d8bcfdb4e4642bbd32702aac5ade67065abeac8ca7fe8b0561559291fcb1'  # noqa 204
           options: '--strip-components=1'
         suffix: tar.gz
         container:
           image: flant/shell-operator
 
   server:
-    version: '1.20.0'
+    version: 1.22.1
     config_file: /etc/default/kubernetes-server.ini
     config: {}
     environ_file: /etc/default/kubernetes-server.sh
@@ -396,11 +396,11 @@ kubernetes:
       uri_a: 'https://dl.k8s.io'
       archive:
         options: '--strip-components=2'
-        source_hash: 'fb56486a55dbf7dbacb53b1aaa690bae18d33d244c72a1e2dc95fb0fcce45108c44ba79f8fa04f12383801c46813dc33d2d0eb2203035cdce1078871595e446e'  # noqa 204
+        source_hash: '66c596577d19c1a609b554e1e61b0bc2c8ba691b2101f481dfc616799e37347edc62956b7684370dec5b16388d48a665ba78c942de4aaf5df1f78cf0667df545'  # noqa 204
       suffix: tar.gz
 
   client:
-    version: '1.20.0'
+    version: 1.22.1
     aliases_file: /etc/default/kubernetes-aliases.sh
     pkg:
       name: kubectl
@@ -411,14 +411,14 @@ kubernetes:
       uri_b: 'https://storage.googleapis.com/kubernetes-release/release'  # binary
       archive:
         options: '--strip-components=2'
-        source_hash: '081472833601aa4fa78e79239f67833aa4efcb4efe714426cd01d4ddf6f36fbf304ef7e1f5373bff0fdff44a845f7560165c093c108bd359b5ab4189f36b1f2f' # noqa 204
+        source_hash: '064bd1eaf468c9b4a00e31bec3f9c80850c52cd1e06edfd86f307236acbdba7c89dbe663cbfefdc5ead72f1cb93ba9d21d828558508f0b29f8c814d9085846ca' # noqa 204
       binary:
         name: kubernetes-client
         source_hash: ''
       suffix: tar.gz
 
   node:
-    version: '1.20.0'
+    version: 1.22.1
     config_file: /etc/default/kubernetes-node.ini
     config: {}
     service: {}
@@ -432,29 +432,26 @@ kubernetes:
       use_upstream: archive
       uri_a: 'https://dl.k8s.io'
       archive:
-        source_hash: '3e6c90561dd1c27fa1dff6953c503251c36001f7e0f8eff3ec918c74ae2d9aa25917d8ac87d5b4224b8229f620b1830442e6dce3b2a497043f8497eee3705696'  # noqa 204
+        source_hash: '53b44fbf58308c18b478ced5629a82d01c67dd6ae5be9559a2d65edae339983bff4d143b1bde062f5d8202ec8241e45da3b087af1fb0aea35afb1812a26450d1'  # noqa 204
         options: '--strip-components=2'
       suffix: tar.gz
 
   crimgr:
-    version: '0.4.1'
+    version: 0.5.0
     config_file: /etc/cri-resmgr/fallback.cfg
     config: {}
     environ: {}
     environ_file: /etc/default/cri-resource-manager
     service: {}
     pkg:
-      commands:
-        - cri-resmgr
       use_upstream: archive
       uri_a: 'https://github.com/intel/cri-resource-manager/releases/download'
       archive:
-        source_hash: '8f1fd0b828ff5e3ba7905e292e4202f12f7caf422a0a65c25364bf578c8f81b1'
-        options: '--strip-components=2'
+        source_hash: '97e117989b3d515dac86cfb0e5c14a69406a29bc5a17b5d8f13e41234b630f0b'  # noqa 204
       suffix: tar.gz
 
   k3s:
-    version: 'v1.20.0-rc2+k3s1'   # include v in this version
+    version: v1.21.4+k3s1   # include v in this version
     pkg:
       commands:
         - k3s
@@ -462,7 +459,7 @@ kubernetes:
       uri_b: 'https://github.com/rancher/k3s/releases/download'
       uri_s: 'https://get.k3s.io'
       binary:
-        source_hash: '44c0d31f86deec3a1d22cc4a56f11b719716863c9664136189342c4845e0cc63'
+        source_hash: '47e686ad5390670da79a467ba94399d72e472364bc064a20fecd3937a8d928b5'  # noqa 204
       script:
         source_hash:
         killall: /usr/local/bin/k3s-killall.sh

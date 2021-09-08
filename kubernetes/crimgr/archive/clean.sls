@@ -10,13 +10,15 @@
 kubernetes-cri-resource-manager-archive-clean:
   file.absent:
     - names:
-      - {{ d.crimgr.pkg['path'] }}
-      - /etc/systemd/system/cri-resource-manager.service
-      - /etc/cri-resmgr
-      - /etc/default/cri-resource-manager
-            {%- for cmd in d.crimgr['pkg']['commands']|unique %}
-      - /usr/local/bin/{{ cmd }}
-            {%- endfor %}
+      # warning: don't list 'd.crimgr.pkg['path']' here (/)
+      - /usr/local/etc/cri-resmgr
+      - /usr/local/etc/default/cri-resource-manager
+      - /usr/local/etc/systemd/system/cri-resource-manager.service
+      - /usr/local/etc/default/cri-resource-manager
+      - /usr/local/opt/intel/bin/cri-resmgr
+      - /usr/local/opt/intel/share/doc/cri-resource-manager/
+      - /usr/local/opt/intel/share/doc/cri-resource-manager/security.md
+      - /usr/local/opt/intel/share/doc/cri-resource-manager/LICENSE
 
         {% endif %}
     {%- else %}

@@ -53,6 +53,7 @@ kubernetes-client-archive-install-symlink-{{ cmd }}:
     - name: /usr/local/bin/{{ cmd }}
     - target: {{ d.client.pkg.path }}/bin/{{ cmd }}
     - force: True
+    - onlyif: test -x {{ d.client.pkg.path }}/bin/{{ cmd }}
     - require:
       - archive: kubernetes-client-archive-install
 

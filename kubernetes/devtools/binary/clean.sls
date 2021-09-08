@@ -12,7 +12,7 @@
 kubernetes-devtools-binary-{{ tool }}-clean:
   file.absent:
     - names:
-      - "{{ d.devtools['pkg'][tool]['path'] }}"
+      - {{ d.devtools['pkg'][tool]['path'] }}
                 {%- for cmd in d.devtools['pkg'][tool]['commands']|unique %}
       - /usr/local/bin/{{ cmd }}
                 {%- endfor %}

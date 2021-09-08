@@ -9,19 +9,6 @@
         {%- if d.crimgr.pkg and d.crimgr.pkg['use_upstream'] == 'archive' and 'archive' in d.crimgr.pkg %}
 
 kubernetes-cri-resource-manager-archive-install:
-  file.directory:
-    - name: {{ d.crimgr.pkg['path'] }}
-    - makedirs: True
-    - clean: {{ d.clean }}
-    - require_in:
-      - archive: kubernetes-cri-resource-manager-archive-install
-    - mode: 755
-    - user: {{ d.identity.rootuser }}
-    - group: {{ d.identity.rootgroup }}
-    - recurse:
-      - user
-      - group
-      - mode
   archive.extracted:
     {{- format_kwargs(d.crimgr.pkg['archive']) }}
     - retry: {{ d.retry_option }}
@@ -33,21 +20,13 @@ kubernetes-cri-resource-manager-archive-install:
       - user
       - group
 
-            {%- if d.linux.altpriority|int == 0 or grains.os_family in ('Arch', 'MacOS') %}
-                {%- for cmd in d.crimgr.pkg['commands']|unique %}
+        {%- else %}
 
-kubernetes-cri-resource-manager-archive-install-symlink-{{ cmd }}:
-  file.symlink:
-    - name: /usr/local/bin/{{ cmd }}
-    - target:  {{ d.crimgr.pkg['path'] }}/bin/{{ cmd }}
-    - force: True
-    - onlyif:
-      - test -f {{ d.crimgr.pkg['path'] }}/bin/{{ cmd }}
-    - require:
-      - archive: kubernetes-cri-resource-manager-archive-install
+kubernetes-cri-resource-manager-archive-install-nothing:
+  test.show_notification:
+    - text: |
+        The cri-resource-manager archive is not defined so skipping.
 
-                {%- endfor %}
-            {%- endif %}
         {%- endif %}
     {%- else %}
 

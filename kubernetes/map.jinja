@@ -46,6 +46,7 @@
             {%- endif %}
 
             {%- if c in ('crimgr',) %}
+                {%- do p.update({ 'path': '/usr/local' }) %}
                 {%- set arch = 'x86_64' if c in ('crimgr',) and d.arch == 'amd64' else d.arch %}
                 {%- set url = '%s/v%s/cri-resource-manager-%s.%s.%s'|format(p.uri_a, d[c]['version'], d[c]['version'], arch, p.suffix) %}
             {%- else %}
@@ -180,13 +181,14 @@
                         {%- set uri = '%s/v%s/%s-%s'|format(p.uri_a, p.version, i, grains.kernel|lower) %}
                         {%- set url = '%s-%s.%s'|format(uri, d.arch, p.suffix) %}
 
-                    {%- elif i in ('kubebuilder',) %}
-                        {%- set uri = '%s/v%s/%s_%s'|format(p.uri_a, p.version, i, p.version) %}
-                        {%- set url = '%s_%s_%s.%s'|format(uri, grains.kernel|lower, d.arch, p.suffix) %}
+                    {%- elif i in ('cue',) %}
+                        {%- set arch = d.arch %}
+                        {%- set uri = '%s/%s/%s_%s'|format(p.uri_a, p.version, i, p.version) %}
+                        {%- set url = '%s_%s_%s.%s'|format(uri, grains.kernel|lower, arch, p.suffix) %}
 
-                    {%- elif i in ('cue', 'dive') %}
-                        {%- set arch = 'x86_64' if i in ('cue',) and d.arch == 'amd64' else d.arch %}
-                        {%- set kernel = 'Windows' if i in ('cue',) and grains.kernel == 'Windows' else grains.kernel|lower %}
+                    {%- elif i in ('dive',) %}
+                        {%- set arch = d.arch %}
+                        {%- set kernel = 'Windows' if grains.kernel == 'Windows' else grains.kernel|lower %}
                         {%- set uri = '%s/v%s/%s_%s'|format(p.uri_a, p.version, i, p.version) %}
                         {%- set url = '%s_%s_%s.%s'|format(uri, kernel, arch, p.suffix) %}
 
@@ -264,6 +266,9 @@
                         {%- set arch = '' if i in ('k3s',) and d.arch == 'amd64' else '-' ~ d.arch %}
                         {%- set suffix = '.' ~ p.suffix if p.suffix else '' %}
                         {%- set url = '%s/v%s/%s-%s%s%s'|format(p.uri_b, p.version, i, grains.kernel|lower, arch, suffix) %}
+
+                    {%- elif i in ('kubebuilder',) %}
+                        {%- set url = '%s/v%s/%s_%s_%s'|format(p.uri_a, p.version, i, grains.kernel|lower, d.arch) %}
 
                     {%- elif i in ('stern',) %}
                         {%- set suffix = '.' ~ p.suffix if p.suffix else '' %}

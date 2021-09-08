@@ -46,6 +46,7 @@ kubernetes-server-archive-install-symlink-{{ cmd }}:
     - name: /usr/local/bin/{{ cmd }}
     - target: {{ d.server.pkg.path }}/bin/{{ cmd }}
     - force: True
+    - onlyif: test -x {{ d.server.pkg.path }}/bin/{{ cmd }}
     - require:
       - archive: kubernetes-server-archive-install
 
