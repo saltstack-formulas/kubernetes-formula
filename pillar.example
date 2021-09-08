@@ -38,7 +38,7 @@ kubernetes:
       - python
       - javascript
   operator:
-    wanted: []
+    wanted: []   # disabled until fixed
     sdk:
       wanted:
         - ansible-operator
