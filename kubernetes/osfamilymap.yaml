@@ -147,7 +147,7 @@ Windows:
       kubens:
         suffix: zip
         archive:
-          source_hash: 'de907e5dbb1684093af2c4aee4e0c6fea21144d1393083783a59346e010655f3'  # noqa 204
+          source_hash: 'eab9ace6e25303b522e7006a1c9e44747b9e9c005e15b1fcf8a9678569ca1c95'  # noqa 204
           options: ''
       kudo:
         use_upstream: false  # windows not available
