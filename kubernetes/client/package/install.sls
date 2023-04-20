@@ -8,8 +8,9 @@
 
         {%- if grains.kernel|lower in ('linux',) %}
             {%- if d.client.pkg.use_upstream == 'repo' %}
+              {%- set sls_repo_install = tplroot ~ '.package.repo.install' %}
 include:
-  - .package.repo.install
+  - {{ sls_repo_install }}
             {%- endif %}
 
 kubernetes-client-package-install-deps:
