@@ -8,8 +8,9 @@
         {%- if grains.kernel|lower in ('linux',) %}
 
             {%- if d.client.pkg.use_upstream == 'repo' %}
+              {%- set sls_repo_clean = tplroot ~ '.package.repo.clean' %}
 include:
-  - .package.repo.clean
+  - {{ sls_repo_clean }}
             {%- endif %}
 
 kubernetes-client-package-clean-pkg:
