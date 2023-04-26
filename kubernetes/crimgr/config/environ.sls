@@ -15,7 +15,7 @@ kubernetes-crimgr-config-file-managed-environ_file:
   file.managed:
     - name: {{ d.crimgr.environ_file }}
     - source: {{ files_switch(['environ.sh.jinja'],
-                              lookup='k8s-crimgr-config-file-managed-environ_file'
+                              lookup='kubernetes-crimgr-config-file-managed-environ_file'
                  )
               }}
     - makedirs: True

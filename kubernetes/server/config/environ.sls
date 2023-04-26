@@ -16,7 +16,7 @@ kubernetes-server-config-file-managed-environ_file:
   file.managed:
     - name: {{ d.server.environ_file }}
     - source: {{ files_switch(['environ.sh.jinja'],
-                              lookup='k8s-server-config-file-managed-environ_file'
+                              lookup='kubernetes-server-config-file-managed-environ_file'
                  )
               }}
     - makedirs: True

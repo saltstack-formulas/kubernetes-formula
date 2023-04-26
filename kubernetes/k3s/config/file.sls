@@ -17,7 +17,7 @@ kubernetes-k3s-config-file-install-file-managed:
   file.managed:
     - name: {{ d.k3s.config_file }}
     - source: {{ files_switch(['config.yml.jinja'],
-                              lookup='k8s-k3s-config-file-install-file-managed'
+                              lookup='kubernetes-k3s-config-file-install-file-managed'
                  )
               }}
     - makedirs: True

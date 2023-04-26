@@ -17,7 +17,7 @@ kubernetes-client-aliases-file-managed-environ_file:
   file.managed:
     - name: {{ d.client.aliases_file }}
     - source: {{ files_switch(['aliases.sh.jinja'],
-                              lookup='k8s-client-aliases-file-managed-environ_file'
+                              lookup='kubernetes-client-aliases-file-managed-environ_file'
                  )
               }}
     - makedirs: True
