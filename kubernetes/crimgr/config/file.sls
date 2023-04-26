@@ -15,7 +15,7 @@ kubernetes-crimgr-config-file-install-file-managed:
   file.managed:
     - name: {{ d.crimgr.config_file }}
     - source: {{ files_switch(['config.yml.jinja'],
-                              lookup='k8s-crimgr-config-file-install-file-managed'
+                              lookup='kubernetes-crimgr-config-file-install-file-managed'
                  )
               }}
     - makedirs: True
